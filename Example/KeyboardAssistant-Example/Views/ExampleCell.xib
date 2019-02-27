@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExampleCellReuseIdentifier" rowHeight="100" id="baI-sD-0ud" userLabel="Example Cell" customClass="ExampleCell" customModule="KeyboardAssistant" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="baI-sD-0ud" id="yp8-SR-Nfs">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVj-cr-8io" userLabel="lbTitle">
+                        <rect key="frame" x="0.0" y="39.5" width="375" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gpi-1x-gWO" userLabel="separatorLine">
+                        <rect key="frame" x="0.0" y="98.5" width="375" height="1"/>
+                        <color key="backgroundColor" name="separator_line_color"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="ue6-jO-lp2"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="SVj-cr-8io" firstAttribute="leading" secondItem="yp8-SR-Nfs" secondAttribute="leading" id="8uA-Uj-wju"/>
+                    <constraint firstAttribute="trailing" secondItem="SVj-cr-8io" secondAttribute="trailing" id="9Gh-yG-gXS"/>
+                    <constraint firstItem="SVj-cr-8io" firstAttribute="centerY" secondItem="yp8-SR-Nfs" secondAttribute="centerY" id="Je3-7H-uh9"/>
+                    <constraint firstAttribute="trailing" secondItem="Gpi-1x-gWO" secondAttribute="trailing" id="hKk-c1-cvg"/>
+                    <constraint firstAttribute="bottom" secondItem="Gpi-1x-gWO" secondAttribute="bottom" id="jbi-hN-uhO"/>
+                    <constraint firstItem="Gpi-1x-gWO" firstAttribute="leading" secondItem="yp8-SR-Nfs" secondAttribute="leading" id="xeb-JU-8aP"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lbTitle" destination="SVj-cr-8io" id="2dY-LR-Uew"/>
+                <outlet property="separatorLine" destination="Gpi-1x-gWO" id="rGq-C6-1GN"/>
+            </connections>
+            <point key="canvasLocation" x="72.799999999999997" y="39.580209895052477"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="separator_line_color">
+            <color red="0.89411764705882357" green="0.89411764705882357" blue="0.89411764705882357" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
