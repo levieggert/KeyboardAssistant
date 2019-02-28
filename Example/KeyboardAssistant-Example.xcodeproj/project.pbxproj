@@ -14,7 +14,6 @@
 		451FA59122273C7C0094DB8B /* ExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA58722273C7C0094DB8B /* ExamplesViewController.swift */; };
 		451FA59222273C7C0094DB8B /* LongTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA58822273C7C0094DB8B /* LongTableViewController.swift */; };
 		451FA59322273C7C0094DB8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 451FA58922273C7C0094DB8B /* Main.storyboard */; };
-		451FA59422273C7C0094DB8B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 451FA58A22273C7C0094DB8B /* Colors.xcassets */; };
 		451FA59522273C7C0094DB8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA58B22273C7C0094DB8B /* AppDelegate.swift */; };
 		451FA59622273C7C0094DB8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 451FA58C22273C7C0094DB8B /* LaunchScreen.storyboard */; };
 		451FA59D22273CBE0094DB8B /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59822273CBD0094DB8B /* KeyboardObserver.swift */; };
@@ -22,6 +21,7 @@
 		451FA59F22273CBE0094DB8B /* InputNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59A22273CBD0094DB8B /* InputNavigator.swift */; };
 		451FA5A022273CBE0094DB8B /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */; };
 		451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59C22273CBD0094DB8B /* NotificationHandler.swift */; };
+		4526749A2228513D0004B4D7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 452674992228513D0004B4D7 /* README.md */; };
 		456577E6222827ED005900F3 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E5222827ED005900F3 /* InputCell.swift */; };
 		456577E822282809005900F3 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 456577E722282809005900F3 /* InputCell.xib */; };
 		456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */; };
@@ -55,7 +55,6 @@
 		451FA58722273C7C0094DB8B /* ExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamplesViewController.swift; sourceTree = "<group>"; };
 		451FA58822273C7C0094DB8B /* LongTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongTableViewController.swift; sourceTree = "<group>"; };
 		451FA58922273C7C0094DB8B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		451FA58A22273C7C0094DB8B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		451FA58B22273C7C0094DB8B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		451FA58C22273C7C0094DB8B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		451FA59822273CBD0094DB8B /* KeyboardObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
@@ -63,6 +62,7 @@
 		451FA59A22273CBD0094DB8B /* InputNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNavigator.swift; sourceTree = "<group>"; };
 		451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		451FA59C22273CBD0094DB8B /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
+		452674992228513D0004B4D7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		456577E5222827ED005900F3 /* InputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
 		456577E722282809005900F3 /* InputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
 		456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSizeScrollViewController.swift; sourceTree = "<group>"; };
@@ -161,9 +161,9 @@
 		45CEA67C22273BE000DC4ADA /* KeyboardAssistant-Example */ = {
 			isa = PBXGroup;
 			children = (
+				452674992228513D0004B4D7 /* README.md */,
 				451FA59722273CBD0094DB8B /* Source */,
 				45CEA68422273BE100DC4ADA /* Assets.xcassets */,
-				451FA58A22273C7C0094DB8B /* Colors.xcassets */,
 				45CEA68922273BE100DC4ADA /* Info.plist */,
 				451FA58C22273C7C0094DB8B /* LaunchScreen.storyboard */,
 				451FA58922273C7C0094DB8B /* Main.storyboard */,
@@ -298,8 +298,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				451FA59322273C7C0094DB8B /* Main.storyboard in Resources */,
-				451FA59422273C7C0094DB8B /* Colors.xcassets in Resources */,
 				456577E822282809005900F3 /* InputCell.xib in Resources */,
+				4526749A2228513D0004B4D7 /* README.md in Resources */,
 				451FA58E22273C7C0094DB8B /* ExampleCell.xib in Resources */,
 				451FA59622273C7C0094DB8B /* LaunchScreen.storyboard in Resources */,
 				45CEA68522273BE100DC4ADA /* Assets.xcassets in Resources */,
@@ -499,6 +499,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q74FGM83LR;
 				INFOPLIST_FILE = "KeyboardAssistant-Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -519,6 +520,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q74FGM83LR;
 				INFOPLIST_FILE = "KeyboardAssistant-Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

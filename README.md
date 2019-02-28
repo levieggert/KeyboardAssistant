@@ -1,29 +1,45 @@
 KeyboardAssistant
-=================
+==============
 
-Seek makes it easy to animate UIView's and constraints based on percentage values.  Animations are defined with a from value and a to value and can then be animated to any position between those values by providing a float between 0 and 1.
+Version 1.0.0
 
-Seek currently supports from and to values for alpha, transforms (translate, rotate, scale), and constraint constants.
+Keyboard Assistant faciliates in the repositioning of views when the device Keyboard is present.  It does this by observing keyboard notifications (willShow, didShow, willHide, didHide) and by responding to UITextField and UITextView delegates when these objects become active and resign. 
 
 ### Requirements
 
-- iOS 8.0+
-- Xcode 10.0
+- iOS 9.0+
+- Xcode 10.1
 - Swift 4.2
 
 ### Cocoapods
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'Seek', '3.1.0'
+    pod 'KeyboardAssistant', '1.0.0'
 end
 ```
 
+### Documentation
+
+KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigator, and KeyboardAssistant.  KeyboardAssistant acts as a layer on top of KeyboardObserver and InputNavigator and depends on these 2 classes.  You can read more about these classes and their responsibilities below.
+
+* KeyboardObserver, as the name of this class states, has the sole responsibility of observing the device Keyboard.  It will register keyboard notifications (willShow, didShow, willHide, didHide) and retrieve the height of the keyboard.  Its job is to tell the observee (KeyboardAssistant) about keyboard state changes and height changes. 
+
+* InputNavigator manages a sequence of input and the navigation between these inputs.  On iOS, input can be obtained from user's by using UITextField and UITextView objects.  This class supports both UITextField and UITextView.  To handle navigation between these inputs, InputNavigator will set the input's returnKeyType (UIReturnKeyType) when editing begins on an input.  The UIReturnKeyType is determined based on the position of the input item.  If the position is at the end of the input items array, the returnKeyType is set to Done, otherwise it is set to Next. 
+
+- KeyboardAssistant
+
 ### How to use
+
+KeyboardAssistant is broken into 2 main configurations, auto assistant and manual assistant.  Auto assistant is the most simplest way to use KeyboardAssistant.  However, if you find yourself requiring more control over keyboard positioning, manual assistant is best for you.
+
+Auto Assistant:
+
+Manual Assistant:
 
 In this example Seek will animate a view's alpha and translate the view.
 

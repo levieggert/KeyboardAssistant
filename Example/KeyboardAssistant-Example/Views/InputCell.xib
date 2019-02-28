@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,16 +24,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KaI-fI-UbU" userLabel="separatorLine">
-                        <rect key="frame" x="0.0" y="118.5" width="375" height="1"/>
-                        <color key="backgroundColor" name="separator_line_color"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="CMa-At-tlA"/>
-                        </constraints>
-                    </view>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m7P-LB-giJ" userLabel="txtInput">
                         <rect key="frame" x="15" y="51.5" width="345" height="40"/>
-                        <color key="backgroundColor" name="text_input_background_color"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="VVk-TQ-nQF"/>
                         </constraints>
@@ -42,6 +33,13 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KaI-fI-UbU" userLabel="separatorLine">
+                        <rect key="frame" x="0.0" y="118.5" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="CMa-At-tlA"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="OUT-1Y-Gg5" firstAttribute="leading" secondItem="m7P-LB-giJ" secondAttribute="leading" id="0UP-MD-0B9"/>
@@ -58,12 +56,4 @@
             <point key="canvasLocation" x="-1" y="47"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <namedColor name="separator_line_color">
-            <color red="0.89411764705882357" green="0.89411764705882357" blue="0.89411764705882357" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="text_input_background_color">
-            <color red="0.98000001907348633" green="0.98000001907348633" blue="0.98000001907348633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-    </resources>
 </document>
