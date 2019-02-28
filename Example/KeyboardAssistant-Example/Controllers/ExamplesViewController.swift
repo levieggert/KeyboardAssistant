@@ -12,11 +12,12 @@ class ExamplesViewController: UIViewController
         case longScrollView
         case longNestedScrollView
         case longTableView
+        case viewSizeScrollView
     }
     
     // MARK: - Properties
     
-    private let examples: [Example] = [.longScrollView, .longNestedScrollView, .longTableView]
+    private let examples: [Example] = [.longScrollView, .longNestedScrollView, .viewSizeScrollView]
     
     // MARK: - Outlets
     
@@ -69,6 +70,9 @@ extension ExamplesViewController: UITableViewDelegate, UITableViewDataSource
         
         case .longTableView:
             self.performSegue(withIdentifier: "showLongTableView", sender: nil)
+            
+        case .viewSizeScrollView:
+            self.performSegue(withIdentifier: "showViewSizeScrollView", sender: nil)
         }
     }
     
@@ -91,6 +95,9 @@ extension ExamplesViewController: UITableViewDelegate, UITableViewDataSource
             
         case .longTableView:
             cell.lbTitle.text = "Long TableView"
+            
+        case .viewSizeScrollView:
+            cell.lbTitle.text = "View Size ScrollView"
         }
         
         if (!isLastRow)

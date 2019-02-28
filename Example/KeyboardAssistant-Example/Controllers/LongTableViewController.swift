@@ -10,6 +10,7 @@ class LongTableViewController: UIViewController
     // MARK: - Properties
     
     // MARK: - Outlets
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -27,6 +28,7 @@ class LongTableViewController: UIViewController
     {
         super.viewDidLoad()
         
+        // keyboardAssistant
         let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
@@ -48,7 +50,7 @@ class LongTableViewController: UIViewController
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                    inputItems: inputItems,
                                                                                    positionScrollView: self.tableView,
-                                                                                   positionConstraint: .viewBottomToTopOfKeyboard,
+                                                                                   positionConstraint: .viewTopToTopOfScreen,
                                                                                    positionOffset: 20,
                                                                                    bottomConstraint: self.bottomConstraint,
                                                                                    bottomConstraintLayoutView: self.view)
@@ -63,6 +65,10 @@ class LongTableViewController: UIViewController
         }
         
         self.keyboardAssistant.observer.loggingEnabled = true
+        
+        // tableView
+        self.tableView.register(UINib(nibName: InputCell.nibName, bundle: nil), forCellReuseIdentifier: InputCell.reuseIdentifier)
+        self.tableView.separatorStyle = .none
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -84,6 +90,35 @@ class LongTableViewController: UIViewController
     @IBAction func handleBack(barButtonItem: UIBarButtonItem)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension LongTableViewController: UITableViewDelegate, UITableViewDataSource
+{
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell: InputCell = self.tableView.dequeueReusableCell(withIdentifier: InputCell.reuseIdentifier, for: indexPath) as! InputCell
+        
+        cell.selectionStyle = .none
+        
+        return cell
     }
 }
 
@@ -114,11 +149,21 @@ extension LongTableViewController: UITextFieldDelegate
     }
 }
 
+// MARK: - UITextViewDelegate
+
+extension LongTableViewController: UITextViewDelegate
+{
+    func textViewDidBeginEditing(_ textView: UITextView)
+    {
+        self.keyboardAssistant.navigator.textViewDidBeginEditing(textView)
+    }
+}
+
 // MARK: - KeyboardAssistantDelegate
 
 extension LongTableViewController: KeyboardAssistantDelegate
 {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, view: UIView, keyboardHeight: CGFloat)
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, inputItem: UIView, keyboardHeight: CGFloat)
     {
         
     }

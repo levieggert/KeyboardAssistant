@@ -7,7 +7,7 @@ import UIKit
 
 public protocol KeyboardAssistantDelegate: class
 {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, view: UIView, keyboardHeight: CGFloat)
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, inputItem: UIView, keyboardHeight: CGFloat)
 }
 
 public class KeyboardAssistant: NSObject
@@ -37,6 +37,9 @@ public class KeyboardAssistant: NSObject
     private init(allowToSetInputDelegates: Bool)
     {
         super.init()
+        
+        // TODO: I would like to rename "allowToSetInputDelegates" to something like, willOverrideInputDelegates, so class implementing KeboardAssistant will tell the assistant
+        // if they plan to override the input delegates.
         
         self.observer = KeyboardObserver()
         self.navigator = InputNavigator(allowToSetInputDelegates: allowToSetInputDelegates)
@@ -70,6 +73,7 @@ public class KeyboardAssistant: NSObject
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
         assistant.type = .manual
+        assistant.delegate = delegate
         
         return assistant
     }
@@ -77,6 +81,11 @@ public class KeyboardAssistant: NSObject
     deinit
     {
         
+    }
+    
+    public func closeKeyboard()
+    {
+        self.navigator.focusedItem = nil
     }
     
     private func reposition()
@@ -92,7 +101,7 @@ public class KeyboardAssistant: NSObject
         case .manual:
             if let delegate = self.delegate, let view = self.navigator.focusedItem
             {
-                delegate.keyboardAssistantManuallyReposition(keyboardAssistant: self, view: view, keyboardHeight: self.observer.keyboardHeight)
+                delegate.keyboardAssistantManuallyReposition(keyboardAssistant: self, inputItem: view, keyboardHeight: self.observer.keyboardHeight)
             }
         }
     }
@@ -101,39 +110,44 @@ public class KeyboardAssistant: NSObject
     {
         if (self.observer.keyboardIsUp)
         {
-            var offsetValue: CGFloat?
+            var scrollOffset: CGFloat?
+
+            //first - get position of toView relative to scrollview
+            var position: CGPoint = toView.convert(toView.frame.origin, to: scrollView)
+            position.y = position.y - toView.frame.origin.y // Here we subtract because when converting to scrollview coordinate space toView.origin.y is added to conversion
             
             switch (constraint)
             {
             case .viewTopToTopOfScreen:
-                // TODO: Need to account for nested views.  Above won't work for nested views.
-                offsetValue = toView.frame.origin.y - offset
+                scrollOffset = position.y - offset // Account for offset
                 
             case .viewBottomToTopOfKeyboard:
-                // TODO: Need to account for nested views.  Above won't work for nested views.
-                offsetValue = (toView.frame.origin.y - scrollView.frame.size.height) + toView.frame.size.height + offset
+                position.y = position.y - scrollView.frame.size.height // This conversion is as if we were placing position.y at the top of the keyboard, align toView top with keyboard top.
+                scrollOffset = position.y + toView.frame.size.height + offset // Account for toView.height and offset
             }
             
-            print("\nKeyboardAssistant: reposition()")
-            print("  constraint: \(constraint)")
-            print("  offset: \(offset)")
-            print("  offsetValue: \(String(describing: offsetValue))")
+            self.log(string: "\nKeyboardAssistant: reposition(scrollView)")
+            self.log(string:"  constraint: \(constraint)")
+            self.log(string:"  offset: \(offset)")
+            self.log(string:"  toView.origin.y: \(toView.frame.origin.y)")
+            self.log(string:"  position.y: \(position.y)")
+            self.log(string:"  scrollOffset: \(String(describing: scrollOffset))")
             
-            if var offsetValue = offsetValue
+            if var scrollOffset = scrollOffset
             {
                 // dont allow to scroll passed bottom of scroll view.
-                if ((scrollView.contentSize.height - offsetValue) < scrollView.frame.size.height)
+                if ((scrollView.contentSize.height - scrollOffset) < scrollView.frame.size.height)
                 {
                     let bottomOfScrollViewOffset: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height
-                    offsetValue = bottomOfScrollViewOffset
+                    scrollOffset = bottomOfScrollViewOffset
                 }
                 
-                if (offsetValue < 0)
+                if (scrollOffset < 0)
                 {
-                    offsetValue = 0
+                    scrollOffset = 0
                 }
                 
-                let contentOffset: CGPoint = CGPoint(x: 0, y: offsetValue)
+                let contentOffset: CGPoint = CGPoint(x: 0, y: scrollOffset)
                 
                 UIView.animate(withDuration: self.animationDuration, delay: 0, options: .curveEaseOut, animations: {
                     
@@ -147,6 +161,14 @@ public class KeyboardAssistant: NSObject
                     }
                 })
             }
+        }
+    }
+    
+    private func log(string: String)
+    {
+        if (self.observer.loggingEnabled)
+        {
+            print(string)
         }
     }
 }
@@ -186,7 +208,21 @@ extension KeyboardAssistant: KeyboardObserverDelegate
             self.reposition()
             
         case .willHide:
-            break
+            
+            if let bottomConstraint = self.bottomConstraint, let bottomConstraintLayoutView = self.bottomConstraintLayoutView
+            {
+                bottomConstraint.constant = self.resetBottomConstraintConstant
+                
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                    bottomConstraintLayoutView.layoutIfNeeded()
+                }, completion: { (finished: Bool) in
+                    
+                    if (finished)
+                    {
+                        
+                    }
+                })
+            }
             
         case .didHide:
             break
@@ -205,7 +241,7 @@ extension KeyboardAssistant: InputNavigatorDelegate
 {
     public func inputNavigatorFocusChanged(inputNavigator: InputNavigator, inputItem: UIView?)
     {
-        //print("\nKeyboardAssistant: input focus changed")
+        print("\nKeyboardAssistant: input focus changed")
         self.reposition()
     }
 }

@@ -5,7 +5,7 @@
 
 import UIKit
 
-class LongNestedScrollViewController: UIViewController
+class ViewSizeScrollViewController: UIViewController
 {
     // MARK: - Properties
     
@@ -15,18 +15,12 @@ class LongNestedScrollViewController: UIViewController
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtCity: UITextField!
-    @IBOutlet weak var txtState: UITextField!
-    @IBOutlet weak var txtZipCode: UITextField!
-    @IBOutlet weak var txtCountry: UITextField!
-    @IBOutlet weak var infoTextView: UITextView!
-    @IBOutlet weak var txtAnimal: UITextField!
-    @IBOutlet weak var txtColor: UITextField!
-    @IBOutlet weak var txtFood: UITextField!
-    @IBOutlet weak var txtHobby: UITextField!
-    @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var btRegisterAccount: UIButton!
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
@@ -36,15 +30,15 @@ class LongNestedScrollViewController: UIViewController
     {
         print("deinit: \(type(of: self))")
     }
-    
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        let useAutoKeyboardAssistant: Bool = true
+        let useAutoKeyboardAssistant: Bool = false
         let allowToSetInputDelegates: Bool = true
         
-        let inputItems: [UIView] = [self.txtFirstName, self.txtLastName, self.txtCity, self.txtState, self.txtZipCode, self.txtCountry, self.infoTextView, self.txtAnimal, self.txtColor, self.txtFood, self.txtHobby, self.notesTextView]
+        let inputItems: [UIView] = [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword]
         
         if (!allowToSetInputDelegates)
         {
@@ -62,8 +56,8 @@ class LongNestedScrollViewController: UIViewController
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                    inputItems: inputItems,
                                                                                    positionScrollView: self.scrollView,
-                                                                                   positionConstraint: .viewTopToTopOfScreen,
-                                                                                   positionOffset: 80,
+                                                                                   positionConstraint: .viewBottomToTopOfKeyboard,
+                                                                                   positionOffset: 20,
                                                                                    bottomConstraint: self.bottomConstraint,
                                                                                    bottomConstraintLayoutView: self.view)
         }
@@ -78,7 +72,7 @@ class LongNestedScrollViewController: UIViewController
         
         self.keyboardAssistant.observer.loggingEnabled = true
     }
-
+    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
@@ -99,11 +93,17 @@ class LongNestedScrollViewController: UIViewController
     {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func handleRegisterAccount(button: UIButton)
+    {
+        self.keyboardAssistant.closeKeyboard()
+        //self.keyboardAssistant.navigator.focusedItem = nil // Same as self.keyboardAssistant.closeKeyboard()
+    }
 }
 
 // MARK: - UITextFieldDelegate
 
-extension LongNestedScrollViewController: UITextFieldDelegate
+extension ViewSizeScrollViewController: UITextFieldDelegate
 {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
     {
@@ -130,7 +130,7 @@ extension LongNestedScrollViewController: UITextFieldDelegate
 
 // MARK: - UITextViewDelegate
 
-extension LongNestedScrollViewController: UITextViewDelegate
+extension ViewSizeScrollViewController: UITextViewDelegate
 {
     func textViewDidBeginEditing(_ textView: UITextView)
     {
@@ -140,10 +140,29 @@ extension LongNestedScrollViewController: UITextViewDelegate
 
 // MARK: - KeyboardAssistantDelegate
 
-extension LongNestedScrollViewController: KeyboardAssistantDelegate
+extension ViewSizeScrollViewController: KeyboardAssistantDelegate
 {
     func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, inputItem: UIView, keyboardHeight: CGFloat)
     {
+        let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
+        let offset: CGFloat = 20
         
+        if (inputItem == self.txtFirstName)
+        {
+            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtLastName, constraint: constraint, offset: offset)
+        }
+        else if (inputItem == self.txtLastName)
+        {
+            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtEmail, constraint: constraint, offset: offset)
+        }
+        else if (inputItem == self.txtEmail)
+        {
+            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtPassword, constraint: constraint, offset: offset)
+        }
+        else if (inputItem == self.txtPassword)
+        {
+            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.btRegisterAccount, constraint: constraint, offset: offset)
+        }
     }
 }
+

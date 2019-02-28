@@ -22,6 +22,9 @@
 		451FA59F22273CBE0094DB8B /* InputNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59A22273CBD0094DB8B /* InputNavigator.swift */; };
 		451FA5A022273CBE0094DB8B /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */; };
 		451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59C22273CBD0094DB8B /* NotificationHandler.swift */; };
+		456577E6222827ED005900F3 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E5222827ED005900F3 /* InputCell.swift */; };
+		456577E822282809005900F3 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 456577E722282809005900F3 /* InputCell.xib */; };
+		456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */; };
 		45CEA68522273BE100DC4ADA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45CEA68422273BE100DC4ADA /* Assets.xcassets */; };
 		45CEA69322273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69222273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift */; };
 		45CEA69E22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69D22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift */; };
@@ -60,6 +63,9 @@
 		451FA59A22273CBD0094DB8B /* InputNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNavigator.swift; sourceTree = "<group>"; };
 		451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		451FA59C22273CBD0094DB8B /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
+		456577E5222827ED005900F3 /* InputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
+		456577E722282809005900F3 /* InputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
+		456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSizeScrollViewController.swift; sourceTree = "<group>"; };
 		45CEA67A22273BE000DC4ADA /* KeyboardAssistant-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyboardAssistant-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CEA68422273BE100DC4ADA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45CEA68922273BE100DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,6 +107,8 @@
 			children = (
 				451FA58222273C7C0094DB8B /* ExampleCell.swift */,
 				451FA58322273C7C0094DB8B /* ExampleCell.xib */,
+				456577E5222827ED005900F3 /* InputCell.swift */,
+				456577E722282809005900F3 /* InputCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,6 +120,7 @@
 				451FA58522273C7C0094DB8B /* LongNestedScrollViewController.swift */,
 				451FA58622273C7C0094DB8B /* LongScrollViewController.swift */,
 				451FA58822273C7C0094DB8B /* LongTableViewController.swift */,
+				456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -290,6 +299,7 @@
 			files = (
 				451FA59322273C7C0094DB8B /* Main.storyboard in Resources */,
 				451FA59422273C7C0094DB8B /* Colors.xcassets in Resources */,
+				456577E822282809005900F3 /* InputCell.xib in Resources */,
 				451FA58E22273C7C0094DB8B /* ExampleCell.xib in Resources */,
 				451FA59622273C7C0094DB8B /* LaunchScreen.storyboard in Resources */,
 				45CEA68522273BE100DC4ADA /* Assets.xcassets in Resources */,
@@ -318,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				451FA59522273C7C0094DB8B /* AppDelegate.swift in Sources */,
+				456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */,
 				451FA59F22273CBE0094DB8B /* InputNavigator.swift in Sources */,
 				451FA59022273C7C0094DB8B /* LongScrollViewController.swift in Sources */,
 				451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */,
@@ -327,6 +338,7 @@
 				451FA59E22273CBE0094DB8B /* KeyboardAssistant.swift in Sources */,
 				451FA58F22273C7C0094DB8B /* LongNestedScrollViewController.swift in Sources */,
 				451FA5A022273CBE0094DB8B /* UserDefaults+Extension.swift in Sources */,
+				456577E6222827ED005900F3 /* InputCell.swift in Sources */,
 				451FA58D22273C7C0094DB8B /* ExampleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
