@@ -126,12 +126,14 @@ public class KeyboardAssistant: NSObject
                 scrollOffset = position.y + toView.frame.size.height + offset // Account for toView.height and offset
             }
             
+            /*
             self.log(string: "\nKeyboardAssistant: reposition(scrollView)")
             self.log(string:"  constraint: \(constraint)")
             self.log(string:"  offset: \(offset)")
             self.log(string:"  toView.origin.y: \(toView.frame.origin.y)")
             self.log(string:"  position.y: \(position.y)")
             self.log(string:"  scrollOffset: \(String(describing: scrollOffset))")
+            */
             
             if var scrollOffset = scrollOffset
             {
@@ -232,6 +234,7 @@ extension KeyboardAssistant: KeyboardObserverDelegate
     public func keyboardDidInvalidateKeyboardHeight(keyboardObserver: KeyboardObserver, keyboardHeight: CGFloat)
     {
         print("\nKeyboardAssistant: keyboard height changed: \(keyboardHeight)")
+        print("  keyboardHeight: \(keyboardHeight)")
     }
 }
 
