@@ -61,6 +61,7 @@ class LongScrollViewController: UIViewController
         {
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                    inputItems: inputItems,
+                                                                                   accessoryController: DefaultNavigationView(),
                                                                                    positionScrollView: self.scrollView,
                                                                                    positionConstraint: .viewBottomToTopOfKeyboard,
                                                                                    positionOffset: 20,
@@ -71,12 +72,24 @@ class LongScrollViewController: UIViewController
         {
             self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                      inputItems: inputItems,
+                                                                                     accessoryController: nil,
                                                                                      bottomConstraint: self.bottomConstraint,
                                                                                      bottomConstraintLayoutView: self.view,
                                                                                      delegate: self)
         }
         
         self.keyboardAssistant.observer.loggingEnabled = true
+        self.keyboardAssistant.observer.loggingEnabled = true
+        
+        let items: [UIView] = InputNavigator.getInputItems(from: self)
+        print(" --> total input items: \(items.count)")
+        for item in items
+        {
+            if let textField = item as? UITextField
+            {
+                print("  placeholder: \(String(describing: textField.placeholder))")
+            }
+        }
     }
     
     override func viewDidLayoutSubviews()
@@ -108,6 +121,11 @@ class LongScrollViewController: UIViewController
     @IBAction func handleBack(barButtonItem: UIBarButtonItem)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func handleFilter(barButtonItem: UIBarButtonItem)
+    {
+        
     }
 }
 

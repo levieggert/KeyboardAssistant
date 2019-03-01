@@ -31,16 +31,12 @@ public class InputNavigator: NSObject
         super.init()
         
         self.shouldSetInputDelegates = allowToSetInputDelegates
-        
-        print("Creating Accessory Controller")
-        self.accessoryController = DefaultNavigationView()
-        self.accessoryController?.delegate = self
-        self.shouldLoopNavigation = true
-        
+                
         if var controller = accessoryController
         {
             self.accessoryController = controller
             controller.delegate = self
+            self.shouldLoopNavigation = true
         }
     }
     
@@ -49,6 +45,7 @@ public class InputNavigator: NSObject
         
     }
     
+    // TODO: Make a note of using this function in the ReadMe known issues for disabling predictive text bar.
     public func disableAutoCorrection(disable: Bool)
     {
         self.shouldDisableAutoCorrection = disable
@@ -123,6 +120,57 @@ public class InputNavigator: NSObject
         else if (fromInputItem == self.inputItems.last)
         {
             self.focusedItem = nil
+        }
+    }
+    
+    // MARK: - ViewController Input Items
+    
+    public static func getInputItems(from: UIViewController) -> [UIView]
+    {
+        let rootView: UIView = from.view
+        
+        var inputItems: [UIView] = Array()
+        
+        self.recurseView(view: rootView, inputItems: &inputItems)
+        
+        inputItems.sort { (this: UIView, that: UIView) -> Bool in
+            
+            var thisPosition: CGPoint = this.convert(this.frame.origin, to: rootView)
+            thisPosition.x = thisPosition.x - this.frame.origin.x
+            thisPosition.y = thisPosition.y - this.frame.origin.y
+            
+            var thatPosition: CGPoint = that.convert(that.frame.origin, to: rootView)
+            thatPosition.x = thatPosition.x - that.frame.origin.x
+            thatPosition.y = thatPosition.y - that.frame.origin.y
+            
+            if (thisPosition.y < thatPosition.y)
+            {
+                return true
+            }
+            else if (thisPosition.y == thatPosition.y)
+            {
+                if (thisPosition.x < thatPosition.x)
+                {
+                    return true
+                }
+            }
+            
+            return false
+        }
+        
+        return inputItems
+    }
+    
+    private static func recurseView(view: UIView, inputItems: inout [UIView])
+    {        
+        if (view is UITextField || view is UITextView)
+        {
+            inputItems.append(view)
+        }
+        
+        for view in view.subviews
+        {
+            InputNavigator.recurseView(view: view, inputItems: &inputItems)
         }
     }
     
@@ -255,19 +303,16 @@ extension InputNavigator: InputNavigatorAccessoryControllerDelegate
 {
     public func inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: InputNavigatorAccessoryController)
     {
-        print("Previous Button Tapped")
         self.gotoPreviousItem()
     }
     
     public func inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: InputNavigatorAccessoryController)
     {
-        print("Next Button Tapped")
         self.gotoNextItem()
     }
     
     public func inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: InputNavigatorAccessoryController)
     {
-        print("Done Button Tapped")
         self.focusedItem = nil
     }
 }

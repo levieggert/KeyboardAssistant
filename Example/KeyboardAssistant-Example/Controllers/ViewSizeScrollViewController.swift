@@ -55,6 +55,7 @@ class ViewSizeScrollViewController: UIViewController
         {
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                    inputItems: inputItems,
+                                                                                   accessoryController: nil,
                                                                                    positionScrollView: self.scrollView,
                                                                                    positionConstraint: .viewBottomToTopOfKeyboard,
                                                                                    positionOffset: 20,
@@ -65,12 +66,24 @@ class ViewSizeScrollViewController: UIViewController
         {
             self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                      inputItems: inputItems,
+                                                                                     accessoryController: nil,
                                                                                      bottomConstraint: self.bottomConstraint,
                                                                                      bottomConstraintLayoutView: self.view,
                                                                                      delegate: self)
         }
         
         self.keyboardAssistant.loggingEnabled = true
+        self.keyboardAssistant.observer.loggingEnabled = true
+        
+        let items: [UIView] = InputNavigator.getInputItems(from: self)
+        print(" --> total input items: \(items.count)")
+        for item in items
+        {
+            if let textField = item as? UITextField
+            {
+                print("  placeholder: \(String(describing: textField.placeholder))")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -92,6 +105,11 @@ class ViewSizeScrollViewController: UIViewController
     @IBAction func handleBack(barButtonItem: UIBarButtonItem)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func handleFilter(barButtonItem: UIBarButtonItem)
+    {
+        
     }
     
     @IBAction func handleRegisterAccount(button: UIButton)

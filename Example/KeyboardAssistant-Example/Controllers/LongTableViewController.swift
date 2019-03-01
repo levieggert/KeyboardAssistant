@@ -7,7 +7,22 @@ import UIKit
 
 class LongTableViewController: UIViewController
 {
+    enum InputField
+    {
+        case animal
+        case color
+        case email
+        case firstName
+        case food
+        case hobby
+        case lastName
+        case password
+    }
+    
     // MARK: - Properties
+    
+    private let inputFields: [InputField] = [.firstName, .lastName, .email, .password, .animal, .food, .color, .hobby]
+    private var inputFieldValues: [InputField: String] = [:]
     
     // MARK: - Outlets
     
@@ -48,7 +63,8 @@ class LongTableViewController: UIViewController
         if (useAutoKeyboardAssistant)
         {
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
-                                                                                   inputItems: inputItems,
+                                                                                   inputItems: inputItems, 
+                                                                                   accessoryController: nil,
                                                                                    positionScrollView: self.tableView,
                                                                                    positionConstraint: .viewTopToTopOfScreen,
                                                                                    positionOffset: 20,
@@ -59,11 +75,13 @@ class LongTableViewController: UIViewController
         {
             self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                      inputItems: inputItems,
+                                                                                     accessoryController: nil,
                                                                                      bottomConstraint: self.bottomConstraint,
                                                                                      bottomConstraintLayoutView: self.view,
                                                                                      delegate: self)
         }
         
+        self.keyboardAssistant.observer.loggingEnabled = true
         self.keyboardAssistant.observer.loggingEnabled = true
         
         // tableView
@@ -104,7 +122,7 @@ extension LongTableViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 0
+        return self.inputFields.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
@@ -115,10 +133,57 @@ extension LongTableViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell: InputCell = self.tableView.dequeueReusableCell(withIdentifier: InputCell.reuseIdentifier, for: indexPath) as! InputCell
+        let inputField: InputField = self.inputFields[indexPath.row]
         
         cell.selectionStyle = .none
         
+        var fieldLabel: String = ""
+        
+        switch (inputField)
+        {
+        case .animal:
+            fieldLabel = "Favorite Animal"
+            
+        case .color:
+            fieldLabel = "Favorite Color"
+            
+        case .email:
+            fieldLabel = "Email"
+            
+        case .firstName:
+            fieldLabel = "First Name"
+            
+        case .food:
+            fieldLabel = "Favorite Food"
+            
+        case .hobby:
+            fieldLabel = "Favorite Hobby"
+            
+        case .lastName:
+            fieldLabel = "Last Name"
+            
+        case .password:
+            fieldLabel = "Password"
+        }
+        
+        cell.lbInput.text = fieldLabel
+        
+        let isLastRow: Bool = indexPath.row == self.inputFields.count - 1
+        if (!isLastRow)
+        {
+            cell.separatorLine.isHidden = false
+        }
+        else
+        {
+            cell.separatorLine.isHidden = true
+        }
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 120
     }
 }
 

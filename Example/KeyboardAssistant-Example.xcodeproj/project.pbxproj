@@ -32,6 +32,7 @@
 		45CEA68522273BE100DC4ADA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45CEA68422273BE100DC4ADA /* Assets.xcassets */; };
 		45CEA69322273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69222273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift */; };
 		45CEA69E22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69D22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift */; };
+		45E058C22229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E058C12229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		45CEA69922273BE100DC4ADA /* KeyboardAssistant-ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KeyboardAssistant-ExampleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CEA69D22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAssistant_ExampleUITests.swift; sourceTree = "<group>"; };
 		45CEA69F22273BE100DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45E058C12229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAssistantFiltersViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				451FA58722273C7C0094DB8B /* ExamplesViewController.swift */,
+				45E058C12229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift */,
 				451FA58522273C7C0094DB8B /* LongNestedScrollViewController.swift */,
 				451FA58622273C7C0094DB8B /* LongScrollViewController.swift */,
 				451FA58822273C7C0094DB8B /* LongTableViewController.swift */,
@@ -354,6 +357,7 @@
 				451FA58F22273C7C0094DB8B /* LongNestedScrollViewController.swift in Sources */,
 				451FA5A022273CBE0094DB8B /* UserDefaults+Extension.swift in Sources */,
 				4585BEF622297BA300C5A42C /* InputNavigatorAccessoryController.swift in Sources */,
+				45E058C22229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift in Sources */,
 				456577E6222827ED005900F3 /* InputCell.swift in Sources */,
 				451FA58D22273C7C0094DB8B /* ExampleCell.swift in Sources */,
 			);

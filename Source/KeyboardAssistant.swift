@@ -35,7 +35,7 @@ public class KeyboardAssistant: NSObject
     
     private weak var delegate: KeyboardAssistantDelegate?
     
-    private init(allowToSetInputDelegates: Bool)
+    private init(allowToSetInputDelegates: Bool, accessoryController: InputNavigatorAccessoryController?)
     {
         super.init()
         
@@ -43,7 +43,7 @@ public class KeyboardAssistant: NSObject
         // if they plan to override the input delegates.
         
         self.observer = KeyboardObserver()
-        self.navigator = InputNavigator(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: nil)
+        self.navigator = InputNavigator(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: accessoryController)
         
         self.observer.delegate = self
         self.navigator.delegate = self
@@ -51,9 +51,9 @@ public class KeyboardAssistant: NSObject
         // TODO: Is there a way to see if the bottom constraint of the scrollview is attached to the safe area for inverting bottomConstraint.constant when pushing up with keyboard?
     }
     
-    static func createAutoKeyboardAssistant(allowToSetInputDelegates: Bool, inputItems: [UIView], positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
+    static func createAutoKeyboardAssistant(allowToSetInputDelegates: Bool, inputItems: [UIView], accessoryController: InputNavigatorAccessoryController?, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
     {
-        let assistant: KeyboardAssistant = KeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates)
+        let assistant: KeyboardAssistant = KeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: accessoryController)
         
         assistant.navigator.addInputItems(inputItems: inputItems)
         assistant.scrollView = positionScrollView
@@ -66,9 +66,9 @@ public class KeyboardAssistant: NSObject
         return assistant
     }
     
-    static func createManualKeyboardAssistant(allowToSetInputDelegates: Bool, inputItems: [UIView], bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView, delegate: KeyboardAssistantDelegate) -> KeyboardAssistant
+    static func createManualKeyboardAssistant(allowToSetInputDelegates: Bool, inputItems: [UIView], accessoryController: InputNavigatorAccessoryController?, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView, delegate: KeyboardAssistantDelegate) -> KeyboardAssistant
     {
-        let assistant: KeyboardAssistant = KeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates)
+        let assistant: KeyboardAssistant = KeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: accessoryController)
         
         assistant.navigator.addInputItems(inputItems: inputItems)
         assistant.bottomConstraint = bottomConstraint

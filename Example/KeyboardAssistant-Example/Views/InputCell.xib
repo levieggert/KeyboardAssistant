@@ -53,6 +53,11 @@
                     <constraint firstItem="m7P-LB-giJ" firstAttribute="centerY" secondItem="HK2-Yu-aTc" secondAttribute="centerY" multiplier="1.2" id="uK0-kN-NdG"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="lbInput" destination="OUT-1Y-Gg5" id="GUm-AD-7aR"/>
+                <outlet property="separatorLine" destination="KaI-fI-UbU" id="3Gf-bT-oIf"/>
+                <outlet property="txtInput" destination="m7P-LB-giJ" id="mKl-js-gPd"/>
+            </connections>
             <point key="canvasLocation" x="-1" y="47"/>
         </tableViewCell>
     </objects>

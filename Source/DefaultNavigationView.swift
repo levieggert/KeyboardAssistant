@@ -54,8 +54,6 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     
     @IBAction func handlePrev(button: UIButton)
     {
-        print("HANDLE PREV")
-        
         if let delegate = self.delegate
         {
             delegate.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
@@ -64,8 +62,6 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     
     @IBAction func handleNext(button: UIButton)
     {
-        print("HANDLE NEXT")
-        
         if let delegate = self.delegate
         {
             delegate.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
@@ -73,9 +69,7 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     }
     
     @IBAction func handleDone(button: UIButton)
-    {
-        print("HANDLE DONE")
-        
+    {        
         if let delegate = self.delegate
         {
             delegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)

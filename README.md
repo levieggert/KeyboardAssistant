@@ -35,11 +35,30 @@ KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigat
 
 ### How to use
 
-KeyboardAssistant is broken into 2 main configurations, auto assistant and manual assistant.  Auto assistant is the most simplest way to use KeyboardAssistant.  However, if you find yourself requiring more control over keyboard positioning, manual assistant is best for you.
+This section is broken up into the following parts.
+1. How to structure your controller for keyboard positioning.
+2. How to create and use the auto assistant.
+3. How to create and use the manual assistant.
 
-Auto Assistant:
+#### Structuring your UIViewController
 
-Manual Assistant:
+For Keyboard positioning, I prefer to use the UIScrollView approach.  There are a few major reasons for this.  
+1. It's a lot more user friendly because it allows user's to scroll through input while the keyboard is open.  
+2. It's much easier to manage than say a UITableView.  UITableView's are great, but when collecting input from user's they can become a pain to manage.  This is because as you scroll through a UITableView, cell's are getting recycled.  Extra management is required to collect input from UITextFields as well as navigating to previous and next textfield input items.  
+3. I end up having to use a UIScrollView on most my view controllers anyways to handle shorter device sizes.
+
+Here is how you will need to structure your view hier-archy.  UIView [root / UIViewController.view]  >  UIScrollView [scrollView]  >  UIView [contentView].
+
+UIScrollView should set all edge constraints to the UIView [root / UIViewController.view].
+UIView [contentView] should set all edge constraints to the UIScrollView and also set equal widths to UIScrollView.
+
+That's it.  Then all your custom UI goes inside the UIVIew [contentView].  
+
+Note:  This setup uses auto layout to determine the UIScrollView's content size.  That means, all of your subviews inside of the UIView [contentView] need to provide top and bottom constraints so the contentView's height can be satisfied.  It will also require some of your subviews height contraints to be set.  Unless ofcourse, their height is determined by their child views.  If you are unfamiliar with this concept read more about autolayout. 
+
+#### Auto Assistant:
+
+#### Manual Assistant:
 
 In this example Seek will animate a view's alpha and translate the view.
 
