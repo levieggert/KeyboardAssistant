@@ -41,7 +41,7 @@ class LongScrollViewController: UIViewController
     {
         super.viewDidLoad()
         
-        let useAutoKeyboardAssistant: Bool = false
+        let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
         let inputItems: [UIView] = [self.txtFirstName, self.txtLastName, self.txtCity, self.txtState, self.txtZipCode, self.txtCountry, self.infoTextView, self.txtAnimal, self.txtColor, self.txtFood, self.txtHobby, self.notesTextView]
@@ -62,8 +62,8 @@ class LongScrollViewController: UIViewController
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                    inputItems: inputItems,
                                                                                    positionScrollView: self.scrollView,
-                                                                                   positionConstraint: .viewTopToTopOfScreen,
-                                                                                   positionOffset: 80,
+                                                                                   positionConstraint: .viewBottomToTopOfKeyboard,
+                                                                                   positionOffset: 20,
                                                                                    bottomConstraint: self.bottomConstraint,
                                                                                    bottomConstraintLayoutView: self.view)
         }
@@ -142,6 +142,13 @@ extension LongScrollViewController: UITextFieldDelegate
 
 extension LongScrollViewController: UITextViewDelegate
 {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
+    {
+        self.keyboardAssistant.navigator.textViewShouldBeginEditing(textView)
+        
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView)
     {
         self.keyboardAssistant.navigator.textViewDidBeginEditing(textView)

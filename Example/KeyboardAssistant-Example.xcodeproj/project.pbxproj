@@ -25,6 +25,10 @@
 		456577E6222827ED005900F3 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E5222827ED005900F3 /* InputCell.swift */; };
 		456577E822282809005900F3 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 456577E722282809005900F3 /* InputCell.xib */; };
 		456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */; };
+		4585BEEE222976C500C5A42C /* DefaultNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEED222976C500C5A42C /* DefaultNavigationView.swift */; };
+		4585BEF0222976D300C5A42C /* DefaultNavigationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4585BEEF222976D300C5A42C /* DefaultNavigationView.xib */; };
+		4585BEF22229793500C5A42C /* ViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEF12229793500C5A42C /* ViewComponent.swift */; };
+		4585BEF622297BA300C5A42C /* InputNavigatorAccessoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */; };
 		45CEA68522273BE100DC4ADA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45CEA68422273BE100DC4ADA /* Assets.xcassets */; };
 		45CEA69322273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69222273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift */; };
 		45CEA69E22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69D22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift */; };
@@ -66,6 +70,10 @@
 		456577E5222827ED005900F3 /* InputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
 		456577E722282809005900F3 /* InputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
 		456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSizeScrollViewController.swift; sourceTree = "<group>"; };
+		4585BEED222976C500C5A42C /* DefaultNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNavigationView.swift; sourceTree = "<group>"; };
+		4585BEEF222976D300C5A42C /* DefaultNavigationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DefaultNavigationView.xib; sourceTree = "<group>"; };
+		4585BEF12229793500C5A42C /* ViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewComponent.swift; sourceTree = "<group>"; };
+		4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNavigatorAccessoryController.swift; sourceTree = "<group>"; };
 		45CEA67A22273BE000DC4ADA /* KeyboardAssistant-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyboardAssistant-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CEA68422273BE100DC4ADA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45CEA68922273BE100DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -128,11 +136,15 @@
 		451FA59722273CBD0094DB8B /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				4585BEED222976C500C5A42C /* DefaultNavigationView.swift */,
+				4585BEEF222976D300C5A42C /* DefaultNavigationView.xib */,
 				451FA59A22273CBD0094DB8B /* InputNavigator.swift */,
+				4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */,
 				451FA59922273CBD0094DB8B /* KeyboardAssistant.swift */,
 				451FA59822273CBD0094DB8B /* KeyboardObserver.swift */,
 				451FA59C22273CBD0094DB8B /* NotificationHandler.swift */,
 				451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */,
+				4585BEF12229793500C5A42C /* ViewComponent.swift */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -299,6 +311,7 @@
 			files = (
 				451FA59322273C7C0094DB8B /* Main.storyboard in Resources */,
 				456577E822282809005900F3 /* InputCell.xib in Resources */,
+				4585BEF0222976D300C5A42C /* DefaultNavigationView.xib in Resources */,
 				4526749A2228513D0004B4D7 /* README.md in Resources */,
 				451FA58E22273C7C0094DB8B /* ExampleCell.xib in Resources */,
 				451FA59622273C7C0094DB8B /* LaunchScreen.storyboard in Resources */,
@@ -331,13 +344,16 @@
 				456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */,
 				451FA59F22273CBE0094DB8B /* InputNavigator.swift in Sources */,
 				451FA59022273C7C0094DB8B /* LongScrollViewController.swift in Sources */,
+				4585BEF22229793500C5A42C /* ViewComponent.swift in Sources */,
 				451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */,
 				451FA59D22273CBE0094DB8B /* KeyboardObserver.swift in Sources */,
 				451FA59122273C7C0094DB8B /* ExamplesViewController.swift in Sources */,
 				451FA59222273C7C0094DB8B /* LongTableViewController.swift in Sources */,
+				4585BEEE222976C500C5A42C /* DefaultNavigationView.swift in Sources */,
 				451FA59E22273CBE0094DB8B /* KeyboardAssistant.swift in Sources */,
 				451FA58F22273C7C0094DB8B /* LongNestedScrollViewController.swift in Sources */,
 				451FA5A022273CBE0094DB8B /* UserDefaults+Extension.swift in Sources */,
+				4585BEF622297BA300C5A42C /* InputNavigatorAccessoryController.swift in Sources */,
 				456577E6222827ED005900F3 /* InputCell.swift in Sources */,
 				451FA58D22273C7C0094DB8B /* ExampleCell.swift in Sources */,
 			);

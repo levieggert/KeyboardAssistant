@@ -132,6 +132,13 @@ extension LongNestedScrollViewController: UITextFieldDelegate
 
 extension LongNestedScrollViewController: UITextViewDelegate
 {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
+    {
+        self.keyboardAssistant.navigator.textViewShouldBeginEditing(textView)
+        
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView)
     {
         self.keyboardAssistant.navigator.textViewDidBeginEditing(textView)

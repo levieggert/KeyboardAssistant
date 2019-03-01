@@ -35,7 +35,7 @@ class ViewSizeScrollViewController: UIViewController
     {
         super.viewDidLoad()
         
-        let useAutoKeyboardAssistant: Bool = false
+        let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
         let inputItems: [UIView] = [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword]
@@ -70,7 +70,7 @@ class ViewSizeScrollViewController: UIViewController
                                                                                      delegate: self)
         }
         
-        self.keyboardAssistant.observer.loggingEnabled = true
+        self.keyboardAssistant.loggingEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -132,6 +132,13 @@ extension ViewSizeScrollViewController: UITextFieldDelegate
 
 extension ViewSizeScrollViewController: UITextViewDelegate
 {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
+    {
+        self.keyboardAssistant.navigator.textViewShouldBeginEditing(textView)
+        
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView)
     {
         self.keyboardAssistant.navigator.textViewDidBeginEditing(textView)

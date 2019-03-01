@@ -31,6 +31,7 @@ public class KeyboardAssistant: NSObject
     public private(set) weak var scrollView: UIScrollView?
     
     public var animationDuration: TimeInterval = 0.3
+    public var loggingEnabled: Bool = false
     
     private weak var delegate: KeyboardAssistantDelegate?
     
@@ -42,7 +43,7 @@ public class KeyboardAssistant: NSObject
         // if they plan to override the input delegates.
         
         self.observer = KeyboardObserver()
-        self.navigator = InputNavigator(allowToSetInputDelegates: allowToSetInputDelegates)
+        self.navigator = InputNavigator(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: nil)
         
         self.observer.delegate = self
         self.navigator.delegate = self
@@ -60,7 +61,7 @@ public class KeyboardAssistant: NSObject
         assistant.repositionOffset = positionOffset
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
-        assistant.type = .auto
+        assistant.type = .auto        
         
         return assistant
     }
@@ -168,7 +169,7 @@ public class KeyboardAssistant: NSObject
     
     private func log(string: String)
     {
-        if (self.observer.loggingEnabled)
+        if (self.loggingEnabled)
         {
             print(string)
         }
@@ -181,7 +182,7 @@ extension KeyboardAssistant: KeyboardObserverDelegate
 {
     public func keyboardDidChangeState(keyboardObserver: KeyboardObserver, keyboardState: KeyboardObserver.KeyboardState)
     {
-        print("\nKeyboardAssistant: keyboard state changed: \(keyboardState)")
+        self.log(string: "\nKeyboardAssistant: keyboard state changed: \(keyboardState)")
         
         switch (keyboardState)
         {
@@ -189,24 +190,6 @@ extension KeyboardAssistant: KeyboardObserverDelegate
             break
             
         case .didShow:
-            
-            if let bottomConstraint = self.bottomConstraint, let bottomConstraintLayoutView = self.bottomConstraintLayoutView
-            {
-                // TODO: Sometimes height will not have to be inverted by -1.  Depends on how constraints are set.
-                // If the scrollview bottom is attached to safe area bottom then it needs to be inverted by -1.  Otherwise no inversion.
-                bottomConstraint.constant = keyboardObserver.keyboardHeight * -1
-                
-                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                    bottomConstraintLayoutView.layoutIfNeeded()
-                }, completion: { (finished: Bool) in
-                    
-                    if (finished)
-                    {
-
-                    }
-                })
-            }
-            
             self.reposition()
             
         case .willHide:
@@ -233,8 +216,25 @@ extension KeyboardAssistant: KeyboardObserverDelegate
     
     public func keyboardDidInvalidateKeyboardHeight(keyboardObserver: KeyboardObserver, keyboardHeight: CGFloat)
     {
-        print("\nKeyboardAssistant: keyboard height changed: \(keyboardHeight)")
-        print("  keyboardHeight: \(keyboardHeight)")
+        self.log(string: "\nKeyboardAssistant: keyboard height changed: \(keyboardHeight)")
+        self.log(string: "  keyboardHeight: \(keyboardHeight)")
+        
+        if let bottomConstraint = self.bottomConstraint, let bottomConstraintLayoutView = self.bottomConstraintLayoutView
+        {
+            // TODO: Sometimes height will not have to be inverted by -1.  Depends on how constraints are set.
+            // If the scrollview bottom is attached to safe area bottom then it needs to be inverted by -1.  Otherwise no inversion.
+            bottomConstraint.constant = keyboardObserver.keyboardHeight * -1
+            
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                bottomConstraintLayoutView.layoutIfNeeded()
+            }, completion: { (finished: Bool) in
+                
+                if (finished)
+                {
+                    
+                }
+            })
+        }
     }
 }
 
@@ -244,7 +244,7 @@ extension KeyboardAssistant: InputNavigatorDelegate
 {
     public func inputNavigatorFocusChanged(inputNavigator: InputNavigator, inputItem: UIView?)
     {
-        print("\nKeyboardAssistant: input focus changed")
+        self.log(string: "\nKeyboardAssistant: input focus changed")
         self.reposition()
     }
 }
