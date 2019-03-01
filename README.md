@@ -67,3 +67,13 @@ Seek.constraint(constraint: myConstraint, constraintLayoutView: layoutView, dura
 Use the SeekProperties class to define your from values and to values for a Seek animation.
 
 Use the Seek class to animate your UIView's and constraints.  Seek uses UIView.animation to run the animations.
+
+### Know Issues
+
+There is an issue with obtaining the correct device keyboard height when the keyboard changes.  I believe this is a bug in Apple's Framework.  I will explain below.  
+
+Since iOS 8, the device keyboard came with a new feature called predictive text.  This is a bar placed above the keyboard that provides word suggestions as you type.  Some UITextField's will not use the predictive text bar (example, enabling secure text entry).  This is causing a problem somewhere within the depths of Apple's Framework because the change isn't getting reported to the Keyboard.  Well, it is, but it isn't. I'll give a step by step process of the bug and how it can be produced.
+
+Let's say you setup an account registration controller with 4 UITextFields in this order (first name, last name, email, and password).  For the password, you enable secure text entry.  Also note that predictive text bar is enabled.  User taps first name textfield, keyboard will show is notified and we obtain a keyboard height of 260.  Predictive text bar is showing.  Now, we tap on the password textfield, keyboard will show is called and this time we obtain a keyboard height of 216 because the predictive text bar is not showing becuse serure text entry is enabled.  The issue is, when we tap back on a textfield that is displaying a predictive text bar, keyboard will show is called and reports a keyboard height of 216 when the last time it was reporting 260.  Now,we have an incorrect keyboard height which will cause issues when repositioning views. 
+
+We could get around this issue if there's a way to check if predictive text bar is showing.  If this logic doesn't exist, we will have to create "fake" logic for checking.  And by fake, I mean testing all possibilities that will disable the predictive text bar.  Secure text entry is one of them.  But, what happens with new iOS releases?  We will have to update this for every release and test for every change to the device keyboard.  It add's more complexity and logic to the original implementation that we really don't want.

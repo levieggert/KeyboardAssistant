@@ -95,6 +95,8 @@ extension KeyboardObserver: NotificationHandler
             
             let lastKeyboardHeight: CGFloat = self.keyboardHeight
             
+            self.log(string: "  lastKeyboardHeight: \(lastKeyboardHeight)")
+            
             if let keyboardInfo = notification.userInfo
             {
                 if let keyboardAnimationDurationNumber = keyboardInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
@@ -105,6 +107,8 @@ extension KeyboardObserver: NotificationHandler
                 if let keyboardFrameValue = keyboardInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
                 {
                     let newKeyboardHeight: CGFloat = keyboardFrameValue.cgRectValue.size.height
+                    
+                    self.log(string: "  newKeyboardHeight: \(newKeyboardHeight)")
                     
                     if (lastKeyboardHeight != newKeyboardHeight)
                     {
