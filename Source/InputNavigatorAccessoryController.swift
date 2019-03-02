@@ -14,6 +14,6 @@ public protocol InputNavigatorAccessoryControllerDelegate: class
 
 public protocol InputNavigatorAccessoryController
 {
-    var accessoryView: UIView { get }
+    var controllerView: UIView { get }
     var delegate: InputNavigatorAccessoryControllerDelegate? { get set }
 }

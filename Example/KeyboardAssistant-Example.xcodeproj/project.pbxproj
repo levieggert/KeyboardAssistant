@@ -33,6 +33,7 @@
 		45CEA69322273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69222273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift */; };
 		45CEA69E22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69D22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift */; };
 		45E058C22229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E058C12229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift */; };
+		45E58584222B236300ADC57B /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E58583222B236300ADC57B /* UIExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		45CEA69D22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAssistant_ExampleUITests.swift; sourceTree = "<group>"; };
 		45CEA69F22273BE100DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45E058C12229EE4C00DC8E13 /* KeyboardAssistantFiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAssistantFiltersViewController.swift; sourceTree = "<group>"; };
+		45E58583222B236300ADC57B /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				451FA59922273CBD0094DB8B /* KeyboardAssistant.swift */,
 				451FA59822273CBD0094DB8B /* KeyboardObserver.swift */,
 				451FA59C22273CBD0094DB8B /* NotificationHandler.swift */,
+				45E58583222B236300ADC57B /* UIExtensions.swift */,
 				451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */,
 				4585BEF12229793500C5A42C /* ViewComponent.swift */,
 			);
@@ -346,6 +349,7 @@
 				451FA59522273C7C0094DB8B /* AppDelegate.swift in Sources */,
 				456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */,
 				451FA59F22273CBE0094DB8B /* InputNavigator.swift in Sources */,
+				45E58584222B236300ADC57B /* UIExtensions.swift in Sources */,
 				451FA59022273C7C0094DB8B /* LongScrollViewController.swift in Sources */,
 				4585BEF22229793500C5A42C /* ViewComponent.swift in Sources */,
 				451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */,

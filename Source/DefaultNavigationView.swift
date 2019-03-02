@@ -9,7 +9,7 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
 {
     // MARK: - InputNavigatorAccessoryController protocol
     
-    public var accessoryView: UIView { return self }
+    public var controllerView: UIView { return self }
     public weak var delegate: InputNavigatorAccessoryControllerDelegate?
     
     // MARK: - Properties
@@ -24,7 +24,7 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     
     public required init()
     {
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
         
         self.load()
     }
@@ -48,6 +48,15 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     private func load()
     {
         self.loadNibWithName(nibName: "DefaultNavigationView", constrainEdgesToSuperview: true)
+        
+        // top shadow
+        self.layer.shadowOffset = CGSize(width: 0, height: -1)
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowRadius = 3
+        self.layer.shadowOpacity = 0.2
+        
+        // button colors
+        self.setButtonColors(color: .black)
     }
     
     // MARK: - Actions
@@ -74,5 +83,14 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
         {
             delegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
         }
+    }
+    
+    // MARK: - Color
+    
+    public func setButtonColors(color: UIColor)
+    {
+        self.btPrev.setImageColor(color: color)
+        self.btNext.setImageColor(color: color)
+        self.btDone.setTitleColor(color, for: .normal)
     }
 }

@@ -36,7 +36,7 @@ public class KeyboardObserver: NSObject
     
     deinit
     {
-        
+        self.stop()
     }
     
     public func start()
@@ -78,7 +78,9 @@ public class KeyboardObserver: NSObject
 
 extension KeyboardObserver: NotificationHandler
 {
-    @objc func handleNotification(notification: Notification)
+    // TODO: look into keyboardDidChangeFrameNotification
+    
+    func handleNotification(notification: Notification)
     {
         if (notification.name == UIResponder.keyboardWillShowNotification)
         {

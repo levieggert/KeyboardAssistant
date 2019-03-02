@@ -35,14 +35,15 @@ class ViewSizeScrollViewController: UIViewController
     {
         super.viewDidLoad()
         
-        let useAutoKeyboardAssistant: Bool = true
+        let useAutoKeyboardAssistant: Bool = false
         let allowToSetInputDelegates: Bool = true
         
-        let inputItems: [UIView] = [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword]
+        let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
+        navigator.addInputItems(from: self)
         
         if (!allowToSetInputDelegates)
         {
-            for item in inputItems
+            for item in navigator.inputItems
             {
                 if let textField = item as? UITextField
                 {
@@ -53,23 +54,19 @@ class ViewSizeScrollViewController: UIViewController
         
         if (useAutoKeyboardAssistant)
         {
-            self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
-                                                                                   inputItems: inputItems,
-                                                                                   accessoryController: nil,
-                                                                                   positionScrollView: self.scrollView,
-                                                                                   positionConstraint: .viewBottomToTopOfKeyboard,
-                                                                                   positionOffset: 20,
-                                                                                   bottomConstraint: self.bottomConstraint,
-                                                                                   bottomConstraintLayoutView: self.view)
+            self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator,
+                                                                                             positionScrollView: self.scrollView,
+                                                                                             positionConstraint: .viewBottomToTopOfKeyboard,
+                                                                                             positionOffset: 30,
+                                                                                             bottomConstraint: self.bottomConstraint,
+                                                                                             bottomConstraintLayoutView: self.view)
         }
         else
         {
-            self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
-                                                                                     inputItems: inputItems,
-                                                                                     accessoryController: nil,
+            self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(inputNavigator: navigator,
+                                                                                     delegate: self,
                                                                                      bottomConstraint: self.bottomConstraint,
-                                                                                     bottomConstraintLayoutView: self.view,
-                                                                                     delegate: self)
+                                                                                     bottomConstraintLayoutView: self.view)
         }
         
         self.keyboardAssistant.loggingEnabled = true
@@ -90,14 +87,14 @@ class ViewSizeScrollViewController: UIViewController
     {
         super.viewWillAppear(animated)
         
-        self.keyboardAssistant.observer.start()
+        self.keyboardAssistant.start()
     }
     
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
-        self.keyboardAssistant.observer.stop()
+        self.keyboardAssistant.stop()
     }
     
     // MARK: - Actions
@@ -123,43 +120,11 @@ class ViewSizeScrollViewController: UIViewController
 
 extension ViewSizeScrollViewController: UITextFieldDelegate
 {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
-    {
-        return true
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField)
-    {
-        self.keyboardAssistant.navigator.textFieldDidBeginEditing(textField)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField)
-    {
-        self.keyboardAssistant.navigator.textFieldDidEndEditing(textField)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
+    {        
         _ = self.keyboardAssistant.navigator.textFieldShouldReturn(textField)
         
         return true
-    }
-}
-
-// MARK: - UITextViewDelegate
-
-extension ViewSizeScrollViewController: UITextViewDelegate
-{
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
-    {
-        self.keyboardAssistant.navigator.textViewShouldBeginEditing(textView)
-        
-        return true
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView)
-    {
-        self.keyboardAssistant.navigator.textViewDidBeginEditing(textView)
     }
 }
 
@@ -174,19 +139,19 @@ extension ViewSizeScrollViewController: KeyboardAssistantDelegate
         
         if (toInputItem == self.txtFirstName)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtLastName, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtLastName, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtLastName)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtEmail, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtEmail, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtEmail)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtPassword, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtPassword, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtPassword)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.btRegisterAccount, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.btRegisterAccount, constraint: constraint, offset: offset)
         }
     }
 }

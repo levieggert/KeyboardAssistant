@@ -12,7 +12,7 @@ public protocol KeyboardAssistantDelegate: class
 
 public class KeyboardAssistant: NSObject
 {
-    public enum AssistantType { case auto; case manual; }
+    public enum AssistantType { case autoScrollView; case manual; }
     public enum RepositionConstraint { case viewTopToTopOfScreen; case viewBottomToTopOfKeyboard; }
     
     // MARK: - Properties
@@ -22,7 +22,7 @@ public class KeyboardAssistant: NSObject
         
     public private(set) var observer: KeyboardObserver!
     public private(set) var navigator: InputNavigator!
-    public private(set) var type: KeyboardAssistant.AssistantType = .auto
+    public private(set) var type: KeyboardAssistant.AssistantType = .autoScrollView
     public private(set) var repositionConstraint: KeyboardAssistant.RepositionConstraint = .viewTopToTopOfScreen
     public private(set) var repositionOffset: CGFloat = 20
     public private(set) var resetBottomConstraintConstant: CGFloat = 0
@@ -34,15 +34,12 @@ public class KeyboardAssistant: NSObject
     
     private weak var delegate: KeyboardAssistantDelegate?
     
-    private init(allowToSetInputDelegates: Bool, accessoryController: InputNavigatorAccessoryController?)
+    private init(inputNavigator: InputNavigator)
     {
         super.init()
         
-        // TODO: I would like to rename "allowToSetInputDelegates" to something like, willOverrideInputDelegates, so class implementing KeboardAssistant will tell the assistant
-        // if they plan to override the input delegates.
-        
         self.observer = KeyboardObserver()
-        self.navigator = InputNavigator(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: accessoryController)
+        self.navigator = inputNavigator
         
         self.observer.delegate = self
         self.navigator.delegate = self
@@ -50,26 +47,24 @@ public class KeyboardAssistant: NSObject
         // TODO: Is there a way to see if the bottom constraint of the scrollview is attached to the safe area for inverting bottomConstraint.constant when pushing up with keyboard?
     }
     
-    static func createAutoKeyboardAssistant(allowToSetInputDelegates: Bool, inputItems: [UIView], accessoryController: InputNavigatorAccessoryController?, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
+    static public func createAutoScrollViewKeyboardAssistant(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
     {
-        let assistant: KeyboardAssistant = KeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: accessoryController)
+        let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
-        assistant.navigator.addInputItems(inputItems: inputItems)
         assistant.scrollView = positionScrollView
         assistant.repositionConstraint = positionConstraint
         assistant.repositionOffset = positionOffset
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
-        assistant.type = .auto        
+        assistant.type = .autoScrollView
         
         return assistant
     }
     
-    static func createManualKeyboardAssistant(allowToSetInputDelegates: Bool, inputItems: [UIView], accessoryController: InputNavigatorAccessoryController?, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView, delegate: KeyboardAssistantDelegate) -> KeyboardAssistant
+    static public func createManualKeyboardAssistant(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
     {
-        let assistant: KeyboardAssistant = KeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates, accessoryController: accessoryController)
+        let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
-        assistant.navigator.addInputItems(inputItems: inputItems)
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
         assistant.type = .manual
@@ -80,7 +75,7 @@ public class KeyboardAssistant: NSObject
     
     deinit
     {
-        
+        self.stop()
     }
     
     public func closeKeyboard()
@@ -135,6 +130,7 @@ public class KeyboardAssistant: NSObject
     
     public func start()
     {
+        self.navigator.addNotifications()
         self.observer.start()
     }
     
@@ -142,13 +138,14 @@ public class KeyboardAssistant: NSObject
     {
         self.navigator.focusedItem = nil
         self.observer.stop()
+        self.navigator.removeNotifications()
     }
     
     private func reposition(toInputItem: UIView)
     {
         switch (self.type)
         {
-        case .auto:
+        case .autoScrollView:
             if let scrollView = self.scrollView
             {
                 self.reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: self.repositionConstraint, offset: self.repositionOffset)

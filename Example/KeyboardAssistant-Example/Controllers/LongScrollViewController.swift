@@ -57,6 +57,8 @@ class LongScrollViewController: UIViewController
             }
         }
         
+        /*
+        
         if (useAutoKeyboardAssistant)
         {
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
@@ -77,6 +79,8 @@ class LongScrollViewController: UIViewController
                                                                                      bottomConstraintLayoutView: self.view,
                                                                                      delegate: self)
         }
+ 
+        */
         
         self.keyboardAssistant.observer.loggingEnabled = true
         self.keyboardAssistant.observer.loggingEnabled = true
@@ -106,14 +110,14 @@ class LongScrollViewController: UIViewController
     {
         super.viewWillAppear(animated)
         
-        self.keyboardAssistant.observer.start()
+        self.keyboardAssistant.start()
     }
     
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
-        self.keyboardAssistant.observer.stop()
+        self.keyboardAssistant.stop()
     }
     
     // MARK: - Actions
@@ -133,43 +137,11 @@ class LongScrollViewController: UIViewController
 
 extension LongScrollViewController: UITextFieldDelegate
 {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
-    {
-        return true
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField)
-    {
-        self.keyboardAssistant.navigator.textFieldDidBeginEditing(textField)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField)
-    {
-        self.keyboardAssistant.navigator.textFieldDidEndEditing(textField)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         _ = self.keyboardAssistant.navigator.textFieldShouldReturn(textField)
         
         return true
-    }
-}
-
-// MARK: - UITextViewDelegate
-
-extension LongScrollViewController: UITextViewDelegate
-{
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
-    {
-        self.keyboardAssistant.navigator.textViewShouldBeginEditing(textView)
-        
-        return true
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView)
-    {
-        self.keyboardAssistant.navigator.textViewDidBeginEditing(textView)
     }
 }
 
@@ -184,39 +156,39 @@ extension LongScrollViewController: KeyboardAssistantDelegate
         
         if (toInputItem == self.txtFirstName || toInputItem == self.txtLastName)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtCity, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtCity, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtCity || toInputItem == self.txtState)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtZipCode, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtZipCode, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtZipCode || toInputItem == self.txtCountry)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtZipCode, constraint: constraint, offset: 80)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtZipCode, constraint: constraint, offset: 80)
         }
         else if (toInputItem == self.infoTextView)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtZipCode, constraint: .viewTopToTopOfScreen, offset: 50)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtZipCode, constraint: .viewTopToTopOfScreen, offset: 50)
         }
         else if (toInputItem == self.txtAnimal)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtColor, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtColor, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtColor)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtFood, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtFood, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtFood)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtHobby, constraint: constraint, offset: offset)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtHobby, constraint: constraint, offset: offset)
         }
         else if (toInputItem == self.txtHobby)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtHobby, constraint: constraint, offset: 50)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtHobby, constraint: constraint, offset: 50)
         }
         else if (toInputItem == self.notesTextView)
         {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.notesTextView, constraint: .viewTopToTopOfScreen, offset: 50)
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.notesTextView, constraint: .viewTopToTopOfScreen, offset: 50)
         }
     }
 }

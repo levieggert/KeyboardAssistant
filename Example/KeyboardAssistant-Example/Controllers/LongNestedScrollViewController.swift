@@ -57,6 +57,8 @@ class LongNestedScrollViewController: UIViewController
             }
         }
         
+        /*
+        
         if (useAutoKeyboardAssistant)
         {
             self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
@@ -77,6 +79,8 @@ class LongNestedScrollViewController: UIViewController
                                                                                      bottomConstraintLayoutView: self.view,
                                                                                      delegate: self)
         }
+ 
+        */
         
         self.keyboardAssistant.observer.loggingEnabled = true
         self.keyboardAssistant.observer.loggingEnabled = true
@@ -96,14 +100,14 @@ class LongNestedScrollViewController: UIViewController
     {
         super.viewWillAppear(animated)
         
-        self.keyboardAssistant.observer.start()
+        self.keyboardAssistant.start()
     }
     
     override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
-        self.keyboardAssistant.observer.stop()
+        self.keyboardAssistant.stop()
     }
     
     // MARK: - Actions
@@ -123,43 +127,11 @@ class LongNestedScrollViewController: UIViewController
 
 extension LongNestedScrollViewController: UITextFieldDelegate
 {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
-    {
-        return true
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField)
-    {
-        self.keyboardAssistant.navigator.textFieldDidBeginEditing(textField)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField)
-    {
-        self.keyboardAssistant.navigator.textFieldDidEndEditing(textField)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         _ = self.keyboardAssistant.navigator.textFieldShouldReturn(textField)
         
         return true
-    }
-}
-
-// MARK: - UITextViewDelegate
-
-extension LongNestedScrollViewController: UITextViewDelegate
-{
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
-    {
-        self.keyboardAssistant.navigator.textViewShouldBeginEditing(textView)
-        
-        return true
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView)
-    {
-        self.keyboardAssistant.navigator.textViewDidBeginEditing(textView)
     }
 }
 
