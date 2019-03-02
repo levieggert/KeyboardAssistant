@@ -56,6 +56,10 @@ That's it.  Then all your custom UI goes inside the UIVIew [contentView].
 
 Note:  This setup uses auto layout to determine the UIScrollView's content size.  That means, all of your subviews inside of the UIView [contentView] need to provide top and bottom constraints so the contentView's height can be satisfied.  It will also require some of your subviews height contraints to be set.  Unless ofcourse, their height is determined by their child views.  If you are unfamiliar with this concept read more about autolayout. 
 
+The below screenshot is an example of this structure.  The constraints on the right show how to setup the UIScrollView and UIView [contentView] constraints.
+
+![alt text](ReadMe-Assets/scrollview_structure_constraints.jpg)
+
 #### Auto Assistant:
 
 #### Manual Assistant:
