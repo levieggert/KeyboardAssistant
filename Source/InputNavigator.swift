@@ -52,8 +52,8 @@ public class InputNavigator: NSObject
         
         if (disable)
         {
-            print("\nWARNING: InputNavigator: disableAutoCorrection()")
-            print("  Disabling auto correction will remove the predictive text from the device keyboard.  Disabling auto correction solves issues with obtaining the correct keyboard height when the keyboard changes to a keyboard with secure text entry or keyboards that don't use predictive text.")
+            //print("\nWARNING: InputNavigator: disableAutoCorrection()")
+            //print("  Disabling auto correction will remove the predictive text from the device keyboard.  Disabling auto correction solves issues with obtaining the correct keyboard height when the keyboard changes to a keyboard with secure text entry or keyboards that don't use predictive text.")
         }
     }
     
@@ -243,11 +243,6 @@ public class InputNavigator: NSObject
         return nil
     }
     
-    public func addAllInputItems(fromView: UIView)
-    {
-        // TODO: Loop through view hierarchy and all all textfields and textviews.
-    }
-    
     public func addInputItem(inputItem: UIView)
     {
         if (!self.inputItems.contains(inputItem))
@@ -266,6 +261,19 @@ public class InputNavigator: NSObject
                 }
             }
         }
+    }
+    
+    public func removeInputItem(inputItem: UIView)
+    {
+        if (self.inputItems.contains(inputItem))
+        {
+            // TODO: Add functionality to remove input item and any listeners.
+        }
+    }
+    
+    public func addInputItems(from: UIViewController)
+    {
+        self.addInputItems(inputItems: InputNavigator.getInputItems(from: from))
     }
     
     public func addInputItems(inputItems: [UIView])

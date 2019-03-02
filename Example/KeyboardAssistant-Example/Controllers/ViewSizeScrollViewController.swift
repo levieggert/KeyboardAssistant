@@ -167,24 +167,24 @@ extension ViewSizeScrollViewController: UITextViewDelegate
 
 extension ViewSizeScrollViewController: KeyboardAssistantDelegate
 {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, inputItem: UIView, keyboardHeight: CGFloat)
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
     {
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 20
         
-        if (inputItem == self.txtFirstName)
+        if (toInputItem == self.txtFirstName)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtLastName, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtLastName)
+        else if (toInputItem == self.txtLastName)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtEmail, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtEmail)
+        else if (toInputItem == self.txtEmail)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtPassword, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtPassword)
+        else if (toInputItem == self.txtPassword)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.btRegisterAccount, constraint: constraint, offset: offset)
         }

@@ -7,7 +7,7 @@ import UIKit
 
 public protocol KeyboardAssistantDelegate: class
 {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, inputItem: UIView, keyboardHeight: CGFloat)
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
 }
 
 public class KeyboardAssistant: NSObject
@@ -17,8 +17,6 @@ public class KeyboardAssistant: NSObject
     
     // MARK: - Properties
     
-    private var resetBottomConstraintConstant: CGFloat = 0
-    
     private weak var bottomConstraint: NSLayoutConstraint?
     private weak var bottomConstraintLayoutView: UIView?
         
@@ -27,6 +25,7 @@ public class KeyboardAssistant: NSObject
     public private(set) var type: KeyboardAssistant.AssistantType = .auto
     public private(set) var repositionConstraint: KeyboardAssistant.RepositionConstraint = .viewTopToTopOfScreen
     public private(set) var repositionOffset: CGFloat = 20
+    public private(set) var resetBottomConstraintConstant: CGFloat = 0
     
     public private(set) weak var scrollView: UIScrollView?
     
@@ -89,33 +88,89 @@ public class KeyboardAssistant: NSObject
         self.navigator.focusedItem = nil
     }
     
-    private func reposition()
+    public func setBottomConstraintToKeyboard(keyboardHeight: CGFloat, animated: Bool)
     {
-        switch (self.type)
+        if let bottomConstraint = self.bottomConstraint, let bottomConstraintLayoutView = self.bottomConstraintLayoutView
         {
-        case .auto:
-            if let scrollView = self.scrollView, let view = self.navigator.focusedItem
-            {
-                self.reposition(scrollView: scrollView, toView: view, constraint: self.repositionConstraint, offset: self.repositionOffset)
-            }
+            // TODO: Sometimes height will not have to be inverted by -1.  Depends on how constraints are set.
+            // If the scrollview bottom is attached to safe area bottom then it needs to be inverted by -1.  Otherwise no inversion.
+            bottomConstraint.constant = keyboardHeight * -1
             
-        case .manual:
-            if let delegate = self.delegate, let view = self.navigator.focusedItem
+            if (animated)
             {
-                delegate.keyboardAssistantManuallyReposition(keyboardAssistant: self, inputItem: view, keyboardHeight: self.observer.keyboardHeight)
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                    bottomConstraintLayoutView.layoutIfNeeded()
+                }, completion: { (finished: Bool) in
+                    
+                    if (finished)
+                    {
+                        
+                    }
+                })
+            }
+            else
+            {
+                bottomConstraintLayoutView.layoutIfNeeded()
             }
         }
     }
     
-    public func reposition(scrollView: UIScrollView, toView: UIView, constraint: RepositionConstraint, offset: CGFloat)
+    public func resetBottomConstraint(toConstant: CGFloat, animated: Bool)
+    {
+        if let bottomConstraint = self.bottomConstraint, let bottomConstraintLayoutView = self.bottomConstraintLayoutView
+        {
+            bottomConstraint.constant = toConstant
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                bottomConstraintLayoutView.layoutIfNeeded()
+            }, completion: { (finished: Bool) in
+                
+                if (finished)
+                {
+                    
+                }
+            })
+        }
+    }
+    
+    public func start()
+    {
+        self.observer.start()
+    }
+    
+    public func stop()
+    {
+        self.navigator.focusedItem = nil
+        self.observer.stop()
+    }
+    
+    private func reposition(toInputItem: UIView)
+    {
+        switch (self.type)
+        {
+        case .auto:
+            if let scrollView = self.scrollView
+            {
+                self.reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: self.repositionConstraint, offset: self.repositionOffset)
+            }
+            
+        case .manual:
+            if let delegate = self.delegate
+            {
+                delegate.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: self.observer.keyboardHeight)
+            }
+        }
+    }
+    
+    public func reposition(scrollView: UIScrollView, toInputItem: UIView, constraint: RepositionConstraint, offset: CGFloat)
     {
         if (self.observer.keyboardIsUp)
         {
             var scrollOffset: CGFloat?
 
-            //first - get position of toView relative to scrollview
-            var position: CGPoint = toView.convert(toView.frame.origin, to: scrollView)
-            position.y = position.y - toView.frame.origin.y // Here we subtract because when converting to scrollview coordinate space toView.origin.y is added to conversion
+            //first - get position of toInputItem relative to scrollview
+            var position: CGPoint = toInputItem.convert(toInputItem.frame.origin, to: scrollView)
+            position.y = position.y - toInputItem.frame.origin.y // Here we subtract because when converting to scrollview coordinate space toInputItem.origin.y is added to conversion
             
             switch (constraint)
             {
@@ -123,15 +178,15 @@ public class KeyboardAssistant: NSObject
                 scrollOffset = position.y - offset // Account for offset
                 
             case .viewBottomToTopOfKeyboard:
-                position.y = position.y - scrollView.frame.size.height // This conversion is as if we were placing position.y at the top of the keyboard, align toView top with keyboard top.
-                scrollOffset = position.y + toView.frame.size.height + offset // Account for toView.height and offset
+                position.y = position.y - scrollView.frame.size.height // This conversion is as if we were placing position.y at the top of the keyboard, align toInputItem top with keyboard top.
+                scrollOffset = position.y + toInputItem.frame.size.height + offset // Account for toInputItem.height and offset
             }
             
             /*
             self.log(string: "\nKeyboardAssistant: reposition(scrollView)")
             self.log(string:"  constraint: \(constraint)")
             self.log(string:"  offset: \(offset)")
-            self.log(string:"  toView.origin.y: \(toView.frame.origin.y)")
+            self.log(string:"  toInputItem.origin.y: \(toInputItem.frame.origin.y)")
             self.log(string:"  position.y: \(position.y)")
             self.log(string:"  scrollOffset: \(String(describing: scrollOffset))")
             */
@@ -187,27 +242,16 @@ extension KeyboardAssistant: KeyboardObserverDelegate
         switch (keyboardState)
         {
         case .willShow:
-            break
+            self.setBottomConstraintToKeyboard(keyboardHeight: keyboardObserver.keyboardHeight, animated: true)
             
         case .didShow:
-            self.reposition()
+            if let toInputItem = self.navigator.focusedItem
+            {
+                self.reposition(toInputItem: toInputItem)
+            }
             
         case .willHide:
-            
-            if let bottomConstraint = self.bottomConstraint, let bottomConstraintLayoutView = self.bottomConstraintLayoutView
-            {
-                bottomConstraint.constant = self.resetBottomConstraintConstant
-                
-                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                    bottomConstraintLayoutView.layoutIfNeeded()
-                }, completion: { (finished: Bool) in
-                    
-                    if (finished)
-                    {
-                        
-                    }
-                })
-            }
+            self.resetBottomConstraint(toConstant: self.resetBottomConstraintConstant,animated: true)
             
         case .didHide:
             break
@@ -219,22 +263,7 @@ extension KeyboardAssistant: KeyboardObserverDelegate
         self.log(string: "\nKeyboardAssistant: keyboard height changed: \(keyboardHeight)")
         self.log(string: "  keyboardHeight: \(keyboardHeight)")
         
-        if let bottomConstraint = self.bottomConstraint, let bottomConstraintLayoutView = self.bottomConstraintLayoutView
-        {
-            // TODO: Sometimes height will not have to be inverted by -1.  Depends on how constraints are set.
-            // If the scrollview bottom is attached to safe area bottom then it needs to be inverted by -1.  Otherwise no inversion.
-            bottomConstraint.constant = keyboardObserver.keyboardHeight * -1
-            
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                bottomConstraintLayoutView.layoutIfNeeded()
-            }, completion: { (finished: Bool) in
-                
-                if (finished)
-                {
-                    
-                }
-            })
-        }
+        self.setBottomConstraintToKeyboard(keyboardHeight: keyboardHeight, animated: true)
     }
 }
 
@@ -245,6 +274,9 @@ extension KeyboardAssistant: InputNavigatorDelegate
     public func inputNavigatorFocusChanged(inputNavigator: InputNavigator, inputItem: UIView?)
     {
         self.log(string: "\nKeyboardAssistant: input focus changed")
-        self.reposition()
+        if let toInputItem = inputItem
+        {
+            self.reposition(toInputItem: toInputItem)
+        }
     }
 }

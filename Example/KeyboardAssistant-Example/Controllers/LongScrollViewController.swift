@@ -177,44 +177,44 @@ extension LongScrollViewController: UITextViewDelegate
 
 extension LongScrollViewController: KeyboardAssistantDelegate
 {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, inputItem: UIView, keyboardHeight: CGFloat)
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
     {
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 30
         
-        if (inputItem == self.txtFirstName || inputItem == self.txtLastName)
+        if (toInputItem == self.txtFirstName || toInputItem == self.txtLastName)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtCity, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtCity || inputItem == self.txtState)
+        else if (toInputItem == self.txtCity || toInputItem == self.txtState)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtZipCode, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtZipCode || inputItem == self.txtCountry)
+        else if (toInputItem == self.txtZipCode || toInputItem == self.txtCountry)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtZipCode, constraint: constraint, offset: 80)
         }
-        else if (inputItem == self.infoTextView)
+        else if (toInputItem == self.infoTextView)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtZipCode, constraint: .viewTopToTopOfScreen, offset: 50)
         }
-        else if (inputItem == self.txtAnimal)
+        else if (toInputItem == self.txtAnimal)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtColor, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtColor)
+        else if (toInputItem == self.txtColor)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtFood, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtFood)
+        else if (toInputItem == self.txtFood)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtHobby, constraint: constraint, offset: offset)
         }
-        else if (inputItem == self.txtHobby)
+        else if (toInputItem == self.txtHobby)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.txtHobby, constraint: constraint, offset: 50)
         }
-        else if (inputItem == self.notesTextView)
+        else if (toInputItem == self.notesTextView)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toView: self.notesTextView, constraint: .viewTopToTopOfScreen, offset: 50)
         }

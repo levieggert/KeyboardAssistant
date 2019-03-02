@@ -235,7 +235,7 @@ extension LongTableViewController: UITextViewDelegate
 
 extension LongTableViewController: KeyboardAssistantDelegate
 {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, inputItem: UIView, keyboardHeight: CGFloat)
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
     {
         
     }

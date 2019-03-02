@@ -64,6 +64,7 @@ public class KeyboardObserver: NSObject
             self.removeNotification(name: UIResponder.keyboardDidHideNotification)
         }
     }
+    
     private func log(string: String)
     {
         if (self.loggingEnabled)
@@ -82,16 +83,6 @@ extension KeyboardObserver: NotificationHandler
         if (notification.name == UIResponder.keyboardWillShowNotification)
         {
             self.log(string:"\nKeyboardObserver: UIKeyboardWillShow()")
-            
-            if (!self.keyboardIsUp)
-            {
-                self.keyboardState = .willShow
-                
-                if let delegate = self.delegate
-                {
-                    delegate.keyboardDidChangeState(keyboardObserver: self, keyboardState: .willShow)
-                }
-            }
             
             let lastKeyboardHeight: CGFloat = self.keyboardHeight
             
@@ -119,6 +110,16 @@ extension KeyboardObserver: NotificationHandler
                             delegate.keyboardDidInvalidateKeyboardHeight(keyboardObserver: self, keyboardHeight: self.keyboardHeight)
                         }
                     }
+                }
+            }
+            
+            if (!self.keyboardIsUp)
+            {
+                self.keyboardState = .willShow
+                
+                if let delegate = self.delegate
+                {
+                    delegate.keyboardDidChangeState(keyboardObserver: self, keyboardState: .willShow)
                 }
             }
         }
