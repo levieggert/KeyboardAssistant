@@ -87,7 +87,7 @@ Use the SeekProperties class to define your from values and to values for a Seek
 
 Use the Seek class to animate your UIView's and constraints.  Seek uses UIView.animation to run the animations.
 
-### Know Issues
+### Known Issues
 
 There is an issue with obtaining the correct device keyboard height when the keyboard changes.  I believe this is a bug in Apple's Framework.  I will explain below.  
 
