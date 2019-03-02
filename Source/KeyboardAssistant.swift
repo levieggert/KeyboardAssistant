@@ -239,7 +239,7 @@ extension KeyboardAssistant: KeyboardObserverDelegate
         switch (keyboardState)
         {
         case .willShow:
-            self.setBottomConstraintToKeyboard(keyboardHeight: keyboardObserver.keyboardHeight, animated: true)
+            self.setBottomConstraintToKeyboard(keyboardHeight: keyboardObserver.keyboardHeight, animated: false)
             
         case .didShow:
             if let toInputItem = self.navigator.focusedItem
@@ -260,7 +260,12 @@ extension KeyboardAssistant: KeyboardObserverDelegate
         self.log(string: "\nKeyboardAssistant: keyboard height changed: \(keyboardHeight)")
         self.log(string: "  keyboardHeight: \(keyboardHeight)")
         
-        self.setBottomConstraintToKeyboard(keyboardHeight: keyboardHeight, animated: true)
+        self.setBottomConstraintToKeyboard(keyboardHeight: keyboardHeight, animated: false)
+        
+        if let toInputItem = self.navigator.focusedItem
+        {
+            self.reposition(toInputItem: toInputItem)
+        }
     }
 }
 

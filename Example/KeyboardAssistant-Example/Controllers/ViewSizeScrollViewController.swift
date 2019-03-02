@@ -22,7 +22,7 @@ class ViewSizeScrollViewController: UIViewController
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var btRegisterAccount: UIButton!
     
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Life Cycle
     
@@ -38,7 +38,8 @@ class ViewSizeScrollViewController: UIViewController
         let useAutoKeyboardAssistant: Bool = false
         let allowToSetInputDelegates: Bool = true
         
-        let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
+        //let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
+        let navigator: InputNavigator = InputNavigator.createKeyboardNavigation(shouldSetTextFieldDelegates: true)
         navigator.addInputItems(from: self)
         
         if (!allowToSetInputDelegates)
@@ -58,14 +59,14 @@ class ViewSizeScrollViewController: UIViewController
                                                                                              positionScrollView: self.scrollView,
                                                                                              positionConstraint: .viewBottomToTopOfKeyboard,
                                                                                              positionOffset: 30,
-                                                                                             bottomConstraint: self.bottomConstraint,
+                                                                                             bottomConstraint: self.scrollViewBottomConstraint,
                                                                                              bottomConstraintLayoutView: self.view)
         }
         else
         {
             self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(inputNavigator: navigator,
                                                                                      delegate: self,
-                                                                                     bottomConstraint: self.bottomConstraint,
+                                                                                     bottomConstraint: self.scrollViewBottomConstraint,
                                                                                      bottomConstraintLayoutView: self.view)
         }
         

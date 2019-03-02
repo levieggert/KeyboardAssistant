@@ -77,6 +77,11 @@ public class InputNavigator: NSObject
         return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: nil, customAccessoryView: withCustomAccessoryView)
     }
     
+    static public func createKeyboardNavigation(shouldSetTextFieldDelegates: Bool) -> InputNavigator
+    {
+        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: nil, customAccessoryView: nil)
+    }
+    
     static public func createKeyboardNavigation(shouldSetTextFieldDelegates: Bool, withAccessoryController: InputNavigatorAccessoryController) -> InputNavigator
     {
         return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: withAccessoryController, customAccessoryView: nil)

@@ -49,6 +49,7 @@ public class KeyboardObserver: NSObject
             self.addNotification(name: UIResponder.keyboardDidShowNotification)
             self.addNotification(name: UIResponder.keyboardWillHideNotification)
             self.addNotification(name: UIResponder.keyboardDidHideNotification)
+            self.addNotification(name: UIResponder.keyboardDidChangeFrameNotification)
         }
     }
     
@@ -62,6 +63,7 @@ public class KeyboardObserver: NSObject
             self.removeNotification(name: UIResponder.keyboardDidShowNotification)
             self.removeNotification(name: UIResponder.keyboardWillHideNotification)
             self.removeNotification(name: UIResponder.keyboardDidHideNotification)
+            self.removeNotification(name: UIResponder.keyboardDidChangeFrameNotification)
         }
     }
     
@@ -72,23 +74,69 @@ public class KeyboardObserver: NSObject
             print(string)
         }
     }
+    
+    private func checkForKeyboardHeightChange(notification: Notification)
+    {
+        if let keyboardInfo = notification.userInfo
+        {
+            self.log(string: "\nKeyboardObserver: checkForKeyboardHeightChange()")
+            
+            var beginFrameHeight: CGFloat?
+            var endFrameHeight: CGFloat?
+            
+            if let beginFrame = keyboardInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
+            {
+                beginFrameHeight = beginFrame.cgRectValue.size.height
+            }
+            
+            if let endFrame = keyboardInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+            {
+                endFrameHeight = endFrame.cgRectValue.size.height
+            }
+            
+            self.log(string: "beginFrameHeight: \(beginFrameHeight)")
+            self.log(string: "endFrameHeight: \(endFrameHeight)")
+            
+            var newKeyboardHeight: CGFloat?
+            if let endFrameHeight = endFrameHeight
+            {
+                newKeyboardHeight = endFrameHeight
+            }
+            else if let beginFrameHeight = beginFrameHeight
+            {
+                newKeyboardHeight = beginFrameHeight
+            }
+            
+            let lastKeyboardHeight: CGFloat = self.keyboardHeight
+            self.log(string: "  lastKeyboardHeight: \(lastKeyboardHeight)")
+            
+            if let newKeyboardHeight = newKeyboardHeight
+            {
+                self.log(string: "  newKeyboardHeight: \(newKeyboardHeight)")
+                
+                if (lastKeyboardHeight != newKeyboardHeight)
+                {
+                    self.keyboardHeight = newKeyboardHeight
+                    
+                    if let delegate = self.delegate
+                    {
+                        delegate.keyboardDidInvalidateKeyboardHeight(keyboardObserver: self, keyboardHeight: self.keyboardHeight)
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: - NotificationHandler
 
 extension KeyboardObserver: NotificationHandler
-{
-    // TODO: look into keyboardDidChangeFrameNotification
-    
+{    
     func handleNotification(notification: Notification)
     {
         if (notification.name == UIResponder.keyboardWillShowNotification)
         {
             self.log(string:"\nKeyboardObserver: UIKeyboardWillShow()")
-            
-            let lastKeyboardHeight: CGFloat = self.keyboardHeight
-            
-            self.log(string: "  lastKeyboardHeight: \(lastKeyboardHeight)")
             
             if let keyboardInfo = notification.userInfo
             {
@@ -96,28 +144,13 @@ extension KeyboardObserver: NotificationHandler
                 {
                     self.keyboardAnimationDuration = keyboardAnimationDurationNumber.doubleValue
                 }
-                
-                if let keyboardFrameValue = keyboardInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
-                {
-                    let newKeyboardHeight: CGFloat = keyboardFrameValue.cgRectValue.size.height
-                    
-                    self.log(string: "  newKeyboardHeight: \(newKeyboardHeight)")
-                    
-                    if (lastKeyboardHeight != newKeyboardHeight)
-                    {
-                        self.keyboardHeight = newKeyboardHeight
-                        
-                        if let delegate = self.delegate
-                        {
-                            delegate.keyboardDidInvalidateKeyboardHeight(keyboardObserver: self, keyboardHeight: self.keyboardHeight)
-                        }
-                    }
-                }
             }
             
             if (!self.keyboardIsUp)
             {
                 self.keyboardState = .willShow
+                
+                self.checkForKeyboardHeightChange(notification: notification)
                 
                 if let delegate = self.delegate
                 {
@@ -161,6 +194,15 @@ extension KeyboardObserver: NotificationHandler
             if let delegate = self.delegate
             {
                 delegate.keyboardDidChangeState(keyboardObserver: self, keyboardState: .didHide)
+            }
+        }
+        else if (notification.name == UIResponder.keyboardDidChangeFrameNotification)
+        {
+            self.log(string:"\nKeyboardObserver: UIKeyboardDidChangeFrame()")
+            
+            if (self.keyboardIsUp)
+            {
+                self.checkForKeyboardHeightChange(notification: notification)
             }
         }
     }

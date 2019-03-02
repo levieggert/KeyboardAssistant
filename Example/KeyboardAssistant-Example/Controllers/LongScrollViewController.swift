@@ -28,7 +28,7 @@ class LongScrollViewController: UIViewController
     @IBOutlet weak var txtHobby: UITextField!
     @IBOutlet weak var notesTextView: UITextView!
     
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Life Cycle
     
@@ -44,11 +44,13 @@ class LongScrollViewController: UIViewController
         let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
-        let inputItems: [UIView] = [self.txtFirstName, self.txtLastName, self.txtCity, self.txtState, self.txtZipCode, self.txtCountry, self.infoTextView, self.txtAnimal, self.txtColor, self.txtFood, self.txtHobby, self.notesTextView]
+        //let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
+        let navigator: InputNavigator = InputNavigator.createKeyboardNavigation(shouldSetTextFieldDelegates: true)
+        navigator.addInputItems(from: self)
         
         if (!allowToSetInputDelegates)
         {
-            for item in inputItems
+            for item in navigator.inputItems
             {
                 if let textField = item as? UITextField
                 {
@@ -57,30 +59,22 @@ class LongScrollViewController: UIViewController
             }
         }
         
-        /*
-        
         if (useAutoKeyboardAssistant)
         {
-            self.keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
-                                                                                   inputItems: inputItems,
-                                                                                   accessoryController: DefaultNavigationView(),
-                                                                                   positionScrollView: self.scrollView,
-                                                                                   positionConstraint: .viewBottomToTopOfKeyboard,
-                                                                                   positionOffset: 20,
-                                                                                   bottomConstraint: self.bottomConstraint,
-                                                                                   bottomConstraintLayoutView: self.view)
+            self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator,
+                                                                                             positionScrollView: self.scrollView,
+                                                                                             positionConstraint: .viewBottomToTopOfKeyboard,
+                                                                                             positionOffset: 30,
+                                                                                             bottomConstraint: self.scrollViewBottomConstraint,
+                                                                                             bottomConstraintLayoutView: self.view)
         }
         else
         {
-            self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
-                                                                                     inputItems: inputItems,
-                                                                                     accessoryController: nil,
-                                                                                     bottomConstraint: self.bottomConstraint,
-                                                                                     bottomConstraintLayoutView: self.view,
-                                                                                     delegate: self)
+            self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(inputNavigator: navigator,
+                                                                                     delegate: self,
+                                                                                     bottomConstraint: self.scrollViewBottomConstraint,
+                                                                                     bottomConstraintLayoutView: self.view)
         }
- 
-        */
         
         self.keyboardAssistant.observer.loggingEnabled = true
         self.keyboardAssistant.observer.loggingEnabled = true
@@ -93,16 +87,6 @@ class LongScrollViewController: UIViewController
             {
                 print("  placeholder: \(String(describing: textField.placeholder))")
             }
-        }
-    }
-    
-    override func viewDidLayoutSubviews()
-    {
-        super.viewDidLayoutSubviews()
-        
-        if (self.scrollView.constraints.contains(self.bottomConstraint))
-        {
-            print("view did layout - scrollview contains bottom constraint")
         }
     }
     
