@@ -44,7 +44,7 @@ KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigat
 
 The KeyboardAssistant class is the main class you will be using for positioning UIViews above the device keyboard.  Currently, this class supports one option for repositioning views above the keyboard which is utilizing a UIScrollView.  However, if you don't wish to use a UIScrollView, you can still take advantage of using KeyboardAssistant to notify you of position changes for your own custom positioning.
 
-In the future I may add support for more options.  However, my personal preference is to use a UIScrollView which I elaborate on in [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
+In the future I may add support for more options.  However, my personal preference is to use a UIScrollView which I elaborate more on in [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
 
 #### Use auto assistant to position a UIScrollView
 
@@ -52,8 +52,78 @@ This section will describe how to build the auto scrollview assistant.  It requi
 
 This example shows how to:
 1. Create an InputNavigator with a default controller.  You can read more about using InputNavigator [here](#how-to-use-inputnavigator).
-2. Add input items to the InputNavigator.
+2. [Add](#adding-input-items) input items to the InputNavigator.
 3. Create an auto scrollview KeyboardAssistant.
+
+To get started creating the auto scrollview assistant.  First declare a KeyboardAssistant variable in your UIViewController class.
+```swift
+import UIKit
+
+class YourViewController: UIViewController
+{
+    // MARK: - Properties
+
+    private var keyboardAssistant: KeyboardAssistant!
+}
+```
+
+Next, make sure your UIViewController is structured to use a UIScrollView for repositioning.  You will need a reference to the UIScrollView that is repositioned and the UIScrollView's bottom constraint which is placed at the top of the device keyboard.
+```swift
+import UIKit
+
+class YourViewController: UIViewController
+{
+    // MARK: - Properties
+
+    private var keyboardAssistant: KeyboardAssistant!
+
+    // MARK: - Outlets
+
+    @IBOutlet weak var scrollView: UIScrollView!
+
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+}
+```
+
+The viewDidLoad() method is where you will complete the setup of your KeyboardAssistant.  First create an InputNavigator to use and add some inputs for navigation.
+```swift
+import UIKit
+
+class YourViewController: UIViewController
+{
+    // MARK: - Properties
+
+    private var keyboardAssistant: KeyboardAssistant!
+
+    // MARK: - Outlets
+
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var lbTitle: UILabel!
+    @IBOutlet weak var txtFirstName: UITextField!
+    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var btRegisterAccount: UIButton!
+
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+
+        let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+        navigator.addInputItems(inputItems: [self.txtFirstName, 
+        self.txtLastName, 
+        self.txtEmail, 
+        self.txtPassword])
+    }
+}
+```
+
+Lastly, create the KeyboardAssistant.
 
 ```swift
 import UIKit
@@ -89,7 +159,8 @@ class YourViewController: UIViewController
         self.txtEmail, 
         self.txtPassword])
 
-        self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(inputNavigator: navigator, 
+        self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(
+        inputNavigator: navigator, 
         positionScrollView: self.scrollView, 
         positionConstraint: .viewBottomToTopOfKeyboard, 
         positionOffset: 30, 
