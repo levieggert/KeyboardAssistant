@@ -129,14 +129,14 @@ class YourViewController: UIViewController
 
 #### Configuring InputNavigator
 
-- [Create with Default Controller](create-with-default-controller)
-- [Create with Keyboard Navigation](create-with-keyboard-navigation)
-- [Create with Custom Controller](create-with-custom-controller)
-- [Create with Custom Accessory View](create-with-custom-accessory-view)
-- [Create with Keyboard Navigation and Default Controller](create-with-keyboard-navigation-and-default-controller)
-- [Create with Keyboard Navigation and Custom Controller](create-with-keyboard-navigation-and-custom-controller)
-- [Create with Keyboard Navigation and Custom Accessory View](create-with-keyboard-navigation-and-custom-accessory-view)
-- [Adding Input Items](adding-input-items)
+- [Create with Default Controller](#create-with-default-controller)
+- [Create with Keyboard Navigation](#create-with-keyboard-navigation)
+- [Create with Custom Controller](#create-with-custom-controller)
+- [Create with Custom Accessory View](#create-with-custom-accessory-view)
+- [Create with Keyboard Navigation and Default Controller](#create-with-keyboard-navigation-and-default-controller)
+- [Create with Keyboard Navigation and Custom Controller](#create-with-keyboard-navigation-and-custom-controller)
+- [Create with Keyboard Navigation and Custom Accessory View](#create-with-keyboard-navigation-and-custom-accessory-view)
+- [Adding Input Items](#adding-input-items)
 
 InputNavigator get's its own section because there is actually quite a lot to this class and there are quite a few different ways you can configure the InputNavigator.
 
