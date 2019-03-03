@@ -5,10 +5,10 @@ Version 1.0.0
 
 Keyboard Assistant faciliates in the repositioning of views when the device Keyboard is present.  It does this by observing keyboard notifications (willShow, didShow, willHide, didHide) and by responding to UITextField and UITextView objects when they become active and resign. 
 
-[Requirements](#requirements)
-[Cocoapods Installation](#cocoapods)
-[Documentation](#documentation)
-[How to use](#how-to-use)
+- [Requirements](#requirements)
+- [Cocoapods Installation](#cocoapods)
+- [Documentation](#documentation)
+- [How to use](#how-to-use)
 
 ### Requirements
 
@@ -63,7 +63,11 @@ Note:  This setup uses auto layout to determine the UIScrollView's content size.
 
 The below screenshot is an example of this structure.  The constraints on the right show how to setup the UIScrollView and UIView [contentView] constraints.
 
-![alt text](ReadMe-Assets/scrollview_structure_constraints.jpg)
+![alt text](ReadMeAssets/scrollview_structure_constraints.jpg)
+
+Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.
+
+![alt text](ReadMeAssets/scrollview_bottom_constraint.jpg)
 
 #### Auto ScrollView Assistant:
 
