@@ -42,20 +42,66 @@ KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigat
 
 ### How to use KeyboardAssistant
 
-The KeyboardAssistant class is the main class you will be using for positioning UIView's above the device keyboard.  Currently, this class supports 1 option for repositioning views above the keyboard which is utilizing a UIScrollView.  However, if you don't want to use a UIScrollView, you can still take advantage of using KeyboardAssistant to notify you of position changes.
+The KeyboardAssistant class is the main class you will be using for positioning UIViews above the device keyboard.  Currently, this class supports one option for repositioning views above the keyboard which is utilizing a UIScrollView.  However, if you don't wish to use a UIScrollView, you can still take advantage of using KeyboardAssistant to notify you of position changes for your own custom positioning.
 
 In the future I may add support for more options.  However, my personal preference is to use a UIScrollView which I elaborate on in [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
 
 #### Use auto assistant to position a UIScrollView
 
+This section will describe how to build the auto scrollview assistant.  It requires that you structure your UIViewController with a scrollview and contentview.  Read about [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
+
+This example shows how to:
+1. Create an InputNavigator with a default controller.  You can read more about using InputNavigator [here](#how-to-use-inputnavigator).
+2. Add input items to the InputNavigator.
+3. Create an auto scrollview KeyboardAssistant.
+
+```swift
+import UIKit
+
+class YourViewController: UIViewController
+{
+    // MARK: - Properties
+
+    private var keyboardAssistant: KeyboardAssistant!
+
+    // MARK: - Outlets
+
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var lbTitle: UILabel!
+    @IBOutlet weak var txtFirstName: UITextField!
+    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var btRegisterAccount: UIButton!
+
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+
+        let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+        navigator.addInputItems(inputItems: [self.txtFirstName, 
+        self.txtLastName, 
+        self.txtEmail, 
+        self.txtPassword])
+
+        self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(inputNavigator: navigator, 
+        positionScrollView: self.scrollView, 
+        positionConstraint: .viewBottomToTopOfKeyboard, 
+        positionOffset: 30, 
+        bottomConstraint: self.scrollViewBottomConstraint, 
+        bottomConstraintLayoutView: self.view)
+    }
+}
+```
+
 #### Use manual assistant to position a UIScrollView
 
 #### Use manual assistant to do your own positioning
-
-This section is broken up into the following parts.
-1. How to structure your controller for keyboard positioning.
-2. How to create and use the auto scrollview assistant.
-3. How to create and use the manual assistant.
 
 ### Structuring your UIViewController for UIScrollView positioning
 
@@ -80,63 +126,6 @@ The below screenshot is an example of this structure.  The constraints on the ri
 Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.  This constraint is positoned at the top of the keyboard allowing the entire view to be scrolled through without the keyboard getting in the way.
 
 ![alt text](ReadMeAssets/scrollview_bottom_constraint.jpg)
-
-#### Auto ScrollView Assistant:
-
-This section will describe how to build the auto scrollview assistant.  It requires that you structure your UIViewController with a scrollview and contentview.  Read about [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
-
-This example shows how to:
-1. Create an InputNavigator with a default controller.
-2. Add input items to the InputNavigator.
-3. Create an auto scrollview KeyboardAssistant.
-
-```swift
-import UIKit
-
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
-
-    private var keyboardAssistant: KeyboardAssistant!
-    
-    // MARK: - Outlets
-    
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var btRegisterAccount: UIButton!
-    
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
-    
-    // MARK: - Life Cycle
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-    
-        let navigator: InputNavigator = InputNavigator.createWithDefaultController()
-        navigator.addInputItems(inputItems: [self.txtFirstName, 
-        self.txtLastName, 
-        self.txtEmail, 
-        self.txtPassword])
-    
-        self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator, 
-        positionScrollView: self.scrollView, 
-        positionConstraint: .viewBottomToTopOfKeyboard, 
-        positionOffset: 30, 
-        bottomConstraint: self.scrollViewBottomConstraint, 
-        bottomConstraintLayoutView: self.view)
-    }
-}
-```
-
-#### Manual ScrollView Assistant:
-
-#### Manual Assistant:
 
 #### How to use InputNavigator
 

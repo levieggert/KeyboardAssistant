@@ -60,7 +60,7 @@ class LongNestedScrollViewController: UIViewController
         
         if (useAutoKeyboardAssistant)
         {
-            self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator,
+            self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(inputNavigator: navigator,
                                                                                              positionScrollView: self.scrollView,
                                                                                              positionConstraint: .viewBottomToTopOfKeyboard,
                                                                                              positionOffset: 30,
@@ -69,7 +69,7 @@ class LongNestedScrollViewController: UIViewController
         }
         else
         {
-            self.keyboardAssistant = KeyboardAssistant.createManualKeyboardAssistant(inputNavigator: navigator,
+            self.keyboardAssistant = KeyboardAssistant.createManualScrollView(inputNavigator: navigator,
                                                                                      delegate: self,
                                                                                      bottomConstraint: self.scrollViewBottomConstraint,
                                                                                      bottomConstraintLayoutView: self.view)

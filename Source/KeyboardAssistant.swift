@@ -12,7 +12,7 @@ public protocol KeyboardAssistantDelegate: class
 
 public class KeyboardAssistant: NSObject
 {
-    public enum AssistantType { case autoScrollView; case manual; }
+    public enum AssistantType { case autoScrollView; case manualScrollView; case manual; }
     public enum RepositionConstraint { case viewTopToTopOfScreen; case viewBottomToTopOfKeyboard; }
     
     // MARK: - Properties
@@ -47,7 +47,7 @@ public class KeyboardAssistant: NSObject
         // TODO: Is there a way to see if the bottom constraint of the scrollview is attached to the safe area for inverting bottomConstraint.constant when pushing up with keyboard?
     }
     
-    static public func createAutoScrollViewKeyboardAssistant(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
+    static public func createAutoScrollView(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
     {
         let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
@@ -61,19 +61,19 @@ public class KeyboardAssistant: NSObject
         return assistant
     }
     
-    static public func createManualKeyboardAssistant(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
+    static public func createManualScrollView(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
     {
         let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
-        assistant.type = .manual
+        assistant.type = .manualScrollView
         assistant.delegate = delegate
         
         return assistant
     }
     
-    static public func createManualKeyboardAssistant(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate) -> KeyboardAssistant
+    static public func createManual(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate) -> KeyboardAssistant
     {
         let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
@@ -159,6 +159,12 @@ public class KeyboardAssistant: NSObject
             if let scrollView = self.scrollView
             {
                 self.reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: self.repositionConstraint, offset: self.repositionOffset)
+            }
+            
+        case .manualScrollView:
+            if let delegate = self.delegate
+            {
+                delegate.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: self.observer.keyboardHeight)
             }
             
         case .manual:
