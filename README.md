@@ -72,9 +72,12 @@ Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.  
 
 #### Auto ScrollView Assistant:
 
-This section will describe how to build the auto scrollview assistant.  It requires that you structure your UIViewController with a scrollview and contentview.  Read about Structuring your UIViewController.
+This section will describe how to build the auto scrollview assistant.  It requires that you structure your UIViewController with a scrollview and contentview.  Read about [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
 
-To get started using the auto scrollview assistant.  First create a property in your UIViewController class.
+This example shows how to:
+1. Create an InputNavigator with a default controller.
+2. Add input items to the InputNavigator.
+3. Create an auto scrollview KeyboardAssistant.
 
 ```swift
 import UIKit
@@ -84,39 +87,38 @@ class YourViewController: UIViewController
     // MARK: - Properties
 
     private var keyboardAssistant: KeyboardAssistant!
-}
-```
-
-Then ...
-
-```swift
-override func viewDidLoad()
-{
-    super.viewDidLoad()
     
-    let navigator: InputNavigator = InputNavigator.createWithDefaultController()
-    navigator.addInputItems(inputItems: [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword])
- 
-    self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator, positionScrollView: self.scrollView, positionConstraint: .viewBottomToTopOfKeyboard, positionOffset: 30, bottomConstraint: self.scrollViewBottomConstraint, bottomConstraintLayoutView: self.view)
+    // MARK: - Outlets
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var lbTitle: UILabel!
+    @IBOutlet weak var txtFirstName: UITextField!
+    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var btRegisterAccount: UIButton!
+    
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    
+    // MARK: - Life Cycle
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+    
+        let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+        navigator.addInputItems(inputItems: [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword])
+    
+        self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator, positionScrollView: self.scrollView, positionConstraint: .viewBottomToTopOfKeyboard, positionOffset: 30, bottomConstraint: self.scrollViewBottomConstraint, bottomConstraintLayoutView: self.view)
+    }
 }
 ```
+
+#### Manual ScrollView Assistant:
 
 #### Manual Assistant:
 
-In this example Seek will animate a view's alpha and translate the view.
-
-```swift
-let seek: Seek = Seek()
-
-seek.view = myView
-seek.duration = 0.3
-seek.properties.fromAlpha = 0
-seek.properties.toAlpha = 1
-seek.properties.fromTransform = Seek.getTransform(x: 0, y: 0)
-seek.properties.toTransform = Seek.getTransform(x: 80, y: 80)
-
-seek.to(position: 1)
-```
 #### Configuring InputNavigator
 
 InputNavigator get's its own section because there is actually quite a lot to this class and there are quite a few different ways you can configure the InputNavigator.
@@ -177,9 +179,9 @@ The next built in navigation option is the keyboard return key.  When a UITextFi
 
 Note: The returnKeyType will not be set on UITextView objects.  This was done on purpose because the return key can be used for adding new lines to a UITextView.  If you need to navigate from UITextView's then think about using the default controller or a custom navigation of your own.
 
-Important! When creating an InputNavigator with keyboard navigation, there is a Bool flag called `shouldSetTextFieldDelegates`.  If true is passed, InputNavigator will set the UITextField delegate property in order to response to the textFieldShouldReturn delegate method.  If you need use UITextFieldDelegate in your UIViewController then pass false here and make sure to call the InputNavigator's textFieldShouldReturn method to forward navigation.  You can see an example of this in the code samples below.
+Important! When creating an InputNavigator with keyboard navigation, there is a Bool flag called `shouldSetTextFieldDelegates`.  If true is passed, InputNavigator will set the UITextField delegate property in order to respond to the textFieldShouldReturn delegate method.  If you need use UITextFieldDelegate in your UIViewController then pass false here and make sure to call the InputNavigator's textFieldShouldReturn method to forward navigation.  You can see an example of this in the code samples below.
 
-Below is how you create an InputNavigator with keyboard navigation.  Passing true here will set all UITextField delegate's to the InputNavigator.
+This is how you create an InputNavigator with keyboard navigation.  Passing true here will set all UITextField delegate's to the InputNavigator.
 ```swift
 override func viewDidLoad()
 {
@@ -193,6 +195,10 @@ If your UIViewController class need's to use UITextFieldDelegate, then set the f
 ```swift
 class YourViewController: UIViewController
 {
+    // MARK: - Properties
+
+    private var keyboardAssistant: KeyboardAssistant!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
