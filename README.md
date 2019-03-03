@@ -129,17 +129,26 @@ class YourViewController: UIViewController
 
 #### Configuring InputNavigator
 
+- [Create with Default Controller](create-with-default-controller)
+- [Create with Keyboard Navigation](create-with-keyboard-navigation)
+- [Create with Custom Controller](create-with-custom-controller)
+- [Create with Custom Accessory View](create-with-custom-accessory-view)
+- [Create with Keyboard Navigation and Default Controller](create-with-keyboard-navigation-and-default-controller)
+- [Create with Keyboard Navigation and Custom Controller](create-with-keyboard-navigation-and-custom-controller)
+- [Create with Keyboard Navigation and Custom Accessory View](create-with-keyboard-navigation-and-custom-accessory-view)
+- [Adding Input Items](adding-input-items)
+
 InputNavigator get's its own section because there is actually quite a lot to this class and there are quite a few different ways you can configure the InputNavigator.
 
 Before jumping into the code.  It's probably best I give a brief overview of the responsibilities of this class.  The main purprose of this class is to handle and provide navigation between input items (UITextField / UITextView).  InputNavigator is fully flexible, meaning you can choose to use the built in navigation options or provide your own.  There are two built in options, keyboard return key and DefaultNavigationView. Both can be used together, separately, or not at all.  You can provide your own custom views for navigation which get attached to the input item's inputAccessoryView and even use this alongside the keyboard return key if you choose.  There are a lot of options at your disposal. 
 
 Let's start with the built-in options and expand on those.
 
-##### DefaultNavigationView
+##### Create with Default Controller
 
 ![alt text](ReadMeAssets/nav_default_controller.jpg)
 
-We'll start with the DefaultNavigationView.  DefaultNavigationView is a custom view class that comes with the KeyboardAssistant module and has it's own .xib file for creating the UI.  It has 3 primary buttons, btPrev, btNext, and btDone.  The prev and next buttons are for navigating input items and the done button will close the keyboard by resigning the active input item.  To create a navigator with the default controller, use the static method as shown in the example below.
+We'll start with the default controller.  DefaultNavigationView is a custom view class that comes with the KeyboardAssistant module and has it's own .xib file for creating the UI.  It has 3 primary buttons, btPrev, btNext, and btDone.  The prev and next buttons are for navigating input items and the done button will close the keyboard by resigning the active input item.  To create a navigator with the default controller, use the static method as shown in the example below.
 
 ```swift
 override func viewDidLoad()
@@ -179,11 +188,11 @@ override func viewDidLoad()
 }
 ```
 
-##### Keyboard Return Key
+##### Create with Keyboard Navigation
 
 ![alt text](ReadMeAssets/nav_keyboard_navigation.jpg)
 
-The next built in navigation option is the keyboard return key.  When a UITextField is being edited the returnKeyType will either be set to next or done depending on the index position of the UITextField in the inputItems list.  If the UITextField being edited is at the end of the list, it's returnKeyType is set to done, otherwise it's set to next.  When a returnKeyType of next is tapped, InputNavigator will move to the next inputItem, if done is tapped, the current inputItem is resigned and the keyboard will hide. 
+The next built in navigation option is keyboard navigation which uses the keyboard's return key.  When a UITextField is being edited the returnKeyType will either be set to next or done depending on the index position of the UITextField in the inputItems list.  If the UITextField being edited is at the end of the list, it's returnKeyType is set to done, otherwise it's set to next.  When a returnKeyType of next is tapped, InputNavigator will move to the next inputItem, if done is tapped, the current inputItem is resigned and the keyboard will hide. 
 
 Note: The returnKeyType will not be set on UITextView objects.  This was done on purpose because the return key can be used for adding new lines to a UITextView.  If you need to navigate from UITextView's then think about using the default controller or a custom navigation of your own.
 
@@ -228,6 +237,14 @@ extension YourViewController: UITextFieldDelegate
 }
 ```
 
-##### Custom Controller
+##### Create with Custom Controller
 
-##### Custom Accessory View
+##### Create with Custom Accessory View
+
+#### Create with Keyboard Navigation and Default Controller
+
+#### Create with Keyboard Navigation and Custom Controller
+
+#### Create with Keyboard Navigation and Custom Accessory View
+
+#### Adding Input Items
