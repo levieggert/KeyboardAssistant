@@ -123,7 +123,7 @@ class YourViewController: UIViewController
 }
 ```
 
-Lastly, create the KeyboardAssistant.
+Then create the KeyboardAssistant using the newly created InputNavigator.
 
 ```swift
 import UIKit
@@ -167,6 +167,23 @@ class YourViewController: UIViewController
         bottomConstraint: self.scrollViewBottomConstraint, 
         bottomConstraintLayoutView: self.view)
     }
+}
+```
+
+Lastly, you will need to manage the lifecycle of registered notifications.  This is done through the KeyboardAssistant start and stop methods.
+```swift
+override func viewWillAppear(_ animated: Bool)
+{
+    super.viewWillAppear(animated)
+
+    self.keyboardAssistant.start()
+}
+
+override func viewWillDisappear(_ animated: Bool)
+{
+    super.viewWillAppear(animated)
+
+    self.keyboardAssistant.stop()
 }
 ```
 
