@@ -85,12 +85,27 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
         }
     }
     
-    // MARK: - Color
+    // MARK: - Colors
     
     public func setButtonColors(color: UIColor)
     {
+        self.setBtPrevColor(color: color)
+        self.setBtNextColor(color: color)
+        self.setBtDoneColor(color: color)
+    }
+    
+    public func setBtPrevColor(color: UIColor)
+    {
         self.btPrev.setImageColor(color: color)
+    }
+    
+    public func setBtNextColor(color: UIColor)
+    {
         self.btNext.setImageColor(color: color)
+    }
+    
+    public func setBtDoneColor(color: UIColor)
+    {
         self.btDone.setTitleColor(color, for: .normal)
     }
 }

@@ -45,7 +45,7 @@ class LongNestedScrollViewController: UIViewController
         let allowToSetInputDelegates: Bool = true
         
         let navigator: InputNavigator = InputNavigator.createWithDefaultController()
-        navigator.addInputItems(from: self)
+        navigator.addInputItems(from: self, itemType: .bothTextFieldAndTextView)
         
         if (!allowToSetInputDelegates)
         {
@@ -78,7 +78,7 @@ class LongNestedScrollViewController: UIViewController
         self.keyboardAssistant.observer.loggingEnabled = true
         self.keyboardAssistant.observer.loggingEnabled = true
         
-        let items: [UIView] = InputNavigator.getInputItems(from: self)
+        let items: [UIView] = InputNavigator.getInputItems(from: self, itemType: .bothTextFieldAndTextView)
         print(" --> total input items: \(items.count)")
         for item in items
         {

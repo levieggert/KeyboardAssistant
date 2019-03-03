@@ -35,12 +35,28 @@ class ViewSizeScrollViewController: UIViewController
     {
         super.viewDidLoad()
         
-        let useAutoKeyboardAssistant: Bool = false
+        let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
         //let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
-        let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
-        navigator.addInputItems(from: self)
+        //let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
+        let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+        //let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
+        //let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
+        navigator.defaultController?.setButtonColors(color: .red)
+        navigator.addInputItems(inputItems: [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword])
+        
+        // you can also configure the default controller in anyway you like.
+        if let defaultController = navigator.defaultController
+        {
+            defaultController.layer.shadowOpacity = 0 // remove top shadow or change the top shadow in anyway you want
+            defaultController.btPrev.backgroundColor = .lightGray
+            defaultController.btNext.backgroundColor = .lightGray
+            defaultController.btDone.backgroundColor = .lightGray
+            defaultController.setBtPrevColor(color: .white)
+            defaultController.setBtNextColor(color: .white)
+            defaultController.setBtDoneColor(color: .black)
+        }
         
         if (!allowToSetInputDelegates)
         {
@@ -73,7 +89,7 @@ class ViewSizeScrollViewController: UIViewController
         self.keyboardAssistant.loggingEnabled = true
         self.keyboardAssistant.observer.loggingEnabled = true
         
-        let items: [UIView] = InputNavigator.getInputItems(from: self)
+        let items: [UIView] = InputNavigator.getInputItems(from: self, itemType: .bothTextFieldAndTextView)
         print(" --> total input items: \(items.count)")
         for item in items
         {

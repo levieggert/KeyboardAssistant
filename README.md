@@ -9,6 +9,7 @@ Keyboard Assistant faciliates in the repositioning of views when the device Keyb
 - [Cocoapods Installation](#cocoapods)
 - [Documentation](#documentation)
 - [How to use](#how-to-use)
+- [Configuring InputNavigator](#configuring-inputnavigator)
 
 ### Requirements
 
@@ -71,6 +72,28 @@ Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.
 
 #### Auto ScrollView Assistant:
 
+This section will describe how to build the auto scrollview assistant.  It requires that you structure your UIViewController with a scrollview and contentview.  Read about Structuring your UIViewController.
+
+To get started using the auto scrollview assistant.  First create a property in your UIViewController class.
+
+```
+private var keyboardAssistant: KeyboardAssistant!
+```
+
+Then ...
+
+```
+override func viewDidLoad()
+{
+    super.viewDidLoad()
+    
+    let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+    navigator.addInputItems(inputItems: [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword])
+ 
+    self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator, positionScrollView: self.scrollView, positionConstraint: .viewBottomToTopOfKeyboard, positionOffset: 30, bottomConstraint: self.scrollViewBottomConstraint, bottomConstraintLayoutView: self.view)
+}
+```
+
 #### Manual Assistant:
 
 In this example Seek will animate a view's alpha and translate the view.
@@ -86,4 +109,36 @@ seek.properties.fromTransform = Seek.getTransform(x: 0, y: 0)
 seek.properties.toTransform = Seek.getTransform(x: 80, y: 80)
 
 seek.to(position: 1)
+```
+#### Configuring InputNavigator
+
+InputNavigator get's its own section because there is actually quite a lot to this class and there are many different ways you can configure the InputNavigator.
+
+Before jumping into the code.  It's probably best I give a brief overview of the responsibilities of this class.  The main purprose of this class is to handle and provide navigation between input items (UITextField / UITextView).  InputNavigator is fully flexible, meaning you can choose to use the built in navigation options or provide your own.  There are two built in options, keyboard return key and DefaultNavigationView. Both can be used together, separately, or not at all.  You can provide your own custom views for navigation which get attached to the inputs inputAccessoryView and even use custom views along with the built in keyboard return key navigation.  There are a lot of options at your disposal. 
+
+Let's start with the built-in options and expand on those.
+
+We'll start with the DefaultNavigationView.  DefaultNavigationView is a custom view class that comes with the KeyboardAssistant module and has it's own .xib file for creating the UI.  It has 3 primary buttons, btPrev, btNext, and btDone.  The prev and next buttons are for navigating input items and the done button will close the keyboard by resigning the active input item.  To create a navigator with the default controller, use the static method as shown in the example below.
+
+```
+let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+```
+
+Editing the default controller is easy.
+```
+let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+
+navigator.defaultController?.setButtonColors(color: .red) // change all button colors
+
+// you can also configure the default controller in anyway you like.
+if let defaultController = navigator.defaultController
+{
+    defaultController.layer.shadowOpacity = 0 // remove the top shadow or change the top shadow in anyway you want
+    defaultController.btPrev.backgroundColor = .lightGray
+    defaultController.btNext.backgroundColor = .lightGray
+    defaultController.btDone.backgroundColor = .lightGray
+    defaultController.setBtPrevColor(color: .white)
+    defaultController.setBtNextColor(color: .white)
+    defaultController.setBtDoneColor(color: .black)
+}
 ```

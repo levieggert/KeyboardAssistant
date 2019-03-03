@@ -12,6 +12,8 @@ public protocol InputNavigatorDelegate: class
 
 public class InputNavigator: NSObject
 {
+    public enum InputItemType { case textField; case textView; case bothTextFieldAndTextView; }
+    
     // MARK: - Properties
     
     public private(set) var accessoryController: InputNavigatorAccessoryController?
@@ -124,6 +126,10 @@ public class InputNavigator: NSObject
         }
     }
     
+    public var defaultController: DefaultNavigationView? {
+        return self.accessoryController as? DefaultNavigationView
+    }
+    
     // MARK: - Navigation
     
     public func gotoPreviousItem(shouldLoop: Bool)
@@ -174,13 +180,13 @@ public class InputNavigator: NSObject
     
     // MARK: - ViewController Input Items
     
-    public static func getInputItems(from: UIViewController) -> [UIView]
+    public static func getInputItems(from: UIViewController, itemType: InputItemType) -> [UIView]
     {
         let rootView: UIView = from.view
         
         var inputItems: [UIView] = Array()
         
-        self.recurseView(view: rootView, inputItems: &inputItems)
+        self.recurseView(view: rootView, inputItems: &inputItems, itemType: itemType)
         
         inputItems.sort { (this: UIView, that: UIView) -> Bool in
             
@@ -210,16 +216,32 @@ public class InputNavigator: NSObject
         return inputItems
     }
     
-    private static func recurseView(view: UIView, inputItems: inout [UIView])
-    {        
-        if (view is UITextField || view is UITextView)
+    private static func recurseView(view: UIView, inputItems: inout [UIView], itemType: InputItemType)
+    {
+        switch (itemType)
         {
-            inputItems.append(view)
+        case .textField:
+            if (view is UITextField)
+            {
+                inputItems.append(view)
+            }
+            
+        case .textView:
+            if (view is UITextView)
+            {
+                inputItems.append(view)
+            }
+            
+        case .bothTextFieldAndTextView:
+            if (view is UITextField || view is UITextView)
+            {
+                inputItems.append(view)
+            }
         }
         
         for view in view.subviews
         {
-            InputNavigator.recurseView(view: view, inputItems: &inputItems)
+            InputNavigator.recurseView(view: view, inputItems: &inputItems, itemType: itemType)
         }
     }
     
@@ -344,11 +366,9 @@ public class InputNavigator: NSObject
         }
     }
     
-    public func addInputItems(from: UIViewController)
+    public func addInputItems(from: UIViewController, itemType: InputItemType)
     {
-        // TODO: I think I want to make this private for now because it can really cause issues if someone has UITextView objects.  OR, add flag
-        // so users can only add UITextFields found within a controller?
-        self.addInputItems(inputItems: InputNavigator.getInputItems(from: from))
+        self.addInputItems(inputItems: InputNavigator.getInputItems(from: from, itemType: itemType))
     }
     
     public func addInputItems(inputItems: [UIView])
