@@ -191,15 +191,16 @@ override func viewDidLoad()
 
 If your UIViewController class need's to use UITextFieldDelegate, then set the flag to false and make sure you call textFieldShouldReturn on the InputNavigator.
 ```swift
-override func viewDidLoad()
+class YourViewController: UIViewController
 {
-    super.viewDidLoad()
-    
-    let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: false)
-}
-```
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
 
-```swift
+        let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: false)
+    }
+}
+
 // MARK: - UITextFieldDelegate
 
 extension YourViewController: UITextFieldDelegate
@@ -213,6 +214,6 @@ extension YourViewController: UITextFieldDelegate
 }
 ```
 
-##### Controller
+##### Custom Controller
 
 ##### Custom Accessory View
