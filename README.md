@@ -8,8 +8,9 @@ Keyboard Assistant faciliates in the repositioning of views when the device Keyb
 - [Requirements](#requirements)
 - [Cocoapods Installation](#cocoapods)
 - [Documentation](#documentation)
-- [How to use](#how-to-use)
-- [Configuring InputNavigator](#configuring-inputnavigator)
+- [How to use KeyboardAssistant](#how-to-use-keyboardassistant)
+- [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning)
+- [How to use InputNavigator](#how-to-use-inputnavigator)
 
 ### Requirements
 
@@ -39,14 +40,24 @@ KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigat
 
 - KeyboardAssistant is the main class you will be working with.  It holds an observer (KeyboardObserver) and navigator (InputNavigator) and handles repositioning views when the keyboard height changes and when new input items are navigated to.
 
-### How to use
+### How to use KeyboardAssistant
+
+The KeyboardAssistant class is the main class you will be using for positioning UIView's above the device keyboard.  Currently, this class supports 1 option for repositioning views above the keyboard which is utilizing a UIScrollView.  However, if you don't want to use a UIScrollView, you can still take advantage of using KeyboardAssistant to notify you of position changes.
+
+In the future I may add support for more options.  However, my personal preference is to use a UIScrollView which I elaborate on in [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
+
+#### Use auto assistant to position a UIScrollView
+
+#### Use manual assistant to position a UIScrollView
+
+#### Use manual assistant to do your own positioning
 
 This section is broken up into the following parts.
 1. How to structure your controller for keyboard positioning.
 2. How to create and use the auto scrollview assistant.
 3. How to create and use the manual assistant.
 
-#### Structuring your UIViewController for UIScrollView positioning
+### Structuring your UIViewController for UIScrollView positioning
 
 For Keyboard positioning, I prefer to use the UIScrollView approach.  There are a few major reasons for this.  
 1. It's a lot more user friendly because it allows user's to scroll through input while the keyboard is open.  
@@ -127,7 +138,7 @@ class YourViewController: UIViewController
 
 #### Manual Assistant:
 
-#### Configuring InputNavigator
+#### How to use InputNavigator
 
 - [Create with Default Controller](#create-with-default-controller)
 - [Create with Keyboard Navigation](#create-with-keyboard-navigation)
