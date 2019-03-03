@@ -73,6 +73,16 @@ public class KeyboardAssistant: NSObject
         return assistant
     }
     
+    static public func createManualKeyboardAssistant(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate) -> KeyboardAssistant
+    {
+        let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
+        
+        assistant.type = .manual
+        assistant.delegate = delegate
+        
+        return assistant
+    }
+    
     deinit
     {
         self.stop()

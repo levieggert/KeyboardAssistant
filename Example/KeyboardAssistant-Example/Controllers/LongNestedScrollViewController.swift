@@ -44,7 +44,7 @@ class LongNestedScrollViewController: UIViewController
         let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
-        let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
+        let navigator: InputNavigator = InputNavigator.createWithDefaultController()
         navigator.addInputItems(from: self)
         
         if (!allowToSetInputDelegates)

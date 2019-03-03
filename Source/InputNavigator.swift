@@ -62,34 +62,39 @@ public class InputNavigator: NSObject
         }
     }
     
-    static public func createDefaultNavigationController() -> InputNavigator
+    static public func createWithDefaultController() -> InputNavigator
     {
         return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
     }
     
-    static public func createAccessoryNavigation(withAccessoryController: InputNavigatorAccessoryController) -> InputNavigator
+    static public func createWithController(accessoryController: InputNavigatorAccessoryController) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: withAccessoryController, customAccessoryView: nil)
+        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: accessoryController, customAccessoryView: nil)
     }
     
-    static public func createCustomNavigation(withCustomAccessoryView: UIView) -> InputNavigator
+    static public func createWithCustomAccessoryView(accessoryView: UIView) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: nil, customAccessoryView: withCustomAccessoryView)
+        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: nil, customAccessoryView: accessoryView)
     }
     
-    static public func createKeyboardNavigation(shouldSetTextFieldDelegates: Bool) -> InputNavigator
+    static public func createWithKeyboardNavigation(shouldSetTextFieldDelegates: Bool) -> InputNavigator
     {
         return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: nil, customAccessoryView: nil)
     }
     
-    static public func createKeyboardNavigation(shouldSetTextFieldDelegates: Bool, withAccessoryController: InputNavigatorAccessoryController) -> InputNavigator
+    static public func createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: Bool) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: withAccessoryController, customAccessoryView: nil)
+        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
     }
     
-    static public func createKeyboardNavigation(shouldSetTextFieldDelegates: Bool, withCustomAccessoryView: UIView) -> InputNavigator
+    static public func createWithKeyboardNavigation(shouldSetTextFieldDelegates: Bool, andController: InputNavigatorAccessoryController) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: nil, customAccessoryView: withCustomAccessoryView)
+        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: andController, customAccessoryView: nil)
+    }
+    
+    static public func createWithKeyboardNavigation(shouldSetTextFieldDelegates: Bool, andCustomAccessoryView: UIView) -> InputNavigator
+    {
+        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: nil, customAccessoryView: andCustomAccessoryView)
     }
     
     deinit
@@ -341,6 +346,8 @@ public class InputNavigator: NSObject
     
     public func addInputItems(from: UIViewController)
     {
+        // TODO: I think I want to make this private for now because it can really cause issues if someone has UITextView objects.  OR, add flag
+        // so users can only add UITextFields found within a controller?
         self.addInputItems(inputItems: InputNavigator.getInputItems(from: from))
     }
     

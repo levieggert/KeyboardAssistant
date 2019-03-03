@@ -39,7 +39,7 @@ class ViewSizeScrollViewController: UIViewController
         let allowToSetInputDelegates: Bool = true
         
         //let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
-        let navigator: InputNavigator = InputNavigator.createKeyboardNavigation(shouldSetTextFieldDelegates: true)
+        let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
         navigator.addInputItems(from: self)
         
         if (!allowToSetInputDelegates)
