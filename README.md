@@ -118,6 +118,10 @@ Before jumping into the code.  It's probably best I give a brief overview of the
 
 Let's start with the built-in options and expand on those.
 
+##### DefaultNavigationView
+
+![alt text](ReadMeAssets/nav_default_controller.jpg)
+
 We'll start with the DefaultNavigationView.  DefaultNavigationView is a custom view class that comes with the KeyboardAssistant module and has it's own .xib file for creating the UI.  It has 3 primary buttons, btPrev, btNext, and btDone.  The prev and next buttons are for navigating input items and the done button will close the keyboard by resigning the active input item.  To create a navigator with the default controller, use the static method as shown in the example below.
 
 ```swift
@@ -153,7 +157,3 @@ override func viewDidLoad()
     }
 }
 ```
-
-![alt text](ReadMeAssets/nav_default_controller.jpg)
-
-
