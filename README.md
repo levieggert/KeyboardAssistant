@@ -108,9 +108,17 @@ class YourViewController: UIViewController
         super.viewDidLoad()
     
         let navigator: InputNavigator = InputNavigator.createWithDefaultController()
-        navigator.addInputItems(inputItems: [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword])
+        navigator.addInputItems(inputItems: [self.txtFirstName, 
+        self.txtLastName, 
+        self.txtEmail, 
+        self.txtPassword])
     
-        self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator, positionScrollView: self.scrollView, positionConstraint: .viewBottomToTopOfKeyboard, positionOffset: 30, bottomConstraint: self.scrollViewBottomConstraint, bottomConstraintLayoutView: self.view)
+        self.keyboardAssistant = KeyboardAssistant.createAutoScrollViewKeyboardAssistant(inputNavigator: navigator, 
+        positionScrollView: self.scrollView, 
+        positionConstraint: .viewBottomToTopOfKeyboard, 
+        positionOffset: 30, 
+        bottomConstraint: self.scrollViewBottomConstraint, 
+        bottomConstraintLayoutView: self.view)
     }
 }
 ```
