@@ -3,7 +3,7 @@ KeyboardAssistant
 
 Version 1.0.0
 
-Keyboard Assistant faciliates in the repositioning of views when the device Keyboard is present.  It does this by observing keyboard notifications (willShow, didShow, willHide, didHide) and by responding to UITextField and UITextView objects when they become active and resign. 
+Keyboard Assistant faciliates in the repositioning of views when the device Keyboard is present.  It does this by observing keyboard notifications (willShow, didShow, willHide, didHide) and by responding to UITextField and UITextView objects when they begin editing. 
 
 - [Requirements](#requirements)
 - [Cocoapods Installation](#cocoapods)
@@ -37,7 +37,7 @@ KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigat
 
 * InputNavigator manages a sequence of input and is responsible for creating and handling the navigation between these inputs.  On iOS, input can be obtained from user's by using UITextField and UITextView objects.  This class supports both UITextField and UITextView.  To handle navigation between these inputs, Input Navigator can be configured to use the keyboard return key, it can also use a custom accessory view that conforms to InputNavigatorAccessoryController, or you can create your own custom input accessory view of type UIView and directly call InputNavigator's navigation methods.
 
-- KeyboardAssistant is the main class you will be working with.  It holds an observer (KeyboardObserver) and navigator (InputNavigator) and handles repositioning views when the keyboard height changes and when new input items are navigated to.  There are currently two different ways to instantiate and use this class.  You can read more on that in the How to use section.
+- KeyboardAssistant is the main class you will be working with.  It holds an observer (KeyboardObserver) and navigator (InputNavigator) and handles repositioning views when the keyboard height changes and when new input items are navigated to.
 
 ### How to use
 
@@ -46,7 +46,7 @@ This section is broken up into the following parts.
 2. How to create and use the auto scrollview assistant.
 3. How to create and use the manual assistant.
 
-#### Structuring your UIViewController
+#### Structuring your UIViewController for UIScrollView positioning
 
 For Keyboard positioning, I prefer to use the UIScrollView approach.  There are a few major reasons for this.  
 1. It's a lot more user friendly because it allows user's to scroll through input while the keyboard is open.  
@@ -58,15 +58,15 @@ Here is how you will need to structure your controller view hier-archy.  UIView 
 UIScrollView should set all edge constraints to the UIView [root / UIViewController.view].
 UIView [contentView] should set all edge constraints to the UIScrollView and also set equal widths to UIScrollView.
 
-That's it.  Then all your custom UI goes inside the UIVIew [contentView].  
+That's it.  Then all your custom UI goes inside the UIView [contentView].  
 
-Note:  This setup uses auto layout to determine the UIScrollView's content size.  That means, all of your subviews inside of the UIView [contentView] need to provide top and bottom constraints so the contentView's height can be satisfied.  It will also require some of your subviews height contraints to be set.  Unless ofcourse, their height is determined by their child views.  If you are unfamiliar with this concept read more about autolayout. 
+Note:  This setup uses auto layout to determine the UIScrollView's content size.  That means, all of your subviews inside of the UIView [contentView] need to provide top and bottom constraints so the contentView's height can be satisfied.  It will also require some of your subviews height contraints to be set.  Unless ofcourse, their height is determined by their subviews.  If you are unfamiliar with this concept read more about autolayout. 
 
 The below screenshot is an example of this structure.  The constraints on the right show how to setup the UIScrollView and UIView [contentView] constraints.
 
 ![alt text](ReadMeAssets/scrollview_structure_constraints.jpg)
 
-Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.
+Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.  This constraint is positoned at the top of the keyboard allowing the entire view to be scrolled through without the keyboard getting in the way.
 
 ![alt text](ReadMeAssets/scrollview_bottom_constraint.jpg)
 
@@ -76,13 +76,20 @@ This section will describe how to build the auto scrollview assistant.  It requi
 
 To get started using the auto scrollview assistant.  First create a property in your UIViewController class.
 
-```
-private var keyboardAssistant: KeyboardAssistant!
+```swift
+import UIKit
+
+class YourViewController: UIViewController
+{
+    // MARK: - Properties
+
+    private var keyboardAssistant: KeyboardAssistant!
+}
 ```
 
 Then ...
 
-```
+```swift
 override func viewDidLoad()
 {
     super.viewDidLoad()
@@ -112,9 +119,9 @@ seek.to(position: 1)
 ```
 #### Configuring InputNavigator
 
-InputNavigator get's its own section because there is actually quite a lot to this class and there are many different ways you can configure the InputNavigator.
+InputNavigator get's its own section because there is actually quite a lot to this class and there are quite a few different ways you can configure the InputNavigator.
 
-Before jumping into the code.  It's probably best I give a brief overview of the responsibilities of this class.  The main purprose of this class is to handle and provide navigation between input items (UITextField / UITextView).  InputNavigator is fully flexible, meaning you can choose to use the built in navigation options or provide your own.  There are two built in options, keyboard return key and DefaultNavigationView. Both can be used together, separately, or not at all.  You can provide your own custom views for navigation which get attached to the inputs inputAccessoryView and even use custom views along with the built in keyboard return key navigation.  There are a lot of options at your disposal. 
+Before jumping into the code.  It's probably best I give a brief overview of the responsibilities of this class.  The main purprose of this class is to handle and provide navigation between input items (UITextField / UITextView).  InputNavigator is fully flexible, meaning you can choose to use the built in navigation options or provide your own.  There are two built in options, keyboard return key and DefaultNavigationView. Both can be used together, separately, or not at all.  You can provide your own custom views for navigation which get attached to the input item's inputAccessoryView and even use this alongside the keyboard return key if you choose.  There are a lot of options at your disposal. 
 
 Let's start with the built-in options and expand on those.
 
@@ -142,12 +149,16 @@ override func viewDidLoad()
 
     let navigator: InputNavigator = InputNavigator.createWithDefaultController()
     
-    navigator.defaultController?.setButtonColors(color: .red) // change all button colors
+    // change all button colors
+    navigator.defaultController?.setButtonColors(color: .red)
     
     // you can also configure the default controller in anyway you like.
     if let defaultController = navigator.defaultController
     {
-        defaultController.layer.shadowOpacity = 0 // remove the top shadow or change the top shadow in anyway you want
+        // remove the top shadow or change the top shadow in anyway you want
+        defaultController.layer.shadowOpacity = 0
+        
+        // edit individual buttons
         defaultController.btPrev.backgroundColor = .lightGray
         defaultController.btNext.backgroundColor = .lightGray
         defaultController.btDone.backgroundColor = .lightGray
@@ -157,3 +168,51 @@ override func viewDidLoad()
     }
 }
 ```
+
+##### Keyboard Return Key
+
+![alt text](ReadMeAssets/nav_keyboard_navigation.jpg)
+
+The next built in navigation option is the keyboard return key.  When a UITextField is being edited the returnKeyType will either be set to next or done depending on the index position of the UITextField in the inputItems list.  If the UITextField being edited is at the end of the list, it's returnKeyType is set to done, otherwise it's set to next.  When a returnKeyType of next is tapped, InputNavigator will move to the next inputItem, if done is tapped, the current inputItem is resigned and the keyboard will hide. 
+
+Note: The returnKeyType will not be set on UITextView objects.  This was done on purpose because the return key can be used for adding new lines to a UITextView.  If you need to navigate from UITextView's then think about using the default controller or a custom navigation of your own.
+
+Important! When creating an InputNavigator with keyboard navigation, there is a Bool flag called `shouldSetTextFieldDelegates`.  If true is passed, InputNavigator will set the UITextField delegate property in order to response to the textFieldShouldReturn delegate method.  If you need use UITextFieldDelegate in your UIViewController then pass false here and make sure to call the InputNavigator's textFieldShouldReturn method to forward navigation.  You can see an example of this in the code samples below.
+
+Below is how you create an InputNavigator with keyboard navigation.  Passing true here will set all UITextField delegate's to the InputNavigator.
+```swift
+override func viewDidLoad()
+{
+    super.viewDidLoad()
+    
+    let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
+}
+```
+
+If your UIViewController class need's to use UITextFieldDelegate, then set the flag to false and make sure you call textFieldShouldReturn on the InputNavigator.
+```swift
+override func viewDidLoad()
+{
+    super.viewDidLoad()
+    
+    let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: false)
+}
+```
+
+```swift
+// MARK: - UITextFieldDelegate
+
+extension YourViewController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {        
+        _ = self.keyboardAssistant.navigator.textFieldShouldReturn(textField)
+
+        return true
+    }
+}
+```
+
+##### Controller
+
+##### Custom Accessory View

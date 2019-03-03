@@ -38,11 +38,8 @@ class ViewSizeScrollViewController: UIViewController
         let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
-        //let navigator: InputNavigator = InputNavigator.createDefaultNavigationController()
-        //let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
-        let navigator: InputNavigator = InputNavigator.createWithDefaultController()
-        //let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
-        //let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
+        //let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+        let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
         //navigator.defaultController?.setButtonColors(color: .red)
         navigator.addInputItems(inputItems: [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword])
         
