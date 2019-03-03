@@ -121,25 +121,36 @@ Let's start with the built-in options and expand on those.
 We'll start with the DefaultNavigationView.  DefaultNavigationView is a custom view class that comes with the KeyboardAssistant module and has it's own .xib file for creating the UI.  It has 3 primary buttons, btPrev, btNext, and btDone.  The prev and next buttons are for navigating input items and the done button will close the keyboard by resigning the active input item.  To create a navigator with the default controller, use the static method as shown in the example below.
 
 ```swift
-let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+override func viewDidLoad()
+{
+    super.viewDidLoad()
+    
+    let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+}
 ```
 
 Editing the default controller is easy.
-````swift
-let navigator: InputNavigator = InputNavigator.createWithDefaultController()
 
-navigator.defaultController?.setButtonColors(color: .red) // change all button colors
-
-// you can also configure the default controller in anyway you like.
-if let defaultController = navigator.defaultController
+```swift
+override func viewDidLoad()
 {
-    defaultController.layer.shadowOpacity = 0 // remove the top shadow or change the top shadow in anyway you want
-    defaultController.btPrev.backgroundColor = .lightGray
-    defaultController.btNext.backgroundColor = .lightGray
-    defaultController.btDone.backgroundColor = .lightGray
-    defaultController.setBtPrevColor(color: .white)
-    defaultController.setBtNextColor(color: .white)
-    defaultController.setBtDoneColor(color: .black)
+    super.viewDidLoad()
+
+    let navigator: InputNavigator = InputNavigator.createWithDefaultController()
+    
+    navigator.defaultController?.setButtonColors(color: .red) // change all button colors
+    
+    // you can also configure the default controller in anyway you like.
+    if let defaultController = navigator.defaultController
+    {
+        defaultController.layer.shadowOpacity = 0 // remove the top shadow or change the top shadow in anyway you want
+        defaultController.btPrev.backgroundColor = .lightGray
+        defaultController.btNext.backgroundColor = .lightGray
+        defaultController.btDone.backgroundColor = .lightGray
+        defaultController.setBtPrevColor(color: .white)
+        defaultController.setBtNextColor(color: .white)
+        defaultController.setBtDoneColor(color: .black)
+    }
 }
 ```
 
