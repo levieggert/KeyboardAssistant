@@ -1026,7 +1026,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="55" id="KQs-sK-YWD"/>
                                                 </constraints>
-                                                <state key="normal" title="Done">
+                                                <state key="normal" title="Sign Up">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>

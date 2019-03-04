@@ -35,13 +35,13 @@ class ViewSizeScrollViewController: UIViewController
     {
         super.viewDidLoad()
         
-        let useAutoKeyboardAssistant: Bool = true
+        let useAutoKeyboardAssistant: Bool = false
         let allowToSetInputDelegates: Bool = true
         
         //let navigator: InputNavigator = InputNavigator.createWithDefaultController()
         //let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
-        let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
         //navigator.defaultController?.setButtonColors(color: .red)
+        let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
         navigator.addInputItems(inputItems: [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword])
         
         if (!allowToSetInputDelegates)
@@ -139,7 +139,18 @@ extension ViewSizeScrollViewController: KeyboardAssistantDelegate
     {
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 20
+                
+        if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false)
+        {
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: nextInputItem, constraint: constraint, offset: offset)
+        }
+        else
+        {
+            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.btRegisterAccount, constraint: constraint, offset: offset)
+        }
         
+        
+        /*
         if (toInputItem == self.txtFirstName)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtLastName, constraint: constraint, offset: offset)
@@ -155,7 +166,7 @@ extension ViewSizeScrollViewController: KeyboardAssistantDelegate
         else if (toInputItem == self.txtPassword)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.btRegisterAccount, constraint: constraint, offset: offset)
-        }
+        }*/
     }
 }
 
