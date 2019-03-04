@@ -7,10 +7,9 @@ Keyboard Assistant faciliates in the repositioning of views when the device Keyb
 
 - [Requirements](#requirements)
 - [Cocoapods Installation](#cocoapods)
-- [Documentation](#documentation)
-- [How to use KeyboardAssistant](#how-to-use-keyboardassistant)
-- [Structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning)
-- [How to use InputNavigator](#how-to-use-inputnavigator)
+- [How To Use KeyboardAssistant](#how-to-use-keyboardassistant)
+- [How To Use InputNavigator](#how-to-use-inputnavigator)
+- [Structuring Your ScrollView](#structuring-your-scrollview)
 
 ### Requirements
 
@@ -30,34 +29,26 @@ target '<Your Target Name>' do
 end
 ```
 
-### Documentation
+### How To Use KeyboardAssistant
 
-KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigator, and KeyboardAssistant.  KeyboardAssistant acts as a layer on top of KeyboardObserver and InputNavigator and depends on these 2 classes.  You can read more about these classes and their responsibilities below.
+There are 3 primary ways to use KeyboardAssistant.
 
-* KeyboardObserver, as the name of this class states, has the sole responsibility of observing the device Keyboard.  It will register keyboard notifications (willShow, didShow, willHide, didHide, didChangeFrame) and retrieve the height of the keyboard.  Its job is to tell the observee (KeyboardAssistant) about keyboard state changes and height changes. 
+1. [Auto ScrollView Assistant](#auto-scrollview-assistant): Automatically positions to input items within a scrollview.
+2. [Manual ScrollView Assistant](#manual-scrollview-assistant): Provides dynamic positioning within a scrollview.  Position to buttons, or to the next input item.
+3. [Manual Assistant](#manual-assistant): Most flexible.  A scrollview is not required.  Instead, you write the positioning code.
 
-* InputNavigator manages a sequence of input and is responsible for creating and handling the navigation between these inputs.  On iOS, input can be obtained from user's by using UITextField and UITextView objects.  This class supports both UITextField and UITextView.  To handle navigation between these inputs, Input Navigator can be configured to use the keyboard return key, it can also use a custom accessory view that conforms to InputNavigatorAccessoryController, or you can create your own custom input accessory view of type UIView and directly call InputNavigator's navigation methods.
+#### Auto ScrollView Assistant
 
-- KeyboardAssistant is the main class you will be working with.  It holds an observer (KeyboardObserver) and navigator (InputNavigator) and handles repositioning views when the keyboard height changes and when new input items are navigated to.
+The auto scrollview assistant will automatically position input items above the keyboard for you.  There is minimal code required to set it up, however, you will need to structure your viewcontroller classes to use a scrollview.
 
-### How to use KeyboardAssistant
+Before continuing any further, read more about how to [structure your scrollview](#structuring-your-scrollview).
 
-The KeyboardAssistant class is the main class you will be using for positioning UIViews above the device keyboard.  Currently, this class supports one option for repositioning views above the keyboard which is utilizing a UIScrollView.  However, if you don't wish to use a UIScrollView, you can still take advantage of using KeyboardAssistant to notify you of position changes for your own custom positioning.  It's very easy.
-
-In the future I may add support for more options.  However, my personal preference is to use a UIScrollView which I elaborate more on in structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
-
-In this next section I will go over setting up the auto scrollview assistant.  If you'd like to do things manually you can jump ahead to the [manual assistant](#use-manual-assistant-to-do-your-own-positioning).
-
-#### Use auto assistant to position a UIScrollView
-
-This section will describe how to build the auto scrollview assistant.  It requires that you structure your UIViewController with a scrollview and contentview.  Read about [structuring your UIViewController for UIScrollView positioning](#structuring-your-uiviewcontroller-for-uiscrollview-positioning).
-
-This example shows how to:
-1. Create an InputNavigator with a default controller.  You can read more about using InputNavigator [here](#how-to-use-inputnavigator).
+In this example we will:
+1. Create an InputNavigator with a default controller.  If you are unfamiliar with the InputNavigator than read more about it [here](#how-to-use-inputnavigator).
 2. [Add](#adding-input-items) input items to the InputNavigator.
-3. Create an auto scrollview KeyboardAssistant.
+3. Create an auto scrollview assistant.
 
-To get started creating the auto scrollview assistant.  First declare a KeyboardAssistant variable in your UIViewController class.
+To get started creating the auto scrollview assistant.  First declare a KeyboardAssistant variable in your controller class.
 ```swift
 import UIKit
 
@@ -69,7 +60,7 @@ class YourViewController: UIViewController
 }
 ```
 
-Next, make sure your UIViewController is structured to use a UIScrollView for repositioning.  You will need a reference to the UIScrollView that is repositioned and the UIScrollView's bottom constraint which is placed at the top of the device keyboard by the keyboard assistant.
+Next, make sure your controller is structured to use a UIScrollView for repositioning.  You will need a reference to the UIScrollView that is repositioned and the UIScrollView's bottom constraint which is placed at the top of the device keyboard by the keyboard assistant.
 ```swift
 import UIKit
 
@@ -131,7 +122,7 @@ Then create the KeyboardAssistant using the newly created InputNavigator.  There
 3. positionConstraint: There are 2 types of position constraints. (viewTopToTopOfScreen and viewBottomToTopOfKeyboard) which define how to position an input item.  Either position the top of the view to the top of the screen or the bottom of the view to the top of the keyboard.
 4. positionOffset: This is an offset that will be applied after the view is positioned by the position constraint.  So if you use the position constraint viewTopToTopOfScreen, the view top will get positioned to the top of the device screen and then offset by the position offset.
 5. bottomConstraint: This is the scrollview's bottom constraint.  It is set to the top of the keyboard.  This allows user's to scroll through all subviews without the keyboard interfering.
-6. bottomConstraintLayoutView: This is required for changing the position of the bottomConstraint.  In most cases this will be the UIViewController's view property because it is the parent of the UIScrollView's bottom constraint.
+6. bottomConstraintLayoutView: This is required for changing the position of the bottomConstraint.  In most cases this will be the controller view property because it is the parent of the UIScrollView's bottom constraint.
 ```swift
 import UIKit
 
@@ -197,7 +188,7 @@ override func viewWillDisappear(_ animated: Bool)
 
 That's all there is to it.  Whenever one of the input items is active, it will be repositioned for you.  However, there may be a case where you want to manually position to a view.  For example, when an input item is focused, you want to position to a different view, like a button that is below the input item or an input item that is a couple input items down.  In this next example I will show you how to use the KeyboardAssistant to manually position a scrollview.
 
-#### Use manual assistant to position a UIScrollView
+#### Manual ScrollView Assistant
 
 The manual assistant can be used to reposition your scrollview manually.  So for example, when an input item is focused you can position to a different view.  Like a button below the input item or another input item that is a couple input items down.
 
@@ -317,33 +308,9 @@ extension YourViewController: KeyboardAssistantDelegate
 }
 ```
 
-#### Use manual assistant to do your own positioning
+#### Manual Assistant
 
-### Structuring your UIViewController for UIScrollView positioning
-
-For Keyboard positioning, I prefer to use the UIScrollView approach.  There are a few major reasons for this.  
-1. It's a lot more user friendly because it allows user's to scroll through input while the keyboard is open.  
-2. It's much easier to manage than say a UITableView.  UITableView's are great, but when collecting input from user's they can become a pain to manage.  This is because as you scroll through a UITableView, cell's are getting recycled.  Extra management is required to collect input from UITextFields as well as navigating to previous and next textfield input items.  
-3. I end up having to use a UIScrollView on most my view controllers anyways to handle shorter device sizes.
-
-Here is how you will need to structure your controller view hier-archy.  UIView [root / UIViewController.view]  >  UIScrollView [scrollView]  >  UIView [contentView].
-
-UIScrollView should set all edge constraints to the UIView [root / UIViewController.view].
-UIView [contentView] should set all edge constraints to the UIScrollView and also set equal widths to UIScrollView.
-
-That's it.  Then all your custom UI goes inside the UIView [contentView].  
-
-Note:  This setup uses auto layout to determine the UIScrollView's content size.  That means, all of your subviews inside of the UIView [contentView] need to provide top and bottom constraints so the contentView's height can be satisfied.  It will also require some of your subviews height contraints to be set.  Unless ofcourse, their height is determined by their subviews.  If you are unfamiliar with this concept read more about autolayout. 
-
-The below screenshot is an example of this structure.  The constraints on the right show how to setup the UIScrollView and UIView [contentView] constraints.
-
-![alt text](ReadMeAssets/scrollview_structure_constraints.jpg)
-
-Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.  This constraint is positoned at the top of the keyboard allowing the entire view to be scrolled through without the keyboard getting in the way.
-
-![alt text](ReadMeAssets/scrollview_bottom_constraint.jpg)
-
-#### How to use InputNavigator
+#### How To Use InputNavigator
 
 - [Create with Default Controller](#create-with-default-controller)
 - [Create with Keyboard Navigation](#create-with-keyboard-navigation)
@@ -360,7 +327,7 @@ Before jumping into the code.  It's probably best I give a brief overview of the
 
 Let's start with the built-in options and expand on those.
 
-##### Create with Default Controller
+##### Create With Default Controller
 
 ![alt text](ReadMeAssets/nav_default_controller.jpg)
 
@@ -404,7 +371,7 @@ override func viewDidLoad()
 }
 ```
 
-##### Create with Keyboard Navigation
+##### Create With Keyboard Navigation
 
 ![alt text](ReadMeAssets/nav_keyboard_navigation.jpg)
 
@@ -412,7 +379,7 @@ The next built in navigation option is keyboard navigation which uses the keyboa
 
 Note: The returnKeyType will not be set on UITextView objects.  This was done on purpose because the return key can be used for adding new lines to a UITextView.  If you need to navigate from UITextView's then think about using the default controller or a custom navigation of your own.
 
-Important! When creating an InputNavigator with keyboard navigation, there is a Bool flag called `shouldSetTextFieldDelegates`.  If true is passed, InputNavigator will set the UITextField delegate property in order to respond to the textFieldShouldReturn delegate method.  If you need use UITextFieldDelegate in your UIViewController then pass false here and make sure to call the InputNavigator's textFieldShouldReturn method to forward navigation.  You can see an example of this in the code samples below.
+Important! When creating an InputNavigator with keyboard navigation, there is a Bool flag called `shouldSetTextFieldDelegates`.  If true is passed, InputNavigator will set the UITextField delegate property in order to respond to the textFieldShouldReturn delegate method.  If you need use UITextFieldDelegate in your controller then pass false here and make sure to call the InputNavigator's textFieldShouldReturn method to forward navigation.  You can see an example of this in the code samples below.
 
 This is how you create an InputNavigator with keyboard navigation.  Passing true here will set all UITextField delegate's to the InputNavigator.
 ```swift
@@ -424,7 +391,7 @@ override func viewDidLoad()
 }
 ```
 
-If your UIViewController class need's to use UITextFieldDelegate, then set the flag to false and make sure you call textFieldShouldReturn on the InputNavigator.
+If your controller class need's to use UITextFieldDelegate, then set the flag to false and make sure you call textFieldShouldReturn on the InputNavigator.
 ```swift
 class YourViewController: UIViewController
 {
@@ -453,14 +420,43 @@ extension YourViewController: UITextFieldDelegate
 }
 ```
 
-##### Create with Custom Controller
+##### Create With Custom Controller
 
-##### Create with Custom Accessory View
+##### Create With Custom Accessory View
 
-#### Create with Keyboard Navigation and Default Controller
+#### Create With Keyboard Navigation And Default Controller
 
-#### Create with Keyboard Navigation and Custom Controller
+#### Create With Keyboard Navigation And Custom Controller
 
-#### Create with Keyboard Navigation and Custom Accessory View
+#### Create With Keyboard Navigation And Custom Accessory View
 
 #### Adding Input Items
+
+- [Back To How To Use KeyboardAssistant](#how-to-use-keyboardassistant)
+
+### Structuring Your ScrollView
+
+For Keyboard positioning, I prefer to use the UIScrollView approach.  There are a few major reasons for this.  
+1. It's a lot more user friendly because it allows user's to scroll through input while the keyboard is open.  
+2. It's much easier to manage than say a UITableView.  UITableView's are great, but when collecting input from user's they can become a pain to manage.  This is because as you scroll through a UITableView, cell's are getting recycled.  This adds extra management for collecting input and extra management for input navigation.
+3. I end up having to use a UIScrollView on most my view controllers anyways to handle shorter device sizes.
+
+Here is how you will need to structure your controller view hier-archy.  UIView [root / UIViewController.view]  >  UIScrollView [scrollView]  >  UIView [contentView].
+
+UIScrollView should set all edge constraints to the UIView [root / UIViewController.view].
+UIView [contentView] should set all edge constraints to the UIScrollView and also set equal widths to UIScrollView.
+
+That's it.  Then all your custom UI goes inside the UIView [contentView].  
+
+Note:  This setup uses auto layout to determine the UIScrollView's content size.  That means, all of your subviews inside of the UIView [contentView] need to provide top and bottom constraints so the contentView's height can be satisfied.  It will also require some of your subviews height contraints to be set.  Unless ofcourse, their height is determined by their subviews.  If you are unfamiliar with this concept read more about autolayout. 
+
+The below screenshot is an example of this structure.  The constraints on the right show how to setup the UIScrollView and UIView [contentView] constraints.
+
+![alt text](ReadMeAssets/scrollview_structure_constraints.jpg)
+
+Lastly, make sure to connect the UIScrollView's bottom constrant to an outlet.  This constraint is positoned at the top of the keyboard allowing the entire view to be scrolled through without the keyboard getting in the way.
+
+![alt text](ReadMeAssets/scrollview_bottom_constraint.jpg)
+
+- [Back To Auto ScrollView Assistant](#auto-scrollview-assistant)
+- [Back To Manual ScrollView Assistant](#manual-scrollview-assistant)
