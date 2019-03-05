@@ -580,7 +580,7 @@ There are a couple different ways to add input items to the InputNavigator.
 
 When adding input items explicitly.  InputNavigator will navigate these items in the order they are added.
 
-To add input items explicitly, call the following methods on InputNavigator:
+To add input items explicitly, call the following methods on your InputNavigator instance:
 ```swift
 addInputItem(inputItem: UIView)
 addInputItems(inputItems: [UIView])
@@ -595,6 +595,7 @@ Two parameters are required for this method.  UIViewController and InputItemType
 - InputItem.textView: Only add textviews found in the viewcontroller.
 - InputItem.bothTextFieldAndTextView: Add both textfields and textviews found in the viewcontroller.
 
+Call the following method on your InputNavigator instance:
 ```swift
 addInputItems(from: UIViewController, itemType: InputItemType)
 ```
