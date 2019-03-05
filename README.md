@@ -13,6 +13,7 @@ Note: Before reading any further, note that I use the word input and input item 
 - [How To Use KeyboardAssistant](#how-to-use-keyboardassistant)
 - [How To Use InputNavigator](#how-to-use-inputnavigator)
 - [Structuring Your ScrollView](#structuring-your-scrollview)
+- [Roadmap](#roadmap)
 
 ### Requirements
 
@@ -649,3 +650,7 @@ Lastly, make sure to connect the scrollview's bottom constrant to an outlet.  Th
 
 - [Back To Auto ScrollView Assistant](#auto-scrollview-assistant)
 - [Back To Manual ScrollView Assistant](#manual-scrollview-assistant)
+
+### Roadmap
+
+KeyboardAssistant is very early in release.  I would love to get others opinions and feedback.  I am also thinking about adding more positioning options, such as straight UIView positioning and support for UITableView.
