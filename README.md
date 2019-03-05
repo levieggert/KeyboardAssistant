@@ -524,7 +524,7 @@ For Keyboard positioning, I prefer to use the scrollview approach.  There are a 
 2. It's much easier to manage than say a tableview.  TableViews are great, but when collecting input from users they can become a pain to manage.  This is because as you scroll through a tableview, cells are getting recycled.  This adds extra management to collect input and extra management to navigate input.
 3. I end up having to use a scrollview on most my viewcontrollers anyways to handle shorter device sizes.
 
-Before you begin structuring your scrollview, make sure that in your storyboard document Use Safe Area Layout Guides is checked.  Safe area is replacing top and bottom layout guides.
+Before you begin structuring your scrollview, make sure the Use Safe Area Layout Guides option is checked in interface builder.  To check, select your .storyboard file and select the document tab.
 
 ![alt text](ReadMeAssets/scrollview_structure_safe_area_guides_large.jpg)
 
