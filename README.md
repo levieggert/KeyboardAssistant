@@ -204,7 +204,7 @@ Take a look at the below screenshot.  This is what we want to achieve.  Whenever
 In the code below we will:
 1. Create an InputNavigator with both keyboard navigation and default controller navigation.
 2. Add input items to navigate through.
-3. Create the manual scrollview assistant.
+3. Create a manual assistant.
 4. Manage the keyboard assistant notifications, start and stop.
 
 ```swift
@@ -328,7 +328,7 @@ Create a manual assistant when you want to do your own positioning.
 In the code below we will:
 1. Create an InputNavigator with both keyboard navigation and default controller navigation.
 2. Add input items to navigate through.
-3. Create the manual assistant.
+3. Create a manual assistant.
 4. Manage the keyboard assistant notifications, start and stop.
 5. Add the KeyboardAssistantDelegate: keyboardAssistantManuallyReposition() to perform manual positioning. 
 
@@ -522,7 +522,7 @@ For Keyboard positioning, I prefer to use the scrollview approach.  There are a 
 2. It's much easier to manage than say a tableview.  TableViews are great, but when collecting input from users they can become a pain to manage.  This is because as you scroll through a tableview, cells are getting recycled.  This adds extra management to collect input and extra management to navigate input.
 3. I end up having to use a scrollview on most my viewcontrollers anyways to handle shorter device sizes.
 
-Before you begin structuring your scrollview, make sure that your storyboard is using Safe Area Layout Guides. 
+Before you begin structuring your scrollview, make sure that in your storyboard document Use Safe Area Layout Guides is checked.  Safe area is replacing top and bottom layout guides.
 
 ![alt text](ReadMeAssets/scrollview_structure_safe_area_guides_large.jpg)
 
