@@ -505,6 +505,61 @@ extension YourViewController: UITextFieldDelegate
 
 ##### Create With Custom Controller
 
+The custom controller is used to create a custom navigation view.  It will replace the default controller.  To create a custom controller, create your own UIView class and implement the InputNavigatorAccessoryController protocol.  The buttonDelegate property is used by InputNavigator to respond to btPrev, btNext, and btDone actions.  You will have to set these actions up in your custom view class and make sure to call the delegate methods.
+
+
+Implement the InputNavigatorAccessoryController protocol in your custom view class.
+```swift
+import UIKit
+
+public class YourCustomController: UIView, InputNavigatorAccessoryController
+{
+    // MARK: - InputNavigatorAccessoryController protocol
+    
+    public var controllerView: UIView { return self }
+    @IBOutlet public weak var btPrev: UIButton!
+    @IBOutlet public weak var btNext: UIButton!
+    @IBOutlet public weak var btDone: UIButton!
+    public weak var buttonDelegate: InputNavigatorAccessoryControllerDelegate?
+}
+    
+```
+
+Add actions for btPrev, btNext, and btDone and call the appropriate buttonDelegate methods to inform InputNavigator.
+```swift
+import UIKit
+
+public class YourCustomController: UIView, InputNavigatorAccessoryController
+{
+	// MARK: - Actions
+	
+	@IBAction func handlePrev(button: UIButton)
+    {
+        if let buttonDelegate = self.buttonDelegate
+        {
+            buttonDelegate.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
+        }
+    }
+    
+    @IBAction func handleNext(button: UIButton)
+    {
+        if let buttonDelegate = self.buttonDelegate
+        {
+            buttonDelegate.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
+        }
+    }
+    
+    @IBAction func handleDone(button: UIButton)
+    {        
+        if let buttonDelegate = self.buttonDelegate
+        {
+            buttonDelegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
+        }
+    }
+}
+    
+```
+
 ##### Create With Custom Accessory View
 
 #### Create With Keyboard Navigation And Default Controller
