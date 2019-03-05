@@ -573,13 +573,31 @@ public class YourCustomController: UIView, InputNavigatorAccessoryController
 
 There are a couple different ways to add input items to the InputNavigator. 
 
-1. Explicit: You tell InputNavigator what input items to use.
+- [Explicitly](#add-input-items-explicitly): Manually add input items to InputNavigator.
+- [Less Explicit](#add-input-items-from-viewcontroller): Pass a viewcontroller reference.
 
-When adding input items explicitly, InputNavigator will navigate these items in the order they are added.
+##### Add Input Items Explicitly
 
-2. Less Explicit:
+When adding input items explicitly.  InputNavigator will navigate these items in the order they are added.
 
-The less explicit way of adding input items is to provide the viewcontroller to add input items from.  InputNavigator will recurse the controller view hierarchy and add all UITextField and UITextView objects to the inputItems array.  The inputItems array is then sorted by the origin of each input item so they are navigated top to bottom.
+To add input items explicitly, call the following methods on InputNavigator:
+```swift
+addInputItem(inputItem: UIView)
+addInputItems(inputItems: [UIView])
+```
+
+##### Add Input Items From ViewController
+
+When adding input items from a viewcontroller reference, InputNavigator will recurse the viewcontroller view hierarchy and add all UITextField and UITextView objects to the inputItems array.  The inputItems array is then sorted by the origin (x,y) of each input item so they are navigated top to bottom.
+
+Two parameters are required for this method.  UIViewController and InputItemType.  InputItemType is an enum which is used to filter what input items get added.  
+- InputItem.textField: Only add textfields found in the viewcontroller.
+- InputItem.textView: Only add textviews found in the viewcontroller.
+- InputItem.bothTextFieldAndTextView: Add both textfields and textviews found in the viewcontroller.
+
+```swift
+addInputItems(from: UIViewController, itemType: InputItemType)
+```
 
 - [Back To How To Use KeyboardAssistant](#how-to-use-keyboardassistant)
 
