@@ -56,7 +56,7 @@ public class InputNavigator: NSObject
         if var accessoryController = accessoryController
         {
             self.accessoryController = accessoryController
-            accessoryController.delegate = self
+            accessoryController.buttonDelegate = self
         }
         else if let customAccessoryView = customAccessoryView
         {

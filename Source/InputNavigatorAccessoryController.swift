@@ -15,5 +15,8 @@ public protocol InputNavigatorAccessoryControllerDelegate: class
 public protocol InputNavigatorAccessoryController
 {
     var controllerView: UIView { get }
-    var delegate: InputNavigatorAccessoryControllerDelegate? { get set }
+    var btPrev: UIButton! { get set }
+    var btNext: UIButton! { get set }
+    var btDone: UIButton! { get set }
+    var buttonDelegate: InputNavigatorAccessoryControllerDelegate? { get set }
 }

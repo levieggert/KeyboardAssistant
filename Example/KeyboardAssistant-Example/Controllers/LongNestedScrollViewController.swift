@@ -60,19 +60,21 @@ class LongNestedScrollViewController: UIViewController
         
         if (useAutoKeyboardAssistant)
         {
-            self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(inputNavigator: navigator,
-                                                                                             positionScrollView: self.scrollView,
-                                                                                             positionConstraint: .viewBottomToTopOfKeyboard,
-                                                                                             positionOffset: 30,
-                                                                                             bottomConstraint: self.scrollViewBottomConstraint,
-                                                                                             bottomConstraintLayoutView: self.view)
+            self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(
+                inputNavigator: navigator,
+                positionScrollView: self.scrollView,
+                positionConstraint: .viewBottomToTopOfKeyboard,
+                positionOffset: 30,
+                bottomConstraint: self.scrollViewBottomConstraint,
+                bottomConstraintLayoutView: self.view)
         }
         else
         {
-            self.keyboardAssistant = KeyboardAssistant.createManualScrollView(inputNavigator: navigator,
-                                                                                     delegate: self,
-                                                                                     bottomConstraint: self.scrollViewBottomConstraint,
-                                                                                     bottomConstraintLayoutView: self.view)
+            self.keyboardAssistant = KeyboardAssistant.createManual(
+                inputNavigator: navigator,
+                delegate: self,
+                bottomConstraint: self.scrollViewBottomConstraint,
+                bottomConstraintLayoutView: self.view)
         }
         
         self.keyboardAssistant.observer.loggingEnabled = true

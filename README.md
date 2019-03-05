@@ -201,7 +201,12 @@ Take a look at the below screenshot.  This is what we want to achieve.  Whenever
 
 ![alt text](ReadMeAssets/keyboard_manual_scrollview.jpg)
 
-In the code below, we will create an InputNavigator with both keyboard navigation and default controller navigation.
+In the code below we will:
+1. Create an InputNavigator with both keyboard navigation and default controller navigation.
+2. Add input items to navigate through.
+3. Create the manual scrollview assistant.
+4. Manage the keyboard assistant notifications, start and stop.
+
 ```swift
 import UIKit
 
@@ -237,7 +242,7 @@ class YourViewController: UIViewController
         self.txtEmail, 
         self.txtPassword])
         
-        self.keyboardAssistant = KeyboardAssistant.createManualScrollView(
+        self.keyboardAssistant = KeyboardAssistant.createManual(
         inputNavigator: navigator,
         delegate: self,
         bottomConstraint: self.scrollViewBottomConstraint,
@@ -260,6 +265,9 @@ class YourViewController: UIViewController
 }
 ```
 
+We use the KeyboardAssistantDelegate: keyboardAssistantManuallyReposition() to do all manual positioning.  If there is a nextInputItem then position to it.  Otherwise we are at the end so position to the sign up button. 
+
+We pass shouldLoop: false into getNextInputItem.  If true were passed, it would return the first input item when on the last input item.
 ```swift
 // MARK: - KeyboardAssistantDelegate
 
@@ -314,6 +322,74 @@ extension YourViewController: KeyboardAssistantDelegate
 ```
 
 #### Manual Assistant
+
+Create a manual assistant when you want to do your own positioning.
+
+In the code below we will:
+1. Create an InputNavigator with both keyboard navigation and default controller navigation.
+2. Add input items to navigate through.
+3. Create the manual assistant.
+4. Manage the keyboard assistant notifications, start and stop.
+5. Add the KeyboardAssistantDelegate: keyboardAssistantManuallyReposition() to perform manual positioning. 
+
+```swift
+import UIKit
+
+class YourViewController: UIViewController
+{
+    // MARK: - Properties
+
+    private var keyboardAssistant: KeyboardAssistant!
+
+    // MARK: - Outlets
+
+    @IBOutlet weak var txtFirstName: UITextField!
+    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var btRegisterAccount: UIButton!
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+
+        let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
+        navigator.addInputItems(inputItems: [
+        self.txtFirstName, 
+        self.txtLastName, 
+        self.txtEmail, 
+        self.txtPassword])
+        
+        self.keyboardAssistant = KeyboardAssistant.createManual(inputNavigator: navigator, delegate: self)
+    }
+
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+
+        self.keyboardAssistant.start()
+    }
+
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+
+        self.keyboardAssistant.stop()
+    }
+}
+
+// MARK: - KeyboardAssistantDelegate
+
+extension YourViewController: KeyboardAssistantDelegate
+{
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
+    {
+        // Do your manual positioning here.
+    }
+}
+```
 
 #### How To Use InputNavigator
 
@@ -446,9 +522,13 @@ For Keyboard positioning, I prefer to use the scrollview approach.  There are a 
 2. It's much easier to manage than say a tableview.  TableViews are great, but when collecting input from users they can become a pain to manage.  This is because as you scroll through a tableview, cells are getting recycled.  This adds extra management to collect input and extra management to navigate input.
 3. I end up having to use a scrollview on most my viewcontrollers anyways to handle shorter device sizes.
 
+Before you begin structuring your scrollview, make sure that your storyboard is using Safe Area Layout Guides. 
+
+![alt text](ReadMeAssets/scrollview_structure_safe_area_guides_large.jpg)
+
 Here is how you will need to structure your viewcontroller view hier-archy.  UIView [root / UIViewController.view]  >  UIScrollView [scrollView]  >  UIView [contentView].
 
-UIScrollView should set all edge constraints to the UIView [root / UIViewController.view].
+UIScrollView should set all edge constraints to the safe area. 
 UIView [contentView] should set all edge constraints to the UIScrollView and also set equal widths to UIScrollView.
 
 That's it.  Then all your custom UI goes inside the UIView [contentView].  

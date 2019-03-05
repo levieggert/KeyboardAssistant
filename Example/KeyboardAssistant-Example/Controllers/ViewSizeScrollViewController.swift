@@ -35,7 +35,7 @@ class ViewSizeScrollViewController: UIViewController
     {
         super.viewDidLoad()
         
-        let useAutoKeyboardAssistant: Bool = false
+        let useAutoKeyboardAssistant: Bool = true
         let allowToSetInputDelegates: Bool = true
         
         //let navigator: InputNavigator = InputNavigator.createWithDefaultController()
@@ -58,18 +58,18 @@ class ViewSizeScrollViewController: UIViewController
         if (useAutoKeyboardAssistant)
         {
             self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(inputNavigator: navigator,
-                                                                                             positionScrollView: self.scrollView,
-                                                                                             positionConstraint: .viewBottomToTopOfKeyboard,
-                                                                                             positionOffset: 30,
-                                                                                             bottomConstraint: self.scrollViewBottomConstraint,
-                                                                                             bottomConstraintLayoutView: self.view)
+                                                                            positionScrollView: self.scrollView,
+                                                                            positionConstraint: .viewBottomToTopOfKeyboard,
+                                                                            positionOffset: 30,
+                                                                            bottomConstraint: self.scrollViewBottomConstraint,
+                                                                            bottomConstraintLayoutView: self.view)
         }
         else
         {
-            self.keyboardAssistant = KeyboardAssistant.createManualScrollView(inputNavigator: navigator,
-                                                                                     delegate: self,
-                                                                                     bottomConstraint: self.scrollViewBottomConstraint,
-                                                                                     bottomConstraintLayoutView: self.view)
+            self.keyboardAssistant = KeyboardAssistant.createManual(inputNavigator: navigator,
+                                                                              delegate: self,
+                                                                              bottomConstraint: self.scrollViewBottomConstraint,
+                                                                              bottomConstraintLayoutView: self.view)
         }
         
         self.keyboardAssistant.loggingEnabled = true
@@ -139,7 +139,7 @@ extension ViewSizeScrollViewController: KeyboardAssistantDelegate
     {
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 20
-                
+        
         if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false)
         {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: nextInputItem, constraint: constraint, offset: offset)

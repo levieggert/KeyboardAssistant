@@ -12,7 +12,7 @@ public protocol KeyboardAssistantDelegate: class
 
 public class KeyboardAssistant: NSObject
 {
-    public enum AssistantType { case autoScrollView; case manualScrollView; case manual; }
+    public enum AssistantType { case autoScrollView; case manual; }
     public enum RepositionConstraint { case viewTopToTopOfScreen; case viewBottomToTopOfKeyboard; }
     
     // MARK: - Properties
@@ -29,6 +29,7 @@ public class KeyboardAssistant: NSObject
     
     public private(set) weak var scrollView: UIScrollView?
     
+    public var invertBottomConstraintConstant: Bool = true
     public var animationDuration: TimeInterval = 0.3
     public var loggingEnabled: Bool = false
     
@@ -43,8 +44,6 @@ public class KeyboardAssistant: NSObject
         
         self.observer.delegate = self
         self.navigator.delegate = self
-        
-        // TODO: Is there a way to see if the bottom constraint of the scrollview is attached to the safe area for inverting bottomConstraint.constant when pushing up with keyboard?
     }
     
     static public func createAutoScrollView(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
@@ -61,13 +60,13 @@ public class KeyboardAssistant: NSObject
         return assistant
     }
     
-    static public func createManualScrollView(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
+    static public func createManual(inputNavigator: InputNavigator, delegate: KeyboardAssistantDelegate, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
     {
         let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
-        assistant.type = .manualScrollView
+        assistant.type = .manual
         assistant.delegate = delegate
         
         return assistant
@@ -99,7 +98,16 @@ public class KeyboardAssistant: NSObject
         {
             // TODO: Sometimes height will not have to be inverted by -1.  Depends on how constraints are set.
             // If the scrollview bottom is attached to safe area bottom then it needs to be inverted by -1.  Otherwise no inversion.
-            bottomConstraint.constant = keyboardHeight * -1
+            // Is there a way to check for this?
+            
+            if (self.invertBottomConstraintConstant)
+            {
+                bottomConstraint.constant = keyboardHeight * -1
+            }
+            else
+            {
+                bottomConstraint.constant = keyboardHeight
+            }
             
             if (animated)
             {
@@ -159,12 +167,6 @@ public class KeyboardAssistant: NSObject
             if let scrollView = self.scrollView
             {
                 self.reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: self.repositionConstraint, offset: self.repositionOffset)
-            }
-            
-        case .manualScrollView:
-            if let delegate = self.delegate
-            {
-                delegate.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: self.observer.keyboardHeight)
             }
             
         case .manual:

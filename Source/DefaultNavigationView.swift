@@ -10,7 +10,7 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     // MARK: - InputNavigatorAccessoryController protocol
     
     public var controllerView: UIView { return self }
-    public weak var delegate: InputNavigatorAccessoryControllerDelegate?
+    public weak var buttonDelegate: InputNavigatorAccessoryControllerDelegate?
     
     // MARK: - Properties
         
@@ -63,25 +63,25 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     
     @IBAction func handlePrev(button: UIButton)
     {
-        if let delegate = self.delegate
+        if let buttonDelegate = self.buttonDelegate
         {
-            delegate.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
+            buttonDelegate.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
         }
     }
     
     @IBAction func handleNext(button: UIButton)
     {
-        if let delegate = self.delegate
+        if let buttonDelegate = self.buttonDelegate
         {
-            delegate.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
+            buttonDelegate.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
         }
     }
     
     @IBAction func handleDone(button: UIButton)
     {        
-        if let delegate = self.delegate
+        if let buttonDelegate = self.buttonDelegate
         {
-            delegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
+            buttonDelegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
         }
     }
     
