@@ -531,9 +531,10 @@ import UIKit
 
 public class YourCustomController: UIView, InputNavigatorAccessoryController
 {
-	// MARK: - Actions
-	
-	@IBAction func handlePrev(button: UIButton)
+
+    // MARK: - Actions
+    
+    @IBAction func handlePrev(button: UIButton)
     {
         if let buttonDelegate = self.buttonDelegate
         {
