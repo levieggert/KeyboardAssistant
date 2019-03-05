@@ -34,6 +34,8 @@ end
 
 ### Brief Overview Of Classes
 
+KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigator, and KeyboardAssistant.  The KeyboardAssistant class is the main class you will be working with and sits on top of KeyboardObserver and InputNavigator.  Before using KeyboardAssistant, you will create an InputNavigator and inject it into the KeyboardAssistant.  InputNavigator handles navigation between inputs and is responsible for telling KeyboardAssistant about focus changes (when a UITextField or UITextView begins editing).  The KeyboardObserver class is responsible for checking keyboard state changes (willShow, didShow, willHide, didHide, didChangeFrame) and reports changes to the KeyboardAssistant. It is possible to use InputNavigator and KeyboardObserver separately if you wish.  However, that is not the intent of this module.  For repositioning input items above the device keyboard, you will be utilizing KeyboardAssistant.  To learn more about KeyboardAssistant, start in the How To Use KeyboardAssistant section below.
+
 ### How To Use KeyboardAssistant
 
 There are 3 primary ways to use keyboard assistant.
