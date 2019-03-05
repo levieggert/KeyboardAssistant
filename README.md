@@ -563,11 +563,28 @@ public class YourCustomController: UIView, InputNavigatorAccessoryController
 
 ##### Create With Custom Accessory View
 
+```swift
+let navigator: InputNavigator = InputNavigator.createWithCustomAccessoryView(accessoryView: yourAccessoryView)
+```
+
 #### Create With Keyboard Navigation And Default Controller
+
+```swift
+let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
+```
 
 #### Create With Keyboard Navigation And Custom Controller
 
+```swift
+let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true, andController: yourCustomController)
+```
+
 #### Create With Keyboard Navigation And Custom Accessory View
+
+
+```swift
+let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true, andCustomAccessoryView: yourAccessoryView)
+```
 
 #### Adding Input Items
 
