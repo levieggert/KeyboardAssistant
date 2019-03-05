@@ -571,6 +571,16 @@ public class YourCustomController: UIView, InputNavigatorAccessoryController
 
 #### Adding Input Items
 
+There are a couple different ways to add input items to the InputNavigator. 
+
+1. Explicit: You tell InputNavigator what input items to use.
+
+When adding input items explicitly, InputNavigator will navigate these items in the order they are added.
+
+2. Less Explicit:
+
+The less explicit way of adding input items is to provide the viewcontroller to add input items from.  InputNavigator will recurse the controller view hierarchy and add all UITextField and UITextView objects to the inputItems array.  The inputItems array is then sorted by the origin of each input item so they are navigated top to bottom.
+
 - [Back To How To Use KeyboardAssistant](#how-to-use-keyboardassistant)
 
 ### Structuring Your ScrollView
