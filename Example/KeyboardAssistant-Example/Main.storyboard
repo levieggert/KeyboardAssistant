@@ -107,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PGP-k2-VrT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-534" y="-848"/>
+            <point key="canvasLocation" x="-730" y="1213"/>
         </scene>
         <!--LongScrollViewController-->
         <scene sceneID="aj7-pu-ILU">
@@ -455,7 +455,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JSE-lD-Kn3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="393" y="-1104"/>
+            <point key="canvasLocation" x="814" y="1470"/>
         </scene>
         <!--LongNestedScrollViewController-->
         <scene sceneID="ekH-Mi-kGd">
@@ -944,22 +944,84 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9UG-5h-reV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1602" y="-1105"/>
+            <point key="canvasLocation" x="38" y="1470"/>
         </scene>
-        <!--KeyboardAssistantFiltersViewController-->
+        <!--FiltersViewController-->
         <scene sceneID="yH2-rS-Kgg">
             <objects>
-                <viewController storyboardIdentifier="KeyboardAssistantFiltersViewController" id="H2Q-gt-LLn" userLabel="KeyboardAssistantFiltersViewController" customClass="KeyboardAssistantFiltersViewController" customModule="KeyboardAssistant_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FiltersViewController" id="H2Q-gt-LLn" userLabel="FiltersViewController" customClass="FiltersViewController" customModule="KeyboardAssistant_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oZR-r7-u0U">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3hO-vT-lDg" userLabel="filtersTableView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="548"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="H2Q-gt-LLn" id="h69-Nv-dYe"/>
+                                    <outlet property="delegate" destination="H2Q-gt-LLn" id="kMA-uj-VWk"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7w-Bh-5GP" userLabel="btApplyFilters">
+                                <rect key="frame" x="0.0" y="612" width="375" height="55"/>
+                                <color key="backgroundColor" red="0.28235294117647058" green="0.88235294117647056" blue="0.64313725490196072" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="4dB-s8-coW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="Apply Filters">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleApplyFiltersWithButton:" destination="H2Q-gt-LLn" eventType="touchUpInside" id="utT-ZI-Sks"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="g5G-hO-rof" firstAttribute="bottom" secondItem="C7w-Bh-5GP" secondAttribute="bottom" id="C26-Ou-2zo"/>
+                            <constraint firstItem="3hO-vT-lDg" firstAttribute="leading" secondItem="g5G-hO-rof" secondAttribute="leading" id="ZM9-Xg-0yW"/>
+                            <constraint firstItem="C7w-Bh-5GP" firstAttribute="leading" secondItem="g5G-hO-rof" secondAttribute="leading" id="cP6-xz-EuY"/>
+                            <constraint firstItem="C7w-Bh-5GP" firstAttribute="top" secondItem="3hO-vT-lDg" secondAttribute="bottom" id="gsU-vT-JXC"/>
+                            <constraint firstItem="3hO-vT-lDg" firstAttribute="trailing" secondItem="g5G-hO-rof" secondAttribute="trailing" id="kmq-N7-IeU"/>
+                            <constraint firstItem="3hO-vT-lDg" firstAttribute="top" secondItem="g5G-hO-rof" secondAttribute="top" id="nvd-JO-T4K"/>
+                            <constraint firstItem="C7w-Bh-5GP" firstAttribute="trailing" secondItem="g5G-hO-rof" secondAttribute="trailing" id="pmp-We-ZkR"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="g5G-hO-rof"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Filters" id="fCR-ep-xeF">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="LcM-aj-V1a">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="handleCancelWithBarButtonItem:" destination="H2Q-gt-LLn" id="NE7-9r-SgD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="btApplyFilters" destination="C7w-Bh-5GP" id="PzH-Os-YYI"/>
+                        <outlet property="filtersTableView" destination="3hO-vT-lDg" id="MQW-ne-jye"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="30j-fm-U1o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="928"/>
+            <point key="canvasLocation" x="2390" y="159"/>
+        </scene>
+        <!--FiltersNavigationController-->
+        <scene sceneID="FRp-GI-i2Y">
+            <objects>
+                <navigationController storyboardIdentifier="FiltersNavigationController" id="eSS-3t-be8" userLabel="FiltersNavigationController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4MD-hv-ixM">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="H2Q-gt-LLn" kind="relationship" relationship="rootViewController" id="dbF-hH-1EY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Gs-bw-AMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1625" y="159"/>
         </scene>
         <!--ViewSizeScrollViewController-->
         <scene sceneID="wB7-gu-E8l">
@@ -1104,7 +1166,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0n-60-efS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1775" y="-18"/>
+            <point key="canvasLocation" x="1626" y="1192"/>
         </scene>
     </scenes>
     <resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterCellReuseIdentifier" rowHeight="100" id="rcK-kU-I6K" userLabel="Filter Cell" customClass="FilterCell" customModule="KeyboardAssistant_Example" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rcK-kU-I6K" id="0xk-fK-3gh">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Option" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3k-24-Umt" userLabel="lbTitle">
+                        <rect key="frame" x="15" y="41" width="240" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="240" id="puW-E0-xx8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20j-sT-4oK" userLabel="filterSwitch">
+                        <rect key="frame" x="311" y="34.5" width="51" height="31"/>
+                    </switch>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pIf-Kz-KXI" userLabel="separatorLine">
+                        <rect key="frame" x="0.0" y="98.5" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="FSh-2q-IoA"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="pIf-Kz-KXI" firstAttribute="leading" secondItem="0xk-fK-3gh" secondAttribute="leading" id="24p-tD-PHz"/>
+                    <constraint firstAttribute="trailing" secondItem="20j-sT-4oK" secondAttribute="trailing" constant="15" id="5fp-3Z-PJp"/>
+                    <constraint firstItem="Q3k-24-Umt" firstAttribute="leading" secondItem="0xk-fK-3gh" secondAttribute="leading" constant="15" id="V6b-b8-fR2"/>
+                    <constraint firstItem="20j-sT-4oK" firstAttribute="centerY" secondItem="0xk-fK-3gh" secondAttribute="centerY" id="W0P-vf-Jtd"/>
+                    <constraint firstAttribute="trailing" secondItem="pIf-Kz-KXI" secondAttribute="trailing" id="h3e-dF-Dp6"/>
+                    <constraint firstItem="Q3k-24-Umt" firstAttribute="centerY" secondItem="0xk-fK-3gh" secondAttribute="centerY" id="tsP-sZ-J4z"/>
+                    <constraint firstAttribute="bottom" secondItem="pIf-Kz-KXI" secondAttribute="bottom" id="wGV-bD-QoY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="filterSwitch" destination="20j-sT-4oK" id="6L8-th-OBa"/>
+                <outlet property="lbTitle" destination="Q3k-24-Umt" id="JmU-sm-KWS"/>
+                <outlet property="separatorLine" destination="pIf-Kz-KXI" id="bxQ-7H-MPt"/>
+            </connections>
+            <point key="canvasLocation" x="72.799999999999997" y="39.580209895052477"/>
+        </tableViewCell>
+    </objects>
+</document>

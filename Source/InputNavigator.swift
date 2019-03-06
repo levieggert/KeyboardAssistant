@@ -188,7 +188,16 @@ public class InputNavigator: NSObject
         
         self.recurseView(view: rootView, inputItems: &inputItems, itemType: itemType)
         
-        inputItems.sort { (this: UIView, that: UIView) -> Bool in
+        inputItems = InputNavigator.sortInputItems(inputItems: inputItems, from: from)
+        
+        return inputItems
+    }
+    
+    public static func sortInputItems(inputItems: [UIView], from: UIViewController) -> [UIView]
+    {
+        let rootView: UIView = from.view
+        
+        let items: [UIView] = inputItems.sorted { (this: UIView, that: UIView) -> Bool in
             
             var thisPosition: CGPoint = this.convert(this.frame.origin, to: rootView)
             thisPosition.x = thisPosition.x - this.frame.origin.x
@@ -213,7 +222,7 @@ public class InputNavigator: NSObject
             return false
         }
         
-        return inputItems
+        return items
     }
     
     private static func recurseView(view: UIView, inputItems: inout [UIView], itemType: InputItemType)

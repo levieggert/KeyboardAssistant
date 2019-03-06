@@ -109,7 +109,8 @@ class ViewSizeScrollViewController: UIViewController
     
     @IBAction func handleFilter(barButtonItem: UIBarButtonItem)
     {
-        
+        let filterNavigation: UINavigationController = self.storyboard?.instantiateViewController(withIdentifier: "FiltersNavigationController") as! UINavigationController
+        self.present(filterNavigation, animated: true, completion: nil)
     }
     
     @IBAction func handleRegisterAccount(button: UIButton)

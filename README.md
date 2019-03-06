@@ -394,7 +394,7 @@ extension YourViewController: KeyboardAssistantDelegate
 }
 ```
 
-#### How To Use InputNavigator
+### How To Use InputNavigator
 
 - [Create with Default Controller](#create-with-default-controller)
 - [Create with Keyboard Navigation](#create-with-keyboard-navigation)
@@ -411,7 +411,7 @@ Before jumping into the code.  It's probably best I give a brief overview of the
 
 Let's start with the built-in options and expand on those.
 
-##### Create With Default Controller
+#### Create With Default Controller
 
 ![alt text](ReadMeAssets/nav_default_controller.jpg)
 
@@ -455,7 +455,7 @@ override func viewDidLoad()
 }
 ```
 
-##### Create With Keyboard Navigation
+#### Create With Keyboard Navigation
 
 ![alt text](ReadMeAssets/nav_keyboard_navigation.jpg)
 
@@ -504,7 +504,7 @@ extension YourViewController: UITextFieldDelegate
 }
 ```
 
-##### Create With Custom Controller
+#### Create With Custom Controller
 
 The custom controller is used to create a custom navigation view.  It will replace the default controller.  To create a custom controller, create your own UIView class and implement the InputNavigatorAccessoryController protocol.  The buttonDelegate property is used by InputNavigator to respond to btPrev, btNext, and btDone actions.  You will have to set these actions up in your custom view class and make sure to call the delegate methods.
 
@@ -562,7 +562,7 @@ public class YourCustomController: UIView, InputNavigatorAccessoryController
     
 ```
 
-##### Create With Custom Accessory View
+#### Create With Custom Accessory View
 
 ```swift
 let navigator: InputNavigator = InputNavigator.createWithCustomAccessoryView(accessoryView: yourAccessoryView)
