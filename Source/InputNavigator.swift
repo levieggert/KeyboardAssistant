@@ -12,6 +12,7 @@ public protocol InputNavigatorDelegate: class
 
 public class InputNavigator: NSObject
 {
+    public enum InputNavigatorType { case defaultController; case controller; case customAccessoryView; case keyboard; case keyboardAndDefaultController; case keyboardAndController; case keyboardAndCustomAccessoryView}
     public enum InputItemType { case textField; case textView; case bothTextFieldAndTextView; }
     
     // MARK: - Properties
@@ -19,6 +20,7 @@ public class InputNavigator: NSObject
     public private(set) var accessoryController: InputNavigatorAccessoryController?
     public private(set) var customAccessoryView: UIView?
     public private(set) var inputItems: [UIView] = Array()
+    public private(set) var navigatorType: InputNavigator.InputNavigatorType = .defaultController
     public private(set) var shouldUseKeyboardReturnKeyToNavigate: Bool = false
     public private(set) var shouldSetTextFieldDelegates: Bool = false
     public private(set) var shouldLoopAccessoryControllerNavigation: Bool = true
@@ -66,37 +68,65 @@ public class InputNavigator: NSObject
     
     static public func createWithDefaultController() -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
+        let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
+        
+        navigator.navigatorType = .defaultController
+        
+        return navigator
     }
     
     static public func createWithController(accessoryController: InputNavigatorAccessoryController) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: accessoryController, customAccessoryView: nil)
+        let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: accessoryController, customAccessoryView: nil)
+        
+        navigator.navigatorType = .controller
+        
+        return navigator
     }
     
     static public func createWithCustomAccessoryView(accessoryView: UIView) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: nil, customAccessoryView: accessoryView)
+        let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: nil, customAccessoryView: accessoryView)
+        
+        navigator.navigatorType = .customAccessoryView
+        
+        return navigator
     }
     
     static public func createWithKeyboardNavigation(shouldSetTextFieldDelegates: Bool) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: nil, customAccessoryView: nil)
+        let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: nil, customAccessoryView: nil)
+        
+        navigator.navigatorType = .keyboard
+        
+        return navigator
     }
     
     static public func createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: Bool) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
+        let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
+        
+        navigator.navigatorType = .keyboardAndDefaultController
+        
+        return navigator
     }
     
     static public func createWithKeyboardNavigation(shouldSetTextFieldDelegates: Bool, andController: InputNavigatorAccessoryController) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: andController, customAccessoryView: nil)
+        let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: andController, customAccessoryView: nil)
+        
+        navigator.navigatorType = .keyboardAndController
+        
+        return navigator
     }
     
     static public func createWithKeyboardNavigation(shouldSetTextFieldDelegates: Bool, andCustomAccessoryView: UIView) -> InputNavigator
     {
-        return InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: nil, customAccessoryView: andCustomAccessoryView)
+        let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: nil, customAccessoryView: andCustomAccessoryView)
+        
+        navigator.navigatorType = .keyboardAndCustomAccessoryView
+        
+        return navigator
     }
     
     deinit
