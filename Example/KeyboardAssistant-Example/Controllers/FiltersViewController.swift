@@ -7,36 +7,37 @@ import UIKit
 
 protocol FiltersViewControllerDelegate: class
 {
-    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType)
+    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
 }
 
 class FiltersViewController: UIViewController
 {
     class FilterOption
     {
-        var isActive: Bool = false
+        var inputValue: NSNumber = NSNumber(value: 0)
+        var filterInputType: FilterInputType = .filterSwitch
     }
     
-    class KeyboardOption: FilterOption
-    {
+    class KeyboardOption: FilterOption {
         var type: KeyboardAssistant.AssistantType!
     }
     
-    class NavigatorOption: FilterOption
-    {
+    class NavigatorOption: FilterOption {
         var type: InputNavigator.NavigatorType!
     }
     
-    class MiscOption: FilterOption
-    {
+    class MiscOption: FilterOption {
         var type: MiscType!
-        var inputValue: NSNumber?
-        var filterInputType: FilterInputType = .filterSwitch
+    }
+    
+    class PositionConstraintOption: FilterOption {
+        var type: KeyboardAssistant.RepositionConstraint!
     }
     
     enum Section
     {
         case miscellaneous
+        case positionConstraint
         case keyboardAssistant
         case inputNavigator
     }
@@ -59,16 +60,20 @@ class FiltersViewController: UIViewController
     
     // MARK: - Properties
     
-    private let sections: [Section] = [.miscellaneous, .keyboardAssistant, .inputNavigator]
+    private let sections: [Section] = [.miscellaneous, .positionConstraint, .keyboardAssistant, .inputNavigator]
     private let filterInputCellHeight: CGFloat = 100
     private let filterSwitchCellHeight: CGFloat = 65
     
     private var miscFilterOptionsDictionary: [MiscType: MiscOption] = Dictionary()
     private var miscFilterOptions: [MiscOption] = Array()
+    private var positionFilterOptionsDictionary: [KeyboardAssistant.RepositionConstraint: PositionConstraintOption] = Dictionary()
+    private var positionFilterOptions: [PositionConstraintOption] = Array()
     private var keyboardAssistantFilterOptionsDictionary: [KeyboardAssistant.AssistantType: KeyboardOption] = Dictionary()
     private var keyboardAssistantFilterOptions: [KeyboardOption] = Array()
     private var inputNavigatorFilterOptionsDictionary: [InputNavigator.NavigatorType: NavigatorOption] = Dictionary()
     private var inputNavigatorFilterOptions: [NavigatorOption] = Array()
+    
+    private weak var positionOffsetTextField: UITextField?
     
     var keyboardAssistant: KeyboardAssistant?
     var availableKeyboardAssistantTypes: [KeyboardAssistant.AssistantType] = Array()
@@ -92,6 +97,7 @@ class FiltersViewController: UIViewController
     {
         super.viewDidLoad()
         
+        // - misc options
         var miscOption: MiscOption!
         for miscType in MiscType.allTypes
         {
@@ -106,6 +112,17 @@ class FiltersViewController: UIViewController
         self.miscFilterOptionsDictionary[.shouldSetTextFieldDelegates]?.filterInputType = .filterSwitch
         self.miscFilterOptionsDictionary[.shouldSetTextFieldDelegates]?.inputValue = NSNumber(value: true)
         
+        // - position constraint options
+        var positionOption: PositionConstraintOption!
+        for positionType in KeyboardAssistant.RepositionConstraint.all
+        {
+            positionOption = PositionConstraintOption()
+            positionOption.type = positionType
+            self.positionFilterOptionsDictionary[positionType] = positionOption
+            self.positionFilterOptions.append(positionOption)
+        }
+        
+        // - keyboard assistant options
         var keyboardOption: KeyboardOption!
         for assistantType in KeyboardAssistant.AssistantType.allTypes
         {
@@ -115,6 +132,7 @@ class FiltersViewController: UIViewController
             self.keyboardAssistantFilterOptions.append(keyboardOption)
         }
         
+        // - input navigator options
         var navigatorOption: NavigatorOption!
         for navigatorType in InputNavigator.NavigatorType.allTypes
         {
@@ -134,13 +152,28 @@ class FiltersViewController: UIViewController
         {
             if let filterOption = self.keyboardAssistantFilterOptionsDictionary[keyboardAssistant.type]
             {
-                filterOption.isActive = true
+                filterOption.inputValue = NSNumber(value: true)
             }
             
             if let filterOption = self.inputNavigatorFilterOptionsDictionary[keyboardAssistant.navigator.type]
             {
-                filterOption.isActive = true
+                filterOption.inputValue = NSNumber(value: true)
             }
+            
+            self.miscFilterOptionsDictionary[.positionOffset]?.inputValue = NSNumber(value: Float(keyboardAssistant.repositionOffset))
+            
+            if let filterOption = self.positionFilterOptionsDictionary[keyboardAssistant.repositionConstraint]
+            {
+                filterOption.inputValue = NSNumber(value: true)
+            }
+        }
+    }
+    
+    private func closeKeyboard()
+    {
+        if let positionOffsetTextField = self.positionOffsetTextField
+        {
+            positionOffsetTextField.resignFirstResponder()
         }
     }
     
@@ -157,10 +190,13 @@ class FiltersViewController: UIViewController
         {
             var keyboardAssistantType: KeyboardAssistant.AssistantType = .autoScrollView
             var inputNavigatorType: InputNavigator.NavigatorType = .defaultController
+            var positionConstraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
+            var positionOffset: CGFloat = 20
+            var shouldSetTextFieldDelegates: Bool = true
             
             for keyboardOption in self.keyboardAssistantFilterOptions
             {
-                if (keyboardOption.isActive)
+                if (keyboardOption.inputValue.boolValue)
                 {
                     keyboardAssistantType = keyboardOption.type
                     break
@@ -169,14 +205,33 @@ class FiltersViewController: UIViewController
             
             for navigatorOption in self.inputNavigatorFilterOptions
             {
-                if (navigatorOption.isActive)
+                if (navigatorOption.inputValue.boolValue)
                 {
                     inputNavigatorType = navigatorOption.type
                     break
                 }
             }
             
-            delegate.filtersViewControllerApplyFilters(filtersViewController: self, keyboardAssistantType: keyboardAssistantType, inputNavigatorType: inputNavigatorType)
+            for positionOption in self.positionFilterOptions
+            {
+                if (positionOption.inputValue.boolValue)
+                {
+                    positionConstraint = positionOption.type
+                    break
+                }
+            }
+            
+            if let pPositionOffset = self.miscFilterOptionsDictionary[.positionOffset]?.inputValue.floatValue
+            {
+                positionOffset = CGFloat(pPositionOffset)
+            }
+            
+            if let pShouldSetTextFieldDelegates = self.miscFilterOptionsDictionary[.shouldSetTextFieldDelegates]?.inputValue.boolValue
+            {
+                shouldSetTextFieldDelegates = pShouldSetTextFieldDelegates
+            }
+            
+            delegate.filtersViewControllerApplyFilters(filtersViewController: self, keyboardAssistantType: keyboardAssistantType, inputNavigatorType: inputNavigatorType, positionConstraint: positionConstraint, positionOffset: positionOffset, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates)
         }
     }
 }
@@ -197,12 +252,20 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource
         case .miscellaneous:
             return self.miscFilterOptions.count
             
+        case .positionConstraint:
+            return self.positionFilterOptions.count
+            
         case .keyboardAssistant:
             return self.keyboardAssistantFilterOptions.count
             
         case .inputNavigator:
             return self.inputNavigatorFilterOptions.count
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        self.closeKeyboard()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
@@ -216,11 +279,14 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource
         case .miscellaneous:
             filterHeader.lbTitle.text = "Miscellaneous Options"
             
+        case .positionConstraint:
+            filterHeader.lbTitle.text = "Position Constraint"
+            
         case .keyboardAssistant:
-            filterHeader.lbTitle.text = "Keyboard Assistant"
+            filterHeader.lbTitle.text = "Keyboard Assistant Type"
             
         case .inputNavigator:
-            filterHeader.lbTitle.text = "Input Navigator"
+            filterHeader.lbTitle.text = "Input Navigator Type"
         }
         
         return filterHeader
@@ -229,40 +295,39 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let filterSection: Section = self.sections[indexPath.section]
-        var filterSwitchCell: FilterSwitchCell?
-        var filterInputCell: FilterInputCell?
         var filterOptions: [FilterOption]!
         
-        // - get cell and filter options
+        // - get filter options
         switch (filterSection)
         {
         case .miscellaneous:
-            let miscOption: MiscOption = self.miscFilterOptions[indexPath.row]
-            
-            switch (miscOption.filterInputType)
-            {
-            case .filterSwitch:
-                filterSwitchCell = self.filtersTableView.dequeueReusableCell(withIdentifier: FilterSwitchCell.reuseIdentifier, for: indexPath) as? FilterSwitchCell
-            
-            case .filterInput:
-                filterInputCell = self.filtersTableView.dequeueReusableCell(withIdentifier: FilterInputCell.reuseIdentifier, for: indexPath) as? FilterInputCell
-            }
-            
             filterOptions = self.miscFilterOptions
+            
+        case .positionConstraint:
+            filterOptions = self.positionFilterOptions
         
         case .keyboardAssistant:
-            filterSwitchCell = self.filtersTableView.dequeueReusableCell(withIdentifier: FilterSwitchCell.reuseIdentifier, for: indexPath) as? FilterSwitchCell
             filterOptions = self.keyboardAssistantFilterOptions
             
         case .inputNavigator:
-            filterSwitchCell = self.filtersTableView.dequeueReusableCell(withIdentifier: FilterSwitchCell.reuseIdentifier, for: indexPath) as? FilterSwitchCell
             filterOptions = self.inputNavigatorFilterOptions
         }
         
+        var tableCell: UITableViewCell?
         let filterOption: FilterOption = filterOptions[indexPath.row]
         let isLastRow: Bool = indexPath.row == filterOptions.count - 1
         var title: String = ""
         var filterOptionIsAvailable: Bool = false
+        
+        // - get table cell
+        switch (filterOption.filterInputType)
+        {
+        case .filterInput:
+            tableCell = self.filtersTableView.dequeueReusableCell(withIdentifier: FilterInputCell.reuseIdentifier, for: indexPath) as? FilterInputCell
+            
+        case .filterSwitch:
+            tableCell = self.filtersTableView.dequeueReusableCell(withIdentifier: FilterSwitchCell.reuseIdentifier, for: indexPath) as? FilterSwitchCell
+        }
         
         switch (filterSection)
         {
@@ -277,8 +342,36 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource
                 case .positionOffset:
                     title = "Position Offset"
                     
+                    if let txtInput = (tableCell as? FilterInputCell)?.txtInput
+                    {
+                        if let offset = self.miscFilterOptionsDictionary[.positionOffset]?.inputValue.floatValue
+                        {
+                            txtInput.text = String(offset)
+                        }
+                        
+                        txtInput.keyboardType = .numberPad
+                        txtInput.delegate = self
+                        self.positionOffsetTextField = txtInput
+                    }
+                    
                 case .shouldSetTextFieldDelegates:
                     title = "Should Set TextField Delegates"
+                }
+            }
+            
+        case .positionConstraint:
+            
+            if let positionOption = filterOption as? PositionConstraintOption
+            {
+                filterOptionIsAvailable = true
+                
+                switch (positionOption.type!)
+                {
+                case .viewBottomToTopOfKeyboard:
+                    title = "View Bottom To Top Of Keyboard"
+                    
+                case .viewTopToTopOfScreen:
+                    title = "View Top To Top Of Screen"
                 }
             }
             
@@ -332,12 +425,27 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource
         }
         
         // - configure cell
-        if let switchCell = filterSwitchCell
+        tableCell?.selectionStyle = .none
+        
+        if let filterableCell = tableCell as? FilterableCell
+        {
+            
+            filterableCell.lbTitle.text = title
+            
+            if (!isLastRow)
+            {
+                filterableCell.separatorLine.isHidden = false
+            }
+            else
+            {
+                filterableCell.separatorLine.isHidden = true
+            }
+        }
+        
+        if let switchCell = tableCell as? FilterSwitchCell
         {
             switchCell.delegate = self
-            switchCell.selectionStyle = .none
-            switchCell.lbTitle.text = title
-            switchCell.filterSwitch.isOn = filterOption.isActive
+            switchCell.filterSwitch.isOn = filterOption.inputValue.boolValue
             
             if (filterOptionIsAvailable)
             {
@@ -350,59 +458,69 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource
                 switchCell.filterSwitch.isOn = false
                 switchCell.filterSwitch.isEnabled = false
             }
-            
-            if (!isLastRow) {
-                switchCell.separatorLine.isHidden = false
-            }
-            else {
-                switchCell.separatorLine.isHidden = true
-            }
-        }
-        else if let inputCell = filterInputCell
-        {
-            inputCell.selectionStyle = .none
-            inputCell.lbTitle.text = title
-            inputCell.txtInput.text = ""
-            
-            if (!isLastRow) {
-                inputCell.separatorLine.isHidden = false
-            }
-            else {
-                inputCell.separatorLine.isHidden = true
-            }
         }
         
-        if let filterSwitchCell = filterSwitchCell
-        {
-            return filterSwitchCell
-        }
-        else if let filterInputCell = filterInputCell
-        {
-            return filterInputCell
-        }
-        
-        return UITableViewCell()
+        return tableCell!
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         let filterSection: Section = self.sections[indexPath.section]
+        var filterOptions: [FilterOption]!
         
-        if (filterSection == .miscellaneous)
+        switch (filterSection)
         {
-            let miscOption: MiscOption = self.miscFilterOptions[indexPath.row]
+        case .miscellaneous:
+            filterOptions = self.miscFilterOptions
             
-            if (miscOption.filterInputType == .filterInput)
-            {
-                return self.filterInputCellHeight
-            }
+        case .positionConstraint:
+            filterOptions = self.positionFilterOptions
+            
+        case .keyboardAssistant:
+            filterOptions = self.keyboardAssistantFilterOptions
+            
+        case .inputNavigator:
+            filterOptions = self.inputNavigatorFilterOptions
         }
         
-        return self.filterSwitchCellHeight
+        let filterOption: FilterOption = filterOptions[indexPath.row]
+        
+        switch (filterOption.filterInputType)
+        {
+        case .filterInput:
+            return self.filterInputCellHeight
+            
+        case .filterSwitch:
+            return self.filterSwitchCellHeight
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    {
+        self.closeKeyboard()
     }
 }
 
-// MARK: - FilterCellDelegate
+// MARK: - UITextField
+
+extension FiltersViewController: UITextFieldDelegate
+{
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        if (textField == self.positionOffsetTextField)
+        {
+            if let textOffset = textField.text
+            {
+                if let positionOffset = Float(textOffset)
+                {
+                    self.miscFilterOptionsDictionary[.positionOffset]?.inputValue = NSNumber(value: positionOffset)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - FilterSwitchCellDelegate
 
 extension FiltersViewController: FilterSwitchCellDelegate
 {
@@ -411,32 +529,37 @@ extension FiltersViewController: FilterSwitchCellDelegate
         if let indexPath = self.filtersTableView.indexPath(for: filterSwitchCell)
         {
             let filterSection: Section = self.sections[indexPath.section]
-            var filterOptions: [FilterOption]!
             
             switch (filterSection)
             {
             case .miscellaneous:
-                filterOptions = self.miscFilterOptions
-                let filterOption: FilterOption = filterOptions[indexPath.row]
-                filterOption.isActive = !filterOption.isActive
+                let filterOption: MiscOption = self.miscFilterOptions[indexPath.row]
+                let isActive: Bool = filterOption.inputValue.boolValue
+                filterOption.inputValue = NSNumber(value: !isActive)
+                
+            case .positionConstraint:
+                for option in self.positionFilterOptions {
+                    option.inputValue = NSNumber(value: false)
+                }
+                
+                let filterOption: FilterOption = self.positionFilterOptions[indexPath.row]
+                filterOption.inputValue = NSNumber(value: true)
                 
             case .keyboardAssistant:
-                filterOptions = self.keyboardAssistantFilterOptions
-                for option in filterOptions {
-                    option.isActive = false
+                for option in self.keyboardAssistantFilterOptions {
+                    option.inputValue = NSNumber(value: false)
                 }
                 
-                let filterOption: FilterOption = filterOptions[indexPath.row]
-                filterOption.isActive = true
+                let filterOption: FilterOption = self.keyboardAssistantFilterOptions[indexPath.row]
+                filterOption.inputValue = NSNumber(value: true)
                 
             case .inputNavigator:
-                filterOptions = self.inputNavigatorFilterOptions
-                for option in filterOptions {
-                    option.isActive = false
+                for option in self.inputNavigatorFilterOptions {
+                    option.inputValue = NSNumber(value: false)
                 }
                 
-                let filterOption: FilterOption = filterOptions[indexPath.row]
-                filterOption.isActive = true
+                let filterOption: FilterOption = self.inputNavigatorFilterOptions[indexPath.row]
+                filterOption.inputValue = NSNumber(value: true)
             }
             
             self.filtersTableView.reloadData()

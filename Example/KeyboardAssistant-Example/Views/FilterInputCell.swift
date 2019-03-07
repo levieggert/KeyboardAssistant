@@ -5,7 +5,7 @@
 
 import UIKit
 
-class FilterInputCell: UITableViewCell
+class FilterInputCell: UITableViewCell, FilterableCell
 {
     static let nibName: String = "FilterInputCell"
     static let reuseIdentifier: String = "FilterInputCellReuseIdentifier"

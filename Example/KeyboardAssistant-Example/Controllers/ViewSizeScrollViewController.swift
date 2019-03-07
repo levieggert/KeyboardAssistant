@@ -101,8 +101,6 @@ class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant
         if let keyboardAssistant = self.keyboardAssistant
         {
             keyboardAssistant.closeKeyboard()
-            
-            //keyboardAssistant.navigator.focusedItem = nil //Same as keyboardAssistant.closeKeyboard()
         }
     }
 }

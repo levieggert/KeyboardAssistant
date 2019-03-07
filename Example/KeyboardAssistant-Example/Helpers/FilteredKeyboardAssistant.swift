@@ -64,13 +64,18 @@ extension FilteredKeyboardAssistant
         self.viewController.present(filterNavigation, animated: true, completion: nil)
     }
     
-    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType)
+    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
     {
         if let keyboardAssistant = self.keyboardAssistant
         {
+            /*
             print("\nApply Filters")
             print("  keyboardAssistantType: \(keyboardAssistantType)")
             print("  inputNavigatorType: \(inputNavigatorType)")
+            print("  positionConstraint: \(positionConstraint)")
+            print("  positionOffset: \(positionOffset)")
+            print("  shouldSetTextFieldDelegates: \(shouldSetTextFieldDelegates)")
+            */
             
             keyboardAssistant.closeKeyboard()
             keyboardAssistant.stop()
@@ -97,26 +102,28 @@ extension FilteredKeyboardAssistant
                 }
                 
             case .keyboard:
-                // TODO: Implement bool value in filters.
-                navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
+                navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: shouldSetTextFieldDelegates)
                 
             case .keyboardAndDefaultController:
-                // TODO: Implement bool value in filters.
-                navigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
+                navigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: shouldSetTextFieldDelegates)
                 
             case .keyboardAndController:
-                // TODO: Implement bool value in filters.
                 if let controller = self.navigatorController
                 {
-                    navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true, andController: controller)
+                    navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, andController: controller)
                 }
                 
             case .keyboardAndCustomAccessoryView:
-                // TODO: Implement bool value in filters.
                 if let customAccessoryView = self.navigatorCustomAccessoryView
                 {
-                    navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true, andCustomAccessoryView: customAccessoryView)
+                    navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, andCustomAccessoryView: customAccessoryView)
                 }
+            }
+            
+            if (navigator == nil)
+            {
+                print("\nWARNING: Failed to create InputNavigator.  Creating InputNavigator with default controller.")
+                navigator = InputNavigator.createWithDefaultController()
             }
             
             navigator.addInputItems(inputItems: self.navigatorInputItems)
@@ -128,12 +135,11 @@ extension FilteredKeyboardAssistant
                 // TODO: Handle cases where scrollView and bottomConstraint are nil
                 if let scrollView = self.keyboardScrollView, let bottomConstraint = self.keyboardBottomConstraint
                 {
-                    // TODO: Add positionConstraint and positionOffset to filters
                     newKeyboardAssistant = KeyboardAssistant.createAutoScrollView(
                         inputNavigator: navigator,
                         positionScrollView: scrollView,
-                        positionConstraint: .viewBottomToTopOfKeyboard,
-                        positionOffset: 30,
+                        positionConstraint: positionConstraint,
+                        positionOffset: positionOffset,
                         bottomConstraint: bottomConstraint,
                         bottomConstraintLayoutView: self.viewController.view)
                 }

@@ -10,7 +10,7 @@ protocol FilterSwitchCellDelegate: class
     func filterSwitchCellSwitchChanged(filterSwitchCell: FilterSwitchCell)
 }
 
-class FilterSwitchCell: UITableViewCell
+class FilterSwitchCell: UITableViewCell, FilterableCell
 {
     static let nibName: String = "FilterSwitchCell"
     static let reuseIdentifier: String = "FilterSwitchCellReuseIdentifier"

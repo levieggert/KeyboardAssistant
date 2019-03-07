@@ -27,6 +27,10 @@ public class KeyboardAssistant: NSObject
     {
         case viewTopToTopOfScreen
         case viewBottomToTopOfKeyboard
+        
+        public static var all: [RepositionConstraint] {
+            return [.viewTopToTopOfScreen, .viewBottomToTopOfKeyboard]
+        }
     }
     
     // MARK: - Properties
