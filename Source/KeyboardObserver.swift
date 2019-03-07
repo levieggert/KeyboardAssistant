@@ -94,8 +94,8 @@ public class KeyboardObserver: NSObject
                 endFrameHeight = endFrame.cgRectValue.size.height
             }
             
-            self.log(string: "beginFrameHeight: \(beginFrameHeight)")
-            self.log(string: "endFrameHeight: \(endFrameHeight)")
+            self.log(string: "beginFrameHeight: \(String(describing: beginFrameHeight))")
+            self.log(string: "endFrameHeight: \(String(describing: endFrameHeight))")
             
             var newKeyboardHeight: CGFloat?
             if let endFrameHeight = endFrameHeight
