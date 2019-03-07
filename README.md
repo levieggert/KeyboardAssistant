@@ -13,6 +13,7 @@ Note: Before reading any further, note that I use the word input and input item 
 - [How To Use KeyboardAssistant](#how-to-use-keyboardassistant)
 - [How To Use InputNavigator](#how-to-use-inputnavigator)
 - [Structuring Your ScrollView](#structuring-your-scrollview)
+- [Examples](#examples)
 - [Roadmap](#roadmap)
 
 ### Requirements
@@ -650,6 +651,10 @@ Lastly, make sure to connect the scrollview's bottom constrant to an outlet.  Th
 
 - [Back To Auto ScrollView Assistant](#auto-scrollview-assistant)
 - [Back To Manual ScrollView Assistant](#manual-scrollview-assistant)
+
+### Examples
+
+Be sure to check the KeyboardAssistant-Example project.  There are currently 3 examples utilizing a long scrollview, a long scrollview with nested subviews, and a shorter scrollview simulating a registration screen.  Each example conforms to FilteredKeyboardAssistant for configuring the KeyboardAssistant at run-time.  This allows for easier testing.  If you have any examples you would like me to add, let me know.
 
 ### Roadmap
 
