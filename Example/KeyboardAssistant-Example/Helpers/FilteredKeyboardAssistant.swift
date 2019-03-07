@@ -14,6 +14,8 @@ protocol FilteredKeyboardAssistant: FiltersViewControllerDelegate
     var navigatorController: InputNavigatorAccessoryController? { get }
     var navigatorCustomAccessoryView: UIView? { get }
     var navigatorInputItems: [UIView] { get }
+    var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint { get set }
+    var keyboardPositionOffset: CGFloat { get set }
 }
 
 extension FilteredKeyboardAssistant
@@ -56,6 +58,8 @@ extension FilteredKeyboardAssistant
             availableInputNavigatorFilters.append(.keyboardAndDefaultController)
 
             filtersViewController.keyboardAssistant = self.keyboardAssistant
+            filtersViewController.keyboardPositionConstraint = self.keyboardPositionConstraint
+            filtersViewController.keyboardPositionOffset = self.keyboardPositionOffset
             filtersViewController.availableKeyboardAssistantTypes = availableKeyboardAssistantFilters
             filtersViewController.availableInputNavigatorTypes = availableInputNavigatorFilters
             filtersViewController.delegate = self
@@ -66,6 +70,9 @@ extension FilteredKeyboardAssistant
     
     func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
     {
+        self.keyboardPositionConstraint = positionConstraint
+        self.keyboardPositionOffset = positionOffset
+        
         if let keyboardAssistant = self.keyboardAssistant
         {
             /*

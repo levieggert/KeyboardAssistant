@@ -76,6 +76,8 @@ class FiltersViewController: UIViewController
     private weak var positionOffsetTextField: UITextField?
     
     var keyboardAssistant: KeyboardAssistant?
+    var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
+    var keyboardPositionOffset: CGFloat = 30
     var availableKeyboardAssistantTypes: [KeyboardAssistant.AssistantType] = Array()
     var availableInputNavigatorTypes: [InputNavigator.NavigatorType] = Array()
     
@@ -159,14 +161,14 @@ class FiltersViewController: UIViewController
             {
                 filterOption.inputValue = NSNumber(value: true)
             }
-            
-            self.miscFilterOptionsDictionary[.positionOffset]?.inputValue = NSNumber(value: Float(keyboardAssistant.positionOffset))
-            
-            if let filterOption = self.positionFilterOptionsDictionary[keyboardAssistant.positionConstraint]
-            {
-                filterOption.inputValue = NSNumber(value: true)
-            }
         }
+        
+        if let filterOption = self.positionFilterOptionsDictionary[self.keyboardPositionConstraint]
+        {
+            filterOption.inputValue = NSNumber(value: true)
+        }
+        
+        self.miscFilterOptionsDictionary[.positionOffset]?.inputValue = NSNumber(value: Float(self.keyboardPositionOffset))
     }
     
     private func closeKeyboard()

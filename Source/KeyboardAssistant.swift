@@ -220,14 +220,12 @@ public class KeyboardAssistant: NSObject
                 scrollOffset = position.y + toInputItem.frame.size.height + offset // Account for toInputItem.height and offset
             }
             
-            /*
             self.log(string: "\nKeyboardAssistant: reposition(scrollView)")
             self.log(string:"  constraint: \(constraint)")
             self.log(string:"  offset: \(offset)")
             self.log(string:"  toInputItem.origin.y: \(toInputItem.frame.origin.y)")
             self.log(string:"  position.y: \(position.y)")
             self.log(string:"  scrollOffset: \(String(describing: scrollOffset))")
-            */
             
             if var scrollOffset = scrollOffset
             {

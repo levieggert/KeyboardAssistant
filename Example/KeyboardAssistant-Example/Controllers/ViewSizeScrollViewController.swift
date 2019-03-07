@@ -19,6 +19,8 @@ class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant
     var keyboardBottomConstraint: NSLayoutConstraint? {
         return self.scrollViewBottomConstraint
     }
+    var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
+    var keyboardPositionOffset: CGFloat = 30
     var navigatorController: InputNavigatorAccessoryController? {
         return CustomNavigatorController()
     }
@@ -58,8 +60,8 @@ class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant
         self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(
             inputNavigator: navigator,
             positionScrollView: self.scrollView,
-            positionConstraint: .viewBottomToTopOfKeyboard,
-            positionOffset: 30,
+            positionConstraint: self.keyboardPositionConstraint,
+            positionOffset: self.keyboardPositionOffset,
             bottomConstraint: self.scrollViewBottomConstraint,
             bottomConstraintLayoutView: self.view)
     }
@@ -126,9 +128,8 @@ extension ViewSizeScrollViewController: KeyboardAssistantDelegate
 {
     func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
     {
-        // TODO: Should add these variables to FilteredKeyboardAssistant protocol and use them here.
-        let constraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
-        let offset: CGFloat = 20
+        let constraint: KeyboardAssistant.PositionConstraint = self.keyboardPositionConstraint
+        let offset: CGFloat = self.keyboardPositionOffset
         
         if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false)
         {
