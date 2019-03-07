@@ -23,12 +23,12 @@ public class KeyboardAssistant: NSObject
         }
     }
     
-    public enum RepositionConstraint
+    public enum PositionConstraint
     {
         case viewTopToTopOfScreen
         case viewBottomToTopOfKeyboard
         
-        public static var all: [RepositionConstraint] {
+        public static var all: [PositionConstraint] {
             return [.viewTopToTopOfScreen, .viewBottomToTopOfKeyboard]
         }
     }
@@ -38,8 +38,8 @@ public class KeyboardAssistant: NSObject
     public private(set) var observer: KeyboardObserver!
     public private(set) var navigator: InputNavigator!
     public private(set) var type: KeyboardAssistant.AssistantType = .autoScrollView
-    public private(set) var repositionConstraint: KeyboardAssistant.RepositionConstraint = .viewTopToTopOfScreen
-    public private(set) var repositionOffset: CGFloat = 20
+    public private(set) var positionConstraint: KeyboardAssistant.PositionConstraint = .viewTopToTopOfScreen
+    public private(set) var positionOffset: CGFloat = 20
     public private(set) var resetBottomConstraintConstant: CGFloat = 0
     
     public private(set) weak var scrollView: UIScrollView?
@@ -63,13 +63,13 @@ public class KeyboardAssistant: NSObject
         self.navigator.delegate = self
     }
     
-    static public func createAutoScrollView(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
+    static public func createAutoScrollView(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant
     {
         let assistant: KeyboardAssistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
         assistant.scrollView = positionScrollView
-        assistant.repositionConstraint = positionConstraint
-        assistant.repositionOffset = positionOffset
+        assistant.positionConstraint = positionConstraint
+        assistant.positionOffset = positionOffset
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
         assistant.type = .autoScrollView
@@ -183,7 +183,7 @@ public class KeyboardAssistant: NSObject
         case .autoScrollView:
             if let scrollView = self.scrollView
             {
-                self.reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: self.repositionConstraint, offset: self.repositionOffset)
+                self.reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: self.positionConstraint, offset: self.positionOffset)
             }
             
         case .manualWithBottomConstraint:
@@ -200,7 +200,7 @@ public class KeyboardAssistant: NSObject
         }
     }
     
-    public func reposition(scrollView: UIScrollView, toInputItem: UIView, constraint: RepositionConstraint, offset: CGFloat)
+    public func reposition(scrollView: UIScrollView, toInputItem: UIView, constraint: PositionConstraint, offset: CGFloat)
     {
         if (self.observer.keyboardIsUp)
         {

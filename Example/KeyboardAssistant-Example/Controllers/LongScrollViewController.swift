@@ -124,7 +124,8 @@ extension LongScrollViewController: KeyboardAssistantDelegate
 {
     func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
     {
-        let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
+        // TODO: Should add these variables to FilteredKeyboardAssistant protocol and use them here.
+        let constraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 30
         
         if (toInputItem == self.txtFirstName || toInputItem == self.txtLastName)

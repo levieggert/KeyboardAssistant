@@ -64,7 +64,7 @@ extension FilteredKeyboardAssistant
         self.viewController.present(filterNavigation, animated: true, completion: nil)
     }
     
-    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.RepositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
+    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
     {
         if let keyboardAssistant = self.keyboardAssistant
         {
