@@ -13,7 +13,6 @@
 		45D65D57223176ED00BE4067 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D4D223176ED00BE4067 /* KeyboardObserver.swift */; };
 		45D65D58223176ED00BE4067 /* KeyboardAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D4E223176ED00BE4067 /* KeyboardAssistant.swift */; };
 		45D65D59223176ED00BE4067 /* InputNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D4F223176ED00BE4067 /* InputNavigator.swift */; };
-		45D65D5A223176ED00BE4067 /* DefaultNavigationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D65D50223176ED00BE4067 /* DefaultNavigationView.xib */; };
 		45D65D5B223176ED00BE4067 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D51223176ED00BE4067 /* UserDefaults+Extension.swift */; };
 		45D65D5C223176ED00BE4067 /* ViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D52223176ED00BE4067 /* ViewComponent.swift */; };
 		45D65D5D223176ED00BE4067 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D53223176ED00BE4067 /* NotificationHandler.swift */; };
@@ -26,6 +25,7 @@
 		45D65D6B2231791C00BE4067 /* navigator_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D65D652231791C00BE4067 /* navigator_left.png */; };
 		45D65D6C2231791C00BE4067 /* navigator_left@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D65D662231791C00BE4067 /* navigator_left@3x.png */; };
 		45D65D6D2231791C00BE4067 /* navigator_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D65D672231791C00BE4067 /* navigator_left@2x.png */; };
+		45FC07842231C98A0093C229 /* DefaultNavigationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FC07832231C98A0093C229 /* DefaultNavigationView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,6 @@
 		45D65D4D223176ED00BE4067 /* KeyboardObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
 		45D65D4E223176ED00BE4067 /* KeyboardAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAssistant.swift; sourceTree = "<group>"; };
 		45D65D4F223176ED00BE4067 /* InputNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNavigator.swift; sourceTree = "<group>"; };
-		45D65D50223176ED00BE4067 /* DefaultNavigationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefaultNavigationView.xib; sourceTree = "<group>"; };
 		45D65D51223176ED00BE4067 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		45D65D52223176ED00BE4067 /* ViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComponent.swift; sourceTree = "<group>"; };
 		45D65D53223176ED00BE4067 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		45D65D652231791C00BE4067 /* navigator_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigator_left.png; sourceTree = "<group>"; };
 		45D65D662231791C00BE4067 /* navigator_left@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigator_left@3x.png"; sourceTree = "<group>"; };
 		45D65D672231791C00BE4067 /* navigator_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigator_left@2x.png"; sourceTree = "<group>"; };
+		45FC07832231C98A0093C229 /* DefaultNavigationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefaultNavigationView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +126,6 @@
 				45D65D4D223176ED00BE4067 /* KeyboardObserver.swift */,
 				45D65D4E223176ED00BE4067 /* KeyboardAssistant.swift */,
 				45D65D4F223176ED00BE4067 /* InputNavigator.swift */,
-				45D65D50223176ED00BE4067 /* DefaultNavigationView.xib */,
 				45D65D51223176ED00BE4067 /* UserDefaults+Extension.swift */,
 				45D65D52223176ED00BE4067 /* ViewComponent.swift */,
 				45D65D53223176ED00BE4067 /* NotificationHandler.swift */,
@@ -140,6 +139,7 @@
 		45D65D612231791C00BE4067 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				45FC07832231C98A0093C229 /* DefaultNavigationView.xib */,
 				45D65D652231791C00BE4067 /* navigator_left.png */,
 				45D65D672231791C00BE4067 /* navigator_left@2x.png */,
 				45D65D662231791C00BE4067 /* navigator_left@3x.png */,
@@ -243,11 +243,11 @@
 			files = (
 				45D65D6C2231791C00BE4067 /* navigator_left@3x.png in Resources */,
 				45D65D6D2231791C00BE4067 /* navigator_left@2x.png in Resources */,
+				45FC07842231C98A0093C229 /* DefaultNavigationView.xib in Resources */,
 				45D65D6B2231791C00BE4067 /* navigator_left.png in Resources */,
 				45D65D6A2231791C00BE4067 /* navigator_right@3x.png in Resources */,
 				45D65D682231791C00BE4067 /* navigator_right.png in Resources */,
 				45D65D692231791C00BE4067 /* navigator_right@2x.png in Resources */,
-				45D65D5A223176ED00BE4067 /* DefaultNavigationView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
