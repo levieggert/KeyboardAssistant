@@ -29,13 +29,20 @@
 		4585BEF0222976D300C5A42C /* DefaultNavigationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4585BEEF222976D300C5A42C /* DefaultNavigationView.xib */; };
 		4585BEF22229793500C5A42C /* ViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEF12229793500C5A42C /* ViewComponent.swift */; };
 		4585BEF622297BA300C5A42C /* InputNavigatorAccessoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */; };
+		45B578E8223078BE00927672 /* FilteredKeyboardAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B578E7223078BE00927672 /* FilteredKeyboardAssistant.swift */; };
+		45B578EA2230A68C00927672 /* CustomKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B578E92230A68C00927672 /* CustomKeyboardView.swift */; };
+		45B578EC2230A6C100927672 /* CustomKeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B578EB2230A6C100927672 /* CustomKeyboardView.xib */; };
+		45B578EE2230B7E000927672 /* CustomNavigatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B578ED2230B7E000927672 /* CustomNavigatorController.swift */; };
+		45B578F02230B82E00927672 /* CustomNavigatorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B578EF2230B82E00927672 /* CustomNavigatorController.xib */; };
+		45B578F22230BAAD00927672 /* FilterInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B578F12230BAAD00927672 /* FilterInputCell.swift */; };
+		45B578F42230BAC400927672 /* FilterInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B578F32230BAC400927672 /* FilterInputCell.xib */; };
 		45CEA68522273BE100DC4ADA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45CEA68422273BE100DC4ADA /* Assets.xcassets */; };
 		45CEA69322273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69222273BE100DC4ADA /* KeyboardAssistant_ExampleTests.swift */; };
 		45CEA69E22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA69D22273BE100DC4ADA /* KeyboardAssistant_ExampleUITests.swift */; };
 		45E058C22229EE4C00DC8E13 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E058C12229EE4C00DC8E13 /* FiltersViewController.swift */; };
 		45E58584222B236300ADC57B /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E58583222B236300ADC57B /* UIExtensions.swift */; };
-		45FEF3C72230064000E4EDB0 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FEF3C62230064000E4EDB0 /* FilterCell.swift */; };
-		45FEF3C92230065200E4EDB0 /* FilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FEF3C82230065200E4EDB0 /* FilterCell.xib */; };
+		45FEF3C72230064000E4EDB0 /* FilterSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FEF3C62230064000E4EDB0 /* FilterSwitchCell.swift */; };
+		45FEF3C92230065200E4EDB0 /* FilterSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FEF3C82230065200E4EDB0 /* FilterSwitchCell.xib */; };
 		45FEF3CB22300F1D00E4EDB0 /* FilterSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FEF3CA22300F1D00E4EDB0 /* FilterSectionHeaderView.swift */; };
 		45FEF3CD22300F3D00E4EDB0 /* FilterHeaderSectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FEF3CC22300F3D00E4EDB0 /* FilterHeaderSectionView.xib */; };
 /* End PBXBuildFile section */
@@ -80,6 +87,13 @@
 		4585BEEF222976D300C5A42C /* DefaultNavigationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DefaultNavigationView.xib; sourceTree = "<group>"; };
 		4585BEF12229793500C5A42C /* ViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewComponent.swift; sourceTree = "<group>"; };
 		4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNavigatorAccessoryController.swift; sourceTree = "<group>"; };
+		45B578E7223078BE00927672 /* FilteredKeyboardAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredKeyboardAssistant.swift; sourceTree = "<group>"; };
+		45B578E92230A68C00927672 /* CustomKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardView.swift; sourceTree = "<group>"; };
+		45B578EB2230A6C100927672 /* CustomKeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomKeyboardView.xib; sourceTree = "<group>"; };
+		45B578ED2230B7E000927672 /* CustomNavigatorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigatorController.swift; sourceTree = "<group>"; };
+		45B578EF2230B82E00927672 /* CustomNavigatorController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomNavigatorController.xib; sourceTree = "<group>"; };
+		45B578F12230BAAD00927672 /* FilterInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInputCell.swift; sourceTree = "<group>"; };
+		45B578F32230BAC400927672 /* FilterInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterInputCell.xib; sourceTree = "<group>"; };
 		45CEA67A22273BE000DC4ADA /* KeyboardAssistant-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KeyboardAssistant-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CEA68422273BE100DC4ADA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45CEA68922273BE100DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -91,8 +105,8 @@
 		45CEA69F22273BE100DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45E058C12229EE4C00DC8E13 /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		45E58583222B236300ADC57B /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
-		45FEF3C62230064000E4EDB0 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
-		45FEF3C82230065200E4EDB0 /* FilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterCell.xib; sourceTree = "<group>"; };
+		45FEF3C62230064000E4EDB0 /* FilterSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSwitchCell.swift; sourceTree = "<group>"; };
+		45FEF3C82230065200E4EDB0 /* FilterSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterSwitchCell.xib; sourceTree = "<group>"; };
 		45FEF3CA22300F1D00E4EDB0 /* FilterSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSectionHeaderView.swift; sourceTree = "<group>"; };
 		45FEF3CC22300F3D00E4EDB0 /* FilterHeaderSectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterHeaderSectionView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,12 +139,18 @@
 		451FA58122273C7C0094DB8B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				45B578E92230A68C00927672 /* CustomKeyboardView.swift */,
+				45B578EB2230A6C100927672 /* CustomKeyboardView.xib */,
+				45B578ED2230B7E000927672 /* CustomNavigatorController.swift */,
+				45B578EF2230B82E00927672 /* CustomNavigatorController.xib */,
 				451FA58222273C7C0094DB8B /* ExampleCell.swift */,
 				451FA58322273C7C0094DB8B /* ExampleCell.xib */,
-				45FEF3C62230064000E4EDB0 /* FilterCell.swift */,
-				45FEF3C82230065200E4EDB0 /* FilterCell.xib */,
+				45B578F12230BAAD00927672 /* FilterInputCell.swift */,
+				45B578F32230BAC400927672 /* FilterInputCell.xib */,
 				45FEF3CA22300F1D00E4EDB0 /* FilterSectionHeaderView.swift */,
 				45FEF3CC22300F3D00E4EDB0 /* FilterHeaderSectionView.xib */,
+				45FEF3C62230064000E4EDB0 /* FilterSwitchCell.swift */,
+				45FEF3C82230065200E4EDB0 /* FilterSwitchCell.xib */,
 				456577E5222827ED005900F3 /* InputCell.swift */,
 				456577E722282809005900F3 /* InputCell.xib */,
 			);
@@ -168,6 +188,14 @@
 			path = ../../Source;
 			sourceTree = "<group>";
 		};
+		45B578E6223078AE00927672 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				45B578E7223078BE00927672 /* FilteredKeyboardAssistant.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		45CEA67122273BE000DC4ADA = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +227,7 @@
 				451FA58922273C7C0094DB8B /* Main.storyboard */,
 				451FA58B22273C7C0094DB8B /* AppDelegate.swift */,
 				451FA58422273C7C0094DB8B /* Controllers */,
+				45B578E6223078AE00927672 /* Helpers */,
 				451FA58122273C7C0094DB8B /* Views */,
 			);
 			path = "KeyboardAssistant-Example";
@@ -329,12 +358,15 @@
 			files = (
 				451FA59322273C7C0094DB8B /* Main.storyboard in Resources */,
 				45FEF3CD22300F3D00E4EDB0 /* FilterHeaderSectionView.xib in Resources */,
+				45B578F42230BAC400927672 /* FilterInputCell.xib in Resources */,
 				456577E822282809005900F3 /* InputCell.xib in Resources */,
 				4585BEF0222976D300C5A42C /* DefaultNavigationView.xib in Resources */,
+				45B578EC2230A6C100927672 /* CustomKeyboardView.xib in Resources */,
 				4526749A2228513D0004B4D7 /* README.md in Resources */,
 				451FA58E22273C7C0094DB8B /* ExampleCell.xib in Resources */,
-				45FEF3C92230065200E4EDB0 /* FilterCell.xib in Resources */,
+				45FEF3C92230065200E4EDB0 /* FilterSwitchCell.xib in Resources */,
 				451FA59622273C7C0094DB8B /* LaunchScreen.storyboard in Resources */,
+				45B578F02230B82E00927672 /* CustomNavigatorController.xib in Resources */,
 				45CEA68522273BE100DC4ADA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,14 +392,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45FEF3C72230064000E4EDB0 /* FilterCell.swift in Sources */,
+				45FEF3C72230064000E4EDB0 /* FilterSwitchCell.swift in Sources */,
 				451FA59522273C7C0094DB8B /* AppDelegate.swift in Sources */,
 				456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */,
 				451FA59F22273CBE0094DB8B /* InputNavigator.swift in Sources */,
 				45E58584222B236300ADC57B /* UIExtensions.swift in Sources */,
 				451FA59022273C7C0094DB8B /* LongScrollViewController.swift in Sources */,
+				45B578F22230BAAD00927672 /* FilterInputCell.swift in Sources */,
+				45B578EA2230A68C00927672 /* CustomKeyboardView.swift in Sources */,
 				4585BEF22229793500C5A42C /* ViewComponent.swift in Sources */,
 				451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */,
+				45B578EE2230B7E000927672 /* CustomNavigatorController.swift in Sources */,
 				451FA59D22273CBE0094DB8B /* KeyboardObserver.swift in Sources */,
 				451FA59122273C7C0094DB8B /* ExamplesViewController.swift in Sources */,
 				451FA59222273C7C0094DB8B /* LongTableViewController.swift in Sources */,
@@ -378,6 +413,7 @@
 				45FEF3CB22300F1D00E4EDB0 /* FilterSectionHeaderView.swift in Sources */,
 				4585BEF622297BA300C5A42C /* InputNavigatorAccessoryController.swift in Sources */,
 				45E058C22229EE4C00DC8E13 /* FiltersViewController.swift in Sources */,
+				45B578E8223078BE00927672 /* FilteredKeyboardAssistant.swift in Sources */,
 				456577E6222827ED005900F3 /* InputCell.swift in Sources */,
 				451FA58D22273C7C0094DB8B /* ExampleCell.swift in Sources */,
 			);

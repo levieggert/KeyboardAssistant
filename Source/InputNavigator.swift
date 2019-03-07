@@ -12,15 +12,34 @@ public protocol InputNavigatorDelegate: class
 
 public class InputNavigator: NSObject
 {
-    public enum InputNavigatorType { case defaultController; case controller; case customAccessoryView; case keyboard; case keyboardAndDefaultController; case keyboardAndController; case keyboardAndCustomAccessoryView}
-    public enum InputItemType { case textField; case textView; case bothTextFieldAndTextView; }
+    public enum NavigatorType
+    {
+        case defaultController
+        case controller
+        case customAccessoryView
+        case keyboard
+        case keyboardAndDefaultController
+        case keyboardAndController
+        case keyboardAndCustomAccessoryView
+        
+        public static var allTypes: [InputNavigator.NavigatorType] {
+            return [.defaultController, .controller, .customAccessoryView, .keyboard, .keyboardAndDefaultController, .keyboardAndController, .keyboardAndCustomAccessoryView]
+        }
+    }
+    
+    public enum InputItemType
+    {
+        case textField
+        case textView
+        case bothTextFieldAndTextView
+    }
     
     // MARK: - Properties
     
     public private(set) var accessoryController: InputNavigatorAccessoryController?
     public private(set) var customAccessoryView: UIView?
     public private(set) var inputItems: [UIView] = Array()
-    public private(set) var navigatorType: InputNavigator.InputNavigatorType = .defaultController
+    public private(set) var type: InputNavigator.NavigatorType = .defaultController
     public private(set) var shouldUseKeyboardReturnKeyToNavigate: Bool = false
     public private(set) var shouldSetTextFieldDelegates: Bool = false
     public private(set) var shouldLoopAccessoryControllerNavigation: Bool = true
@@ -50,11 +69,6 @@ public class InputNavigator: NSObject
             self.shouldSetTextFieldDelegates = false
         }
         
-        if (!self.shouldUseKeyboardReturnKeyToNavigate && self.accessoryController == nil && self.customAccessoryView == nil)
-        {
-            self.accessoryController = DefaultNavigationView()
-        }
-        
         if var accessoryController = accessoryController
         {
             self.accessoryController = accessoryController
@@ -70,7 +84,7 @@ public class InputNavigator: NSObject
     {
         let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
         
-        navigator.navigatorType = .defaultController
+        navigator.type = .defaultController
         
         return navigator
     }
@@ -79,7 +93,7 @@ public class InputNavigator: NSObject
     {
         let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: accessoryController, customAccessoryView: nil)
         
-        navigator.navigatorType = .controller
+        navigator.type = .controller
         
         return navigator
     }
@@ -88,7 +102,7 @@ public class InputNavigator: NSObject
     {
         let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: false, shouldSetTextFieldDelegates: false, accessoryController: nil, customAccessoryView: accessoryView)
         
-        navigator.navigatorType = .customAccessoryView
+        navigator.type = .customAccessoryView
         
         return navigator
     }
@@ -97,7 +111,7 @@ public class InputNavigator: NSObject
     {
         let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: nil, customAccessoryView: nil)
         
-        navigator.navigatorType = .keyboard
+        navigator.type = .keyboard
         
         return navigator
     }
@@ -106,7 +120,7 @@ public class InputNavigator: NSObject
     {
         let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, accessoryController: DefaultNavigationView(), customAccessoryView: nil)
         
-        navigator.navigatorType = .keyboardAndDefaultController
+        navigator.type = .keyboardAndDefaultController
         
         return navigator
     }
@@ -115,7 +129,7 @@ public class InputNavigator: NSObject
     {
         let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: andController, customAccessoryView: nil)
         
-        navigator.navigatorType = .keyboardAndController
+        navigator.type = .keyboardAndController
         
         return navigator
     }
@@ -124,13 +138,14 @@ public class InputNavigator: NSObject
     {
         let navigator: InputNavigator = InputNavigator(shouldUseKeyboardReturnKeyToNavigate: true, shouldSetTextFieldDelegates: true, accessoryController: nil, customAccessoryView: andCustomAccessoryView)
         
-        navigator.navigatorType = .keyboardAndCustomAccessoryView
+        navigator.type = .keyboardAndCustomAccessoryView
         
         return navigator
     }
     
     deinit
     {
+        self.removeInputItems()
         self.removeNotifications()
     }
     
@@ -158,6 +173,10 @@ public class InputNavigator: NSObject
     
     public var defaultController: DefaultNavigationView? {
         return self.accessoryController as? DefaultNavigationView
+    }
+    
+    public var keyboardNavigationEnabled: Bool {
+        return self.type == .keyboard || self.type == .keyboardAndDefaultController || self.type == .keyboardAndController || self.type == .keyboardAndCustomAccessoryView
     }
     
     // MARK: - Navigation
@@ -393,6 +412,20 @@ public class InputNavigator: NSObject
     {
         if let index = self.inputItems.index(of: inputItem)
         {
+            if let textField = inputItem as? UITextField
+            {
+                textField.inputAccessoryView = nil
+                
+                if (self.keyboardNavigationEnabled)
+                {
+                    textField.returnKeyType = .default
+                }
+            }
+            else if let textView = inputItem as? UITextView
+            {
+                textView.inputAccessoryView = nil
+            }
+            
             if (self.shouldUseKeyboardReturnKeyToNavigate && self.shouldSetTextFieldDelegates)
             {
                 if let textField = inputItem as? UITextField

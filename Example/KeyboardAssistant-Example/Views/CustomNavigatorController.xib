@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomNavigatorController" customModule="KeyboardAssistant_Example" customModuleProvider="target">
+            <connections>
+                <outlet property="btDone" destination="ijL-9D-OAk" id="kar-yY-AXl"/>
+                <outlet property="btNext" destination="pZ7-EE-Ame" id="hOD-xv-dbP"/>
+                <outlet property="btPrev" destination="oKp-EV-Ezi" id="zEV-Dp-YcE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oKp-EV-Ezi" userLabel="btPrev">
+                    <rect key="frame" x="30" y="0.0" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="GXv-fy-j5w"/>
+                        <constraint firstAttribute="width" constant="50" id="y1A-ek-xlE"/>
+                    </constraints>
+                    <state key="normal" title="Prev">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="handlePrevWithButton:" destination="-1" eventType="touchUpInside" id="4xC-87-fDv"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZ7-EE-Ame" userLabel="btNext">
+                    <rect key="frame" x="90" y="0.0" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="PQ1-OY-2S2"/>
+                        <constraint firstAttribute="width" constant="50" id="doT-bl-5Nw"/>
+                    </constraints>
+                    <state key="normal" title="Next">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="handleNextWithButton:" destination="-1" eventType="touchUpInside" id="iOe-GR-C37"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ijL-9D-OAk" userLabel="btDone">
+                    <rect key="frame" x="170" y="0.0" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="E1H-e4-Jlh"/>
+                        <constraint firstAttribute="width" constant="50" id="Vrb-Em-z8x"/>
+                    </constraints>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="handleDoneWithButton:" destination="-1" eventType="touchUpInside" id="oBQ-XL-UF0"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="pZ7-EE-Ame" firstAttribute="leading" secondItem="oKp-EV-Ezi" secondAttribute="trailing" constant="10" id="EGT-KV-p5d"/>
+                <constraint firstItem="oKp-EV-Ezi" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="NIh-hD-1w7"/>
+                <constraint firstItem="ijL-9D-OAk" firstAttribute="leading" secondItem="pZ7-EE-Ame" secondAttribute="trailing" constant="30" id="Tbo-RP-DPN"/>
+                <constraint firstItem="pZ7-EE-Ame" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="fJ3-DM-WRn"/>
+                <constraint firstItem="ijL-9D-OAk" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kTw-xQ-pIe"/>
+                <constraint firstItem="oKp-EV-Ezi" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tQF-SY-Gib"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="138.40000000000001" y="141.22938530734635"/>
+        </view>
+    </objects>
+</document>

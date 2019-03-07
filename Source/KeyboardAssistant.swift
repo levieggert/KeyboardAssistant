@@ -12,14 +12,25 @@ public protocol KeyboardAssistantDelegate: class
 
 public class KeyboardAssistant: NSObject
 {
-    public enum AssistantType { case autoScrollView; case manual; }
-    public enum RepositionConstraint { case viewTopToTopOfScreen; case viewBottomToTopOfKeyboard; }
+    public enum AssistantType
+    {
+        case autoScrollView
+        case manualWithBottomConstraint
+        case manual
+        
+        public static var allTypes: [KeyboardAssistant.AssistantType] {
+            return [.autoScrollView, .manualWithBottomConstraint, .manual]
+        }
+    }
+    
+    public enum RepositionConstraint
+    {
+        case viewTopToTopOfScreen
+        case viewBottomToTopOfKeyboard
+    }
     
     // MARK: - Properties
     
-    private weak var bottomConstraint: NSLayoutConstraint?
-    private weak var bottomConstraintLayoutView: UIView?
-        
     public private(set) var observer: KeyboardObserver!
     public private(set) var navigator: InputNavigator!
     public private(set) var type: KeyboardAssistant.AssistantType = .autoScrollView
@@ -28,6 +39,8 @@ public class KeyboardAssistant: NSObject
     public private(set) var resetBottomConstraintConstant: CGFloat = 0
     
     public private(set) weak var scrollView: UIScrollView?
+    public private(set) weak var bottomConstraint: NSLayoutConstraint?
+    public private(set) weak var bottomConstraintLayoutView: UIView?
     
     public var invertBottomConstraintConstant: Bool = true
     public var animationDuration: TimeInterval = 0.3
@@ -66,7 +79,7 @@ public class KeyboardAssistant: NSObject
         
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
-        assistant.type = .manual
+        assistant.type = .manualWithBottomConstraint
         assistant.delegate = delegate
         
         return assistant
@@ -167,6 +180,12 @@ public class KeyboardAssistant: NSObject
             if let scrollView = self.scrollView
             {
                 self.reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: self.repositionConstraint, offset: self.repositionOffset)
+            }
+            
+        case .manualWithBottomConstraint:
+            if let delegate = self.delegate
+            {
+                delegate.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: self.observer.keyboardHeight)
             }
             
         case .manual:
