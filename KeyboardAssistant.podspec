@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "9.0"
 
   s.name         = "KeyboardAssistant"
-  s.version      = "1.0.2"
+  s.version      = "1.1.0"
   s.license      = "MIT"
 
   s.homepage     = "https://github.com/levieggert/KeyboardAssistant"
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Source/*.swift'
   s.resources = 'Resources/*.*'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 end
