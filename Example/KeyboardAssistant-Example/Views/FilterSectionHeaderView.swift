@@ -5,39 +5,32 @@
 
 import UIKit
 
-class FilterHeaderSectionView: UIView
-{
-    // MARK: - Outlets
+class FilterHeaderSectionView: UIView, NibBased {
     
-    @IBOutlet weak var lbTitle: UILabel!
+    @IBOutlet weak private var titleLabel: UILabel!
     
-    // MARK: - Life Cycle
-    
-    public required init()
-    {
+    public required init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
-        
-        self.load()
+        initialize()
     }
     
-    public override init(frame: CGRect)
-    {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.load()
+        initialize()
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        self.load()
+        initialize()
     }
     
-    // MARK: - Load
+    private func initialize() {
+        loadNib()
+    }
     
-    private func load()
-    {
-        self.loadNibWithName(nibName: "FilterHeaderSectionView", constrainEdgesToSuperview: true)
+    var title: String? = nil {
+        didSet {
+            titleLabel.text = title
+        }
     }
 }

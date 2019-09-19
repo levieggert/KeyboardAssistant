@@ -5,8 +5,8 @@
 
 import UIKit
 
-public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
-{
+public class DefaultNavigationView: UIView, NibBased, InputNavigatorAccessoryController {
+    
     // MARK: - InputNavigatorAccessoryController protocol
     
     public var controllerView: UIView { return self }
@@ -22,90 +22,62 @@ public class DefaultNavigationView: UIView, InputNavigatorAccessoryController
     
     // MARK: - Life Cycle
     
-    public required init()
-    {
+    public required init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
-        
-        self.load()
+        initialize()
     }
     
-    public override init(frame: CGRect)
-    {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.load()
+        initialize()
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        self.load()
+        initialize()
     }
     
-    // MARK: - Load
-    
-    private func load()
-    {
-        self.loadNibWithName(nibName: "DefaultNavigationView", constrainEdgesToSuperview: true)
+    private func initialize() {
+        
+        loadNib()
         
         // top shadow
-        self.layer.shadowOffset = CGSize(width: 0, height: -1)
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowRadius = 3
-        self.layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 0, height: -1)
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = 3
+        layer.shadowOpacity = 0.2
         
         // button colors
-        self.setButtonColors(color: .black)
+        setButtonColors(color: .black)
     }
     
-    // MARK: - Actions
-    
-    @IBAction func handlePrev(button: UIButton)
-    {
-        if let buttonDelegate = self.buttonDelegate
-        {
-            buttonDelegate.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
-        }
+    @IBAction func handlePrev(button: UIButton) {
+        buttonDelegate?.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleNext(button: UIButton)
-    {
-        if let buttonDelegate = self.buttonDelegate
-        {
-            buttonDelegate.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
-        }
+    @IBAction func handleNext(button: UIButton) {
+        buttonDelegate?.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleDone(button: UIButton)
-    {        
-        if let buttonDelegate = self.buttonDelegate
-        {
-            buttonDelegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
-        }
+    @IBAction func handleDone(button: UIButton) {
+        buttonDelegate?.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
+    }
+        
+    public func setButtonColors(color: UIColor) {
+        setBtPrevColor(color: color)
+        setBtNextColor(color: color)
+        setBtDoneColor(color: color)
     }
     
-    // MARK: - Colors
-    
-    public func setButtonColors(color: UIColor)
-    {
-        self.setBtPrevColor(color: color)
-        self.setBtNextColor(color: color)
-        self.setBtDoneColor(color: color)
+    public func setBtPrevColor(color: UIColor) {
+        btPrev.setImageColor(color: color)
     }
     
-    public func setBtPrevColor(color: UIColor)
-    {
-        self.btPrev.setImageColor(color: color)
+    public func setBtNextColor(color: UIColor) {
+        btNext.setImageColor(color: color)
     }
     
-    public func setBtNextColor(color: UIColor)
-    {
-        self.btNext.setImageColor(color: color)
-    }
-    
-    public func setBtDoneColor(color: UIColor)
-    {
-        self.btDone.setTitleColor(color, for: .normal)
+    public func setBtDoneColor(color: UIColor) {
+        btDone.setTitleColor(color, for: .normal)
     }
 }

@@ -5,42 +5,39 @@
 
 import UIKit
 
-protocol FilterSwitchCellDelegate: class
-{
+protocol FilterSwitchCellDelegate: class {
     func filterSwitchCellSwitchChanged(filterSwitchCell: FilterSwitchCell)
 }
 
-class FilterSwitchCell: UITableViewCell, FilterableCell
-{
+class FilterSwitchCell: UITableViewCell, FilterableCell {
+    
     static let nibName: String = "FilterSwitchCell"
     static let reuseIdentifier: String = "FilterSwitchCellReuseIdentifier"
     
-    // MARK: - Properties
-    
     weak var delegate: FilterSwitchCellDelegate?
     
-    // MARK: - Outlets
+    @IBOutlet weak private(set) var titleLabel: UILabel!
+    @IBOutlet weak private var filterSwitch: UISwitch!
+    @IBOutlet weak private(set) var separatorLine: UIView!
     
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var filterSwitch: UISwitch!
-    @IBOutlet weak var separatorLine: UIView!
-    
-    // MARK: - Life Cycle
-    
-    override func prepareForReuse()
-    {
+    override func prepareForReuse() {
         super.prepareForReuse()
-        
-        self.filterSwitch.isOn = false
+        filterSwitch.isOn = false
     }
     
-    // MARK: - Actions
-    
-    @IBAction func handleFilterSwitchChanged()
-    {
-        if let delegate = self.delegate
-        {
-            delegate.filterSwitchCellSwitchChanged(filterSwitchCell: self)
+    var filterSwitchIsOn: Bool = false {
+        didSet {
+            filterSwitch.isOn = filterSwitchIsOn
         }
+    }
+    
+    var filterSwitchEnabled: Bool = true {
+        didSet {
+            filterSwitch.isEnabled = filterSwitchEnabled
+        }
+    }
+    
+    @IBAction func handleFilterSwitchChanged() {
+        delegate?.filterSwitchCellSwitchChanged(filterSwitchCell: self)
     }
 }

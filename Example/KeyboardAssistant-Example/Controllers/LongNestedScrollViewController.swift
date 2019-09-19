@@ -14,10 +14,10 @@ class LongNestedScrollViewController: UIViewController, FilteredKeyboardAssistan
     }
     var keyboardAssistant: KeyboardAssistant?
     var keyboardScrollView: UIScrollView? {
-        return self.scrollView
+        return scrollView
     }
     var keyboardBottomConstraint: NSLayoutConstraint? {
-        return self.scrollViewBottomConstraint
+        return scrollViewBottomConstraint
     }
     var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
     var keyboardPositionOffset: CGFloat = 30
@@ -26,144 +26,116 @@ class LongNestedScrollViewController: UIViewController, FilteredKeyboardAssistan
     }
     var navigatorCustomAccessoryView: UIView? = CustomKeyboardView()
     var navigatorInputItems: [UIView] {
-        return [self.txtFirstName, self.txtLastName, self.txtCity, self.txtState, self.txtZipCode, self.txtCountry, self.infoTextView, self.txtAnimal, self.txtColor, self.txtFood, self.txtHobby, self.notesTextView]
+        return [txtFirstName, txtLastName, txtCity, txtState, txtZipCode, txtCountry, infoTextView, txtAnimal, txtColor, txtFood, txtHobby, notesTextView]
     }
     
     // MARK: - Properties
     
     // MARK: - Outlets
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtCity: UITextField!
-    @IBOutlet weak var txtState: UITextField!
-    @IBOutlet weak var txtZipCode: UITextField!
-    @IBOutlet weak var txtCountry: UITextField!
-    @IBOutlet weak var infoTextView: UITextView!
-    @IBOutlet weak var txtAnimal: UITextField!
-    @IBOutlet weak var txtColor: UITextField!
-    @IBOutlet weak var txtFood: UITextField!
-    @IBOutlet weak var txtHobby: UITextField!
-    @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var contentView: UIView!
+    @IBOutlet weak private var txtFirstName: UITextField!
+    @IBOutlet weak private var txtLastName: UITextField!
+    @IBOutlet weak private var txtCity: UITextField!
+    @IBOutlet weak private var txtState: UITextField!
+    @IBOutlet weak private var txtZipCode: UITextField!
+    @IBOutlet weak private var txtCountry: UITextField!
+    @IBOutlet weak private var infoTextView: UITextView!
+    @IBOutlet weak private var txtAnimal: UITextField!
+    @IBOutlet weak private var txtColor: UITextField!
+    @IBOutlet weak private var txtFood: UITextField!
+    @IBOutlet weak private var txtHobby: UITextField!
+    @IBOutlet weak private var notesTextView: UITextView!
     
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Life Cycle
     
-    deinit
-    {
+    deinit {
         print("deinit: \(type(of: self))")
     }
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         let navigator: InputNavigator = InputNavigator.createWithDefaultController()
-        navigator.addInputItems(inputItems: self.navigatorInputItems)
-        self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(
+        navigator.addInputItems(inputItems: navigatorInputItems)
+        keyboardAssistant = KeyboardAssistant.createAutoScrollView(
             inputNavigator: navigator,
-            positionScrollView: self.scrollView,
-            positionConstraint: self.keyboardPositionConstraint,
-            positionOffset: self.keyboardPositionOffset,
-            bottomConstraint: self.scrollViewBottomConstraint,
-            bottomConstraintLayoutView: self.view)
+            positionScrollView: scrollView,
+            positionConstraint: keyboardPositionConstraint,
+            positionOffset: keyboardPositionOffset,
+            bottomConstraint: scrollViewBottomConstraint,
+            bottomConstraintLayoutView: view)
     }
 
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let keyboardAssistant = self.keyboardAssistant
-        {
-            keyboardAssistant.start()
-        }
+        keyboardAssistant?.start()
     }
     
-    override func viewWillDisappear(_ animated: Bool)
-    {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let keyboardAssistant = self.keyboardAssistant
-        {
-            keyboardAssistant.stop()
-        }
+        keyboardAssistant?.stop()
     }
     
     // MARK: - Actions
     
-    @IBAction func handleBack(barButtonItem: UIBarButtonItem)
-    {
-        self.navigationController?.popViewController(animated: true)
+    @IBAction func handleBack(barButtonItem: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func handleFilter(barButtonItem: UIBarButtonItem)
-    {
-        self.presentFiltersViewController()
+    @IBAction func handleFilter(barButtonItem: UIBarButtonItem) {
+        presentFiltersViewController()
     }
 }
 
 // MARK: - UITextFieldDelegate
 
-extension LongNestedScrollViewController: UITextFieldDelegate
-{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
-        if let keyboardAssistant = self.keyboardAssistant
-        {
-            _ = keyboardAssistant.navigator.textFieldShouldReturn(textField)
-        }
-        
+extension LongNestedScrollViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        _ = keyboardAssistant?.navigator.textFieldShouldReturn(textField)
         return true
     }
 }
 
 // MARK: - KeyboardAssistantDelegate
 
-extension LongNestedScrollViewController: KeyboardAssistantDelegate
-{
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
-    {
-        let constraint: KeyboardAssistant.PositionConstraint = self.keyboardPositionConstraint
-        let offset: CGFloat = self.keyboardPositionOffset
+extension LongNestedScrollViewController: KeyboardAssistantDelegate {
+    
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
         
-        if (toInputItem == self.txtFirstName || toInputItem == self.txtLastName)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtCity, constraint: constraint, offset: offset)
+        let constraint: KeyboardAssistant.PositionConstraint = keyboardPositionConstraint
+        let offset: CGFloat = keyboardPositionOffset
+        
+        if toInputItem == txtFirstName || toInputItem == txtLastName {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtCity, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtCity || toInputItem == self.txtState)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtZipCode, constraint: constraint, offset: offset)
+        else if toInputItem == txtCity || toInputItem == txtState {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtZipCode, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtZipCode || toInputItem == self.txtCountry)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtZipCode, constraint: constraint, offset: 80)
+        else if toInputItem == txtZipCode || toInputItem == txtCountry {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtZipCode, constraint: constraint, offset: 80)
         }
-        else if (toInputItem == self.infoTextView)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtZipCode, constraint: .viewTopToTopOfScreen, offset: 50)
+        else if toInputItem == infoTextView {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtZipCode, constraint: .viewTopToTopOfScreen, offset: 50)
         }
-        else if (toInputItem == self.txtAnimal)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtColor, constraint: constraint, offset: offset)
+        else if toInputItem == txtAnimal {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtColor, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtColor)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtFood, constraint: constraint, offset: offset)
+        else if toInputItem == txtColor {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtFood, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtFood)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtHobby, constraint: constraint, offset: offset)
+        else if toInputItem == txtFood {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtHobby, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtHobby)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtHobby, constraint: constraint, offset: 50)
+        else if toInputItem == txtHobby {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: txtHobby, constraint: constraint, offset: 50)
         }
-        else if (toInputItem == self.notesTextView)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.notesTextView, constraint: .viewTopToTopOfScreen, offset: 50)
+        else if toInputItem == notesTextView {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: notesTextView, constraint: .viewTopToTopOfScreen, offset: 50)
         }
     }
 }

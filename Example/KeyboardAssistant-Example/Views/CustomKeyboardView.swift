@@ -5,41 +5,26 @@
 
 import UIKit
 
-class CustomKeyboardView: UIView
-{
-    // MARK: - Properties
-    
-    // MARK: - Outlets
-    
+class CustomKeyboardView: UIView, NibBased {
+        
     @IBOutlet public weak var lbTitle: UILabel!
     
-    // MARK: - Life Cycle
-    
-    public required init()
-    {
+    public required init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
-        
-        self.load()
+        initialize()
     }
     
-    public override init(frame: CGRect)
-    {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.load()
+        initialize()
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        self.load()
+        initialize()
     }
     
-    // MARK: - Load
-    
-    private func load()
-    {
-        self.loadNibWithName(nibName: "CustomKeyboardView", constrainEdgesToSuperview: true)
+    private func initialize() {
+        loadNib()
     }
 }

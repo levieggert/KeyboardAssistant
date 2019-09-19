@@ -5,14 +5,13 @@
 
 import UIKit
 
-public protocol KeyboardObserverDelegate: class
-{
+public protocol KeyboardObserverDelegate: class {
     func keyboardDidChangeState(keyboardObserver: KeyboardObserver, keyboardState: KeyboardObserver.KeyboardState)
     func keyboardDidInvalidateKeyboardHeight(keyboardObserver: KeyboardObserver, keyboardHeight: CGFloat)
 }
 
-public class KeyboardObserver: NSObject
-{
+public class KeyboardObserver: NSObject {
+    
     public enum KeyboardState { case willShow; case willHide; case didShow; case didHide; }
     
     // MARK: - Properties
@@ -29,99 +28,80 @@ public class KeyboardObserver: NSObject
     
     // MARK: - Life Cycle
     
-    public override init()
-    {
+    public override init() {
         super.init()
     }
     
-    deinit
-    {
-        self.stop()
+    deinit {
+        stop()
     }
     
-    public func start()
-    {
-        if (!self.isObserving)
-        {
-            self.isObserving = true
+    public func start() {
+        if !isObserving {
+            isObserving = true
             
-            self.addNotification(name: UIResponder.keyboardWillShowNotification)
-            self.addNotification(name: UIResponder.keyboardDidShowNotification)
-            self.addNotification(name: UIResponder.keyboardWillHideNotification)
-            self.addNotification(name: UIResponder.keyboardDidHideNotification)
-            self.addNotification(name: UIResponder.keyboardDidChangeFrameNotification)
+            addNotification(name: UIResponder.keyboardWillShowNotification)
+            addNotification(name: UIResponder.keyboardDidShowNotification)
+            addNotification(name: UIResponder.keyboardWillHideNotification)
+            addNotification(name: UIResponder.keyboardDidHideNotification)
+            addNotification(name: UIResponder.keyboardDidChangeFrameNotification)
         }
     }
     
-    public func stop()
-    {
-        if (self.isObserving)
-        {
-            self.isObserving = false
+    public func stop() {
+        if isObserving {
+            isObserving = false
             
-            self.removeNotification(name: UIResponder.keyboardWillShowNotification)
-            self.removeNotification(name: UIResponder.keyboardDidShowNotification)
-            self.removeNotification(name: UIResponder.keyboardWillHideNotification)
-            self.removeNotification(name: UIResponder.keyboardDidHideNotification)
-            self.removeNotification(name: UIResponder.keyboardDidChangeFrameNotification)
+            removeNotification(name: UIResponder.keyboardWillShowNotification)
+            removeNotification(name: UIResponder.keyboardDidShowNotification)
+            removeNotification(name: UIResponder.keyboardWillHideNotification)
+            removeNotification(name: UIResponder.keyboardDidHideNotification)
+            removeNotification(name: UIResponder.keyboardDidChangeFrameNotification)
         }
     }
     
-    private func log(string: String)
-    {
-        if (self.loggingEnabled)
+    private func log(string: String) {
+        if loggingEnabled
         {
             print(string)
         }
     }
     
-    private func checkForKeyboardHeightChange(notification: Notification)
-    {
-        if let keyboardInfo = notification.userInfo
-        {
-            self.log(string: "\nKeyboardObserver: checkForKeyboardHeightChange()")
+    private func checkForKeyboardHeightChange(notification: Notification) {
+        if let keyboardInfo = notification.userInfo {
+            log(string: "\nKeyboardObserver: checkForKeyboardHeightChange()")
             
             var beginFrameHeight: CGFloat?
             var endFrameHeight: CGFloat?
             
-            if let beginFrame = keyboardInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
-            {
+            if let beginFrame = keyboardInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue {
                 beginFrameHeight = beginFrame.cgRectValue.size.height
             }
             
-            if let endFrame = keyboardInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
-            {
+            if let endFrame = keyboardInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                 endFrameHeight = endFrame.cgRectValue.size.height
             }
             
-            self.log(string: "beginFrameHeight: \(String(describing: beginFrameHeight))")
-            self.log(string: "endFrameHeight: \(String(describing: endFrameHeight))")
+            log(string: "beginFrameHeight: \(String(describing: beginFrameHeight))")
+            log(string: "endFrameHeight: \(String(describing: endFrameHeight))")
             
             var newKeyboardHeight: CGFloat?
-            if let endFrameHeight = endFrameHeight
-            {
+            if let endFrameHeight = endFrameHeight {
                 newKeyboardHeight = endFrameHeight
             }
-            else if let beginFrameHeight = beginFrameHeight
-            {
+            else if let beginFrameHeight = beginFrameHeight {
                 newKeyboardHeight = beginFrameHeight
             }
             
-            let lastKeyboardHeight: CGFloat = self.keyboardHeight
-            self.log(string: "  lastKeyboardHeight: \(lastKeyboardHeight)")
+            let lastKeyboardHeight: CGFloat = keyboardHeight
+            log(string: "  lastKeyboardHeight: \(lastKeyboardHeight)")
             
-            if let newKeyboardHeight = newKeyboardHeight
-            {
-                self.log(string: "  newKeyboardHeight: \(newKeyboardHeight)")
+            if let newKeyboardHeight = newKeyboardHeight {
+                log(string: "  newKeyboardHeight: \(newKeyboardHeight)")
                 
-                if (lastKeyboardHeight != newKeyboardHeight)
-                {
-                    self.keyboardHeight = newKeyboardHeight
-                    
-                    if let delegate = self.delegate
-                    {
-                        delegate.keyboardDidInvalidateKeyboardHeight(keyboardObserver: self, keyboardHeight: self.keyboardHeight)
-                    }
+                if (lastKeyboardHeight != newKeyboardHeight) {
+                    keyboardHeight = newKeyboardHeight
+                    delegate?.keyboardDidInvalidateKeyboardHeight(keyboardObserver: self, keyboardHeight: keyboardHeight)
                 }
             }
         }
@@ -130,79 +110,60 @@ public class KeyboardObserver: NSObject
 
 // MARK: - NotificationHandler
 
-extension KeyboardObserver: NotificationHandler
-{    
-    func handleNotification(notification: Notification)
-    {
-        if (notification.name == UIResponder.keyboardWillShowNotification)
-        {
-            self.log(string:"\nKeyboardObserver: UIKeyboardWillShow()")
+extension KeyboardObserver: NotificationHandler {
+    func handleNotification(notification: Notification) {
+        
+        if notification.name == UIResponder.keyboardWillShowNotification {
+            log(string:"\nKeyboardObserver: UIKeyboardWillShow()")
             
-            if let keyboardInfo = notification.userInfo
-            {
-                if let keyboardAnimationDurationNumber = keyboardInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
-                {
-                    self.keyboardAnimationDuration = keyboardAnimationDurationNumber.doubleValue
+            if let keyboardInfo = notification.userInfo {
+                if let keyboardAnimationDurationNumber = keyboardInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber {
+                    keyboardAnimationDuration = keyboardAnimationDurationNumber.doubleValue
                 }
             }
             
-            if (!self.keyboardIsUp)
-            {
-                self.keyboardState = .willShow
+            if !keyboardIsUp {
+                keyboardState = .willShow
                 
-                self.checkForKeyboardHeightChange(notification: notification)
+                checkForKeyboardHeightChange(notification: notification)
                 
-                if let delegate = self.delegate
-                {
-                    delegate.keyboardDidChangeState(keyboardObserver: self, keyboardState: .willShow)
-                }
+                delegate?.keyboardDidChangeState(keyboardObserver: self, keyboardState: .willShow)
             }
         }
-        else if (notification.name == UIResponder.keyboardDidShowNotification)
-        {
-            self.log(string:"\nKeyboardObserver: UIKeyboardDidShow()")
+        else if notification.name == UIResponder.keyboardDidShowNotification {
             
-            self.keyboardIsUp = true
+            log(string:"\nKeyboardObserver: UIKeyboardDidShow()")
             
-            let currentState: KeyboardState = self.keyboardState
+            keyboardIsUp = true
             
-            self.keyboardState = .didShow
+            let currentState: KeyboardState = keyboardState
             
-            if (currentState == .willShow)
-            {
-                if let delegate = self.delegate
-                {
-                    delegate.keyboardDidChangeState(keyboardObserver: self, keyboardState: .didShow)
-                }
+            keyboardState = .didShow
+            
+            if currentState == .willShow {
+                delegate?.keyboardDidChangeState(keyboardObserver: self, keyboardState: .didShow)
             }
         }
-        else if (notification.name == UIResponder.keyboardWillHideNotification)
-        {
-            self.log(string:"\nKeyboardObserver: UIKeyboardWillHide()")
+        else if notification.name == UIResponder.keyboardWillHideNotification {
             
-            self.keyboardIsUp = false
+            log(string:"\nKeyboardObserver: UIKeyboardWillHide()")
             
-            if let delegate = self.delegate
-            {
-                delegate.keyboardDidChangeState(keyboardObserver: self, keyboardState: .willHide)
-            }
+            keyboardIsUp = false
+            
+            delegate?.keyboardDidChangeState(keyboardObserver: self, keyboardState: .willHide)
         }
-        else if (notification.name == UIResponder.keyboardDidHideNotification)
-        {
-            self.log(string: "\nKeyboardObserver: UIKeyboardDidHide()")
+        else if notification.name == UIResponder.keyboardDidHideNotification {
             
-            if let delegate = self.delegate
-            {
-                delegate.keyboardDidChangeState(keyboardObserver: self, keyboardState: .didHide)
-            }
+            log(string: "\nKeyboardObserver: UIKeyboardDidHide()")
+            
+            delegate?.keyboardDidChangeState(keyboardObserver: self, keyboardState: .didHide)
         }
-        else if (notification.name == UIResponder.keyboardDidChangeFrameNotification)
-        {
-            self.log(string:"\nKeyboardObserver: UIKeyboardDidChangeFrame()")
+        else if notification.name == UIResponder.keyboardDidChangeFrameNotification {
             
-            if (self.keyboardIsUp)
-            {
-                self.checkForKeyboardHeightChange(notification: notification)
+            log(string:"\nKeyboardObserver: UIKeyboardDidChangeFrame()")
+            
+            if keyboardIsUp {
+                checkForKeyboardHeightChange(notification: notification)
             }
         }
     }

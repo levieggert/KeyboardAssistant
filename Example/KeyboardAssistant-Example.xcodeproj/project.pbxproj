@@ -22,11 +22,11 @@
 		451FA5A022273CBE0094DB8B /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */; };
 		451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FA59C22273CBD0094DB8B /* NotificationHandler.swift */; };
 		4526749A2228513D0004B4D7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 452674992228513D0004B4D7 /* README.md */; };
+		4559D83E2333F4F6005BD0D3 /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4559D83D2333F4F6005BD0D3 /* NibBased.swift */; };
 		456577E6222827ED005900F3 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E5222827ED005900F3 /* InputCell.swift */; };
 		456577E822282809005900F3 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 456577E722282809005900F3 /* InputCell.xib */; };
 		456577EA22282C04005900F3 /* ViewSizeScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */; };
 		4585BEEE222976C500C5A42C /* DefaultNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEED222976C500C5A42C /* DefaultNavigationView.swift */; };
-		4585BEF22229793500C5A42C /* ViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEF12229793500C5A42C /* ViewComponent.swift */; };
 		4585BEF622297BA300C5A42C /* InputNavigatorAccessoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */; };
 		45B578E8223078BE00927672 /* FilteredKeyboardAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B578E7223078BE00927672 /* FilteredKeyboardAssistant.swift */; };
 		45B578EA2230A68C00927672 /* CustomKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B578E92230A68C00927672 /* CustomKeyboardView.swift */; };
@@ -87,11 +87,11 @@
 		451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		451FA59C22273CBD0094DB8B /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		452674992228513D0004B4D7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		4559D83D2333F4F6005BD0D3 /* NibBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
 		456577E5222827ED005900F3 /* InputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
 		456577E722282809005900F3 /* InputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
 		456577E922282C04005900F3 /* ViewSizeScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSizeScrollViewController.swift; sourceTree = "<group>"; };
 		4585BEED222976C500C5A42C /* DefaultNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNavigationView.swift; sourceTree = "<group>"; };
-		4585BEF12229793500C5A42C /* ViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewComponent.swift; sourceTree = "<group>"; };
 		4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputNavigatorAccessoryController.swift; sourceTree = "<group>"; };
 		45B578E7223078BE00927672 /* FilteredKeyboardAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredKeyboardAssistant.swift; sourceTree = "<group>"; };
 		45B578E92230A68C00927672 /* CustomKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardView.swift; sourceTree = "<group>"; };
@@ -193,10 +193,10 @@
 				4585BEF522297BA300C5A42C /* InputNavigatorAccessoryController.swift */,
 				451FA59922273CBD0094DB8B /* KeyboardAssistant.swift */,
 				451FA59822273CBD0094DB8B /* KeyboardObserver.swift */,
+				4559D83D2333F4F6005BD0D3 /* NibBased.swift */,
 				451FA59C22273CBD0094DB8B /* NotificationHandler.swift */,
 				45E58583222B236300ADC57B /* UIExtensions.swift */,
 				451FA59B22273CBD0094DB8B /* UserDefaults+Extension.swift */,
-				4585BEF12229793500C5A42C /* ViewComponent.swift */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -349,14 +349,16 @@
 				TargetAttributes = {
 					45CEA67922273BE000DC4ADA = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 					45CEA68D22273BE100DC4ADA = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = 45CEA67922273BE000DC4ADA;
 					};
 					45CEA69822273BE100DC4ADA = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = 45CEA67922273BE000DC4ADA;
 					};
 				};
@@ -437,8 +439,8 @@
 				451FA59022273C7C0094DB8B /* LongScrollViewController.swift in Sources */,
 				45B578F22230BAAD00927672 /* FilterInputCell.swift in Sources */,
 				45B578EA2230A68C00927672 /* CustomKeyboardView.swift in Sources */,
-				4585BEF22229793500C5A42C /* ViewComponent.swift in Sources */,
 				451FA5A122273CBE0094DB8B /* NotificationHandler.swift in Sources */,
+				4559D83E2333F4F6005BD0D3 /* NibBased.swift in Sources */,
 				45B578EE2230B7E000927672 /* CustomNavigatorController.swift in Sources */,
 				451FA59D22273CBE0094DB8B /* KeyboardObserver.swift in Sources */,
 				451FA59122273C7C0094DB8B /* ExamplesViewController.swift in Sources */,
@@ -539,7 +541,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -594,7 +596,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -620,7 +622,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.levi.KeyboardAssistant-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -640,7 +642,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.levi.KeyboardAssistant-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -660,7 +662,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.levi.KeyboardAssistant-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyboardAssistant-Example.app/KeyboardAssistant-Example";
 			};
@@ -681,7 +683,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.levi.KeyboardAssistant-ExampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KeyboardAssistant-Example.app/KeyboardAssistant-Example";
 			};
@@ -701,7 +703,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.levi.KeyboardAssistant-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "KeyboardAssistant-Example";
 			};
@@ -721,7 +723,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.levi.KeyboardAssistant-ExampleUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "KeyboardAssistant-Example";
 			};

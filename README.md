@@ -1,7 +1,7 @@
 KeyboardAssistant
 ==============
 
-Version 1.0.2
+Version 1.1.0
 
 Keyboard Assistant faciliates in the repositioning of views when the device Keyboard is present.  It does this by observing keyboard notifications (willShow, didShow, willHide, didHide) and by responding to UITextField and UITextView objects when they begin editing. 
 
@@ -19,8 +19,8 @@ Note: Before reading any further, note that I use the word input and input item 
 ### Requirements
 
 - iOS 9.0+
-- Xcode 10.1
-- Swift 4.2
+- Xcode 10.1+
+- Swift 5
 
 ### Cocoapods
 
@@ -81,9 +81,9 @@ class YourViewController: UIViewController
 
     // MARK: - Outlets
 
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak private var scrollView: UIScrollView!
 
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 }
 ```
 
@@ -99,16 +99,16 @@ class YourViewController: UIViewController
 
     // MARK: - Outlets
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var btRegisterAccount: UIButton!
+    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var contentView: UIView!
+    @IBOutlet weak private var lbTitle: UILabel!
+    @IBOutlet weak private var txtFirstName: UITextField!
+    @IBOutlet weak private var txtLastName: UITextField!
+    @IBOutlet weak private var txtEmail: UITextField!
+    @IBOutlet weak private var txtPassword: UITextField!
+    @IBOutlet weak private var btRegisterAccount: UIButton!
 
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 
     // MARK: - Life Cycle
 
@@ -143,16 +143,16 @@ class YourViewController: UIViewController
 
     // MARK: - Outlets
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var btRegisterAccount: UIButton!
+    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var contentView: UIView!
+    @IBOutlet weak private var lbTitle: UILabel!
+    @IBOutlet weak private var txtFirstName: UITextField!
+    @IBOutlet weak private var txtLastName: UITextField!
+    @IBOutlet weak private var txtEmail: UITextField!
+    @IBOutlet weak private var txtPassword: UITextField!
+    @IBOutlet weak private var btRegisterAccount: UIButton!
 
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 
     // MARK: - Life Cycle
 
@@ -222,16 +222,16 @@ class YourViewController: UIViewController
 
     // MARK: - Outlets
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var btRegisterAccount: UIButton!
+    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var contentView: UIView!
+    @IBOutlet weak private var lbTitle: UILabel!
+    @IBOutlet weak private var txtFirstName: UITextField!
+    @IBOutlet weak private var txtLastName: UITextField!
+    @IBOutlet weak private var txtEmail: UITextField!
+    @IBOutlet weak private var txtPassword: UITextField!
+    @IBOutlet weak private var btRegisterAccount: UIButton!
 
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 
     // MARK: - Life Cycle
 
@@ -347,11 +347,11 @@ class YourViewController: UIViewController
 
     // MARK: - Outlets
 
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var btRegisterAccount: UIButton!
+    @IBOutlet weak private var txtFirstName: UITextField!
+    @IBOutlet weak private var txtLastName: UITextField!
+    @IBOutlet weak private var txtEmail: UITextField!
+    @IBOutlet weak private var txtPassword: UITextField!
+    @IBOutlet weak private var btRegisterAccount: UIButton!
 
     // MARK: - Life Cycle
 

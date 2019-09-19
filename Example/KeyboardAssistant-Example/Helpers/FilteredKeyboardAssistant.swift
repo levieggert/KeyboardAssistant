@@ -5,8 +5,8 @@
 
 import UIKit
 
-protocol FilteredKeyboardAssistant: FiltersViewControllerDelegate
-{
+protocol FilteredKeyboardAssistant: FiltersViewControllerDelegate {
+    
     var viewController: UIViewController { get }
     var keyboardAssistant: KeyboardAssistant? { get set }
     var keyboardScrollView: UIScrollView? { get }
@@ -18,36 +18,32 @@ protocol FilteredKeyboardAssistant: FiltersViewControllerDelegate
     var keyboardPositionOffset: CGFloat { get set }
 }
 
-extension FilteredKeyboardAssistant
-{
-    func presentFiltersViewController()
-    {
+extension FilteredKeyboardAssistant {
+    
+    func presentFiltersViewController() {
+        
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let filterNavigation: UINavigationController = storyboard.instantiateViewController(withIdentifier: "FiltersNavigationController") as! UINavigationController
         
-        if let filtersViewController = filterNavigation.viewControllers.first as? FiltersViewController
-        {
+        if let filtersViewController = filterNavigation.viewControllers.first as? FiltersViewController {
+            
             var availableKeyboardAssistantFilters: [KeyboardAssistant.AssistantType] = Array()
             var availableInputNavigatorFilters: [InputNavigator.NavigatorType] = Array()
             
-            if (self.keyboardScrollView != nil)
-            {
+            if keyboardScrollView != nil {
                 availableKeyboardAssistantFilters.append(.autoScrollView)
             }
             
-            if (self.keyboardBottomConstraint != nil)
-            {
+            if keyboardBottomConstraint != nil {
                 availableKeyboardAssistantFilters.append(.manualWithBottomConstraint)
             }
             
-            if (self.navigatorController != nil)
-            {
+            if navigatorController != nil {
                 availableInputNavigatorFilters.append(.controller)
                 availableInputNavigatorFilters.append(.keyboardAndController)
             }
             
-            if (self.navigatorCustomAccessoryView != nil)
-            {
+            if navigatorCustomAccessoryView != nil {
                 availableInputNavigatorFilters.append(.customAccessoryView)
                 availableInputNavigatorFilters.append(.keyboardAndCustomAccessoryView)
             }
@@ -57,24 +53,24 @@ extension FilteredKeyboardAssistant
             availableInputNavigatorFilters.append(.keyboard)
             availableInputNavigatorFilters.append(.keyboardAndDefaultController)
 
-            filtersViewController.keyboardAssistant = self.keyboardAssistant
-            filtersViewController.keyboardPositionConstraint = self.keyboardPositionConstraint
-            filtersViewController.keyboardPositionOffset = self.keyboardPositionOffset
+            filtersViewController.keyboardAssistant = keyboardAssistant
+            filtersViewController.keyboardPositionConstraint = keyboardPositionConstraint
+            filtersViewController.keyboardPositionOffset = keyboardPositionOffset
             filtersViewController.availableKeyboardAssistantTypes = availableKeyboardAssistantFilters
             filtersViewController.availableInputNavigatorTypes = availableInputNavigatorFilters
             filtersViewController.delegate = self
         }
         
-        self.viewController.present(filterNavigation, animated: true, completion: nil)
+        viewController.present(filterNavigation, animated: true, completion: nil)
     }
     
-    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
-    {
-        self.keyboardPositionConstraint = positionConstraint
-        self.keyboardPositionOffset = positionOffset
+    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool) {
         
-        if let keyboardAssistant = self.keyboardAssistant
-        {
+        keyboardPositionConstraint = positionConstraint
+        keyboardPositionOffset = positionOffset
+        
+        if let keyboardAssistant = keyboardAssistant {
+            
             /*
             print("\nApply Filters")
             print("  keyboardAssistantType: \(keyboardAssistantType)")
@@ -91,20 +87,18 @@ extension FilteredKeyboardAssistant
             
             var navigator: InputNavigator!
             
-            switch (inputNavigatorType)
-            {
+            switch inputNavigatorType {
+                
             case .defaultController:
                 navigator = InputNavigator.createWithDefaultController()
         
             case .controller:
-                if let controller = self.navigatorController
-                {
+                if let controller = navigatorController {
                     navigator = InputNavigator.createWithController(accessoryController: controller)
                 }
                 
             case .customAccessoryView:
-                if let customAccessoryView = self.navigatorCustomAccessoryView
-                {
+                if let customAccessoryView = navigatorCustomAccessoryView {
                     navigator = InputNavigator.createWithCustomAccessoryView(accessoryView: customAccessoryView)
                 }
                 
@@ -115,53 +109,47 @@ extension FilteredKeyboardAssistant
                 navigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: shouldSetTextFieldDelegates)
                 
             case .keyboardAndController:
-                if let controller = self.navigatorController
-                {
+                if let controller = navigatorController {
                     navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, andController: controller)
                 }
                 
             case .keyboardAndCustomAccessoryView:
-                if let customAccessoryView = self.navigatorCustomAccessoryView
-                {
+                if let customAccessoryView = navigatorCustomAccessoryView {
                     navigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: shouldSetTextFieldDelegates, andCustomAccessoryView: customAccessoryView)
                 }
             }
             
-            if (navigator == nil)
-            {
+            if navigator == nil {
                 print("\nWARNING: Failed to create InputNavigator.  Creating InputNavigator with default controller.")
                 navigator = InputNavigator.createWithDefaultController()
             }
             
-            navigator.addInputItems(inputItems: self.navigatorInputItems)
+            navigator.addInputItems(inputItems: navigatorInputItems)
             
             var newKeyboardAssistant: KeyboardAssistant!
-            switch (keyboardAssistantType)
-            {
+            
+            switch keyboardAssistantType {
             case .autoScrollView:
                 // TODO: Handle cases where scrollView and bottomConstraint are nil
-                if let scrollView = self.keyboardScrollView, let bottomConstraint = self.keyboardBottomConstraint
-                {
+                if let scrollView = keyboardScrollView, let bottomConstraint = keyboardBottomConstraint {
                     newKeyboardAssistant = KeyboardAssistant.createAutoScrollView(
                         inputNavigator: navigator,
                         positionScrollView: scrollView,
                         positionConstraint: positionConstraint,
                         positionOffset: positionOffset,
                         bottomConstraint: bottomConstraint,
-                        bottomConstraintLayoutView: self.viewController.view)
+                        bottomConstraintLayoutView: viewController.view)
                 }
                 
             case .manualWithBottomConstraint:
                 // TODO: Handle cases where bottomConstraint is nil and keyboardAssistantDelegate is nil
-                if let bottomConstraint = self.keyboardBottomConstraint, let keyboardAssistantDelegate = self.viewController as? KeyboardAssistantDelegate
-                {
-                    newKeyboardAssistant = KeyboardAssistant.createManual(inputNavigator: navigator, delegate: keyboardAssistantDelegate, bottomConstraint: bottomConstraint, bottomConstraintLayoutView: self.viewController.view)
+                if let bottomConstraint = keyboardBottomConstraint, let keyboardAssistantDelegate = viewController as? KeyboardAssistantDelegate {
+                    newKeyboardAssistant = KeyboardAssistant.createManual(inputNavigator: navigator, delegate: keyboardAssistantDelegate, bottomConstraint: bottomConstraint, bottomConstraintLayoutView: viewController.view)
                 }
                 
             case .manual:
                 // TODO: Handle cases where keyboardAssistantDelegate is nil
-                if let keyboardAssistantDelegate = self.viewController as? KeyboardAssistantDelegate
-                {
+                if let keyboardAssistantDelegate = viewController as? KeyboardAssistantDelegate {
                     newKeyboardAssistant = KeyboardAssistant.createManual(inputNavigator: navigator, delegate: keyboardAssistantDelegate)
                 }
             }
@@ -170,8 +158,7 @@ extension FilteredKeyboardAssistant
             self.keyboardAssistant = newKeyboardAssistant
         }
         
-        if let presentedViewController = self.viewController.presentedViewController
-        {
+        if let presentedViewController = viewController.presentedViewController {
             presentedViewController.dismiss(animated: true, completion: nil)
         }        
     }

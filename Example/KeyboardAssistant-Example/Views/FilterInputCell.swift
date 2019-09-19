@@ -5,16 +5,12 @@
 
 import UIKit
 
-class FilterInputCell: UITableViewCell, FilterableCell
-{
+class FilterInputCell: UITableViewCell, FilterableCell {
+    
     static let nibName: String = "FilterInputCell"
     static let reuseIdentifier: String = "FilterInputCellReuseIdentifier"
     
-    // MARK: - Properties
-    
-    // MARK: - Outlets
-    
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var txtInput: UITextField!
-    @IBOutlet weak var separatorLine: UIView!
+    @IBOutlet weak private(set) var titleLabel: UILabel!
+    @IBOutlet weak private(set) var inputTextField: UITextField!
+    @IBOutlet weak private(set) var separatorLine: UIView!
 }

@@ -5,8 +5,8 @@
 
 import UIKit
 
-class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant
-{
+class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant {
+    
     // MARK: - FilteredKeyboardAssistant protocol
     
     var viewController: UIViewController {
@@ -14,10 +14,10 @@ class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant
     }
     var keyboardAssistant: KeyboardAssistant?
     var keyboardScrollView: UIScrollView? {
-        return self.scrollView
+        return scrollView
     }
     var keyboardBottomConstraint: NSLayoutConstraint? {
-        return self.scrollViewBottomConstraint
+        return scrollViewBottomConstraint
     }
     var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
     var keyboardPositionOffset: CGFloat = 30
@@ -26,118 +26,95 @@ class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant
     }
     var navigatorCustomAccessoryView: UIView? = CustomKeyboardView()
     var navigatorInputItems: [UIView] {
-        return [self.txtFirstName, self.txtLastName, self.txtEmail, self.txtPassword]
+        return [txtFirstName, txtLastName, txtEmail, txtPassword]
     }
     
     // MARK: - Properties
     
     // MARK: - Outlets
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var btRegisterAccount: UIButton!
+    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var contentView: UIView!
+    @IBOutlet weak private var lbTitle: UILabel!
+    @IBOutlet weak private var txtFirstName: UITextField!
+    @IBOutlet weak private var txtLastName: UITextField!
+    @IBOutlet weak private var txtEmail: UITextField!
+    @IBOutlet weak private var txtPassword: UITextField!
+    @IBOutlet weak private var btRegisterAccount: UIButton!
     
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Life Cycle
     
-    deinit
-    {
+    deinit {
         print("deinit: \(type(of: self))")
     }
 
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         let navigator: InputNavigator = InputNavigator.createWithDefaultController()
-        navigator.addInputItems(inputItems: self.navigatorInputItems)
-        self.keyboardAssistant = KeyboardAssistant.createAutoScrollView(
+        navigator.addInputItems(inputItems: navigatorInputItems)
+        keyboardAssistant = KeyboardAssistant.createAutoScrollView(
             inputNavigator: navigator,
-            positionScrollView: self.scrollView,
-            positionConstraint: self.keyboardPositionConstraint,
-            positionOffset: self.keyboardPositionOffset,
-            bottomConstraint: self.scrollViewBottomConstraint,
-            bottomConstraintLayoutView: self.view)
+            positionScrollView: scrollView,
+            positionConstraint: keyboardPositionConstraint,
+            positionOffset: keyboardPositionOffset,
+            bottomConstraint: scrollViewBottomConstraint,
+            bottomConstraintLayoutView: view)
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let keyboardAssistant = self.keyboardAssistant
-        {
-            keyboardAssistant.start()
-        }
+        keyboardAssistant?.start()
     }
     
-    override func viewWillDisappear(_ animated: Bool)
-    {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let keyboardAssistant = self.keyboardAssistant
-        {
-            keyboardAssistant.stop()
-        }
+        keyboardAssistant?.stop()
     }
     
     // MARK: - Actions
     
-    @IBAction func handleBack(barButtonItem: UIBarButtonItem)
-    {
-        self.navigationController?.popViewController(animated: true)
+    @IBAction func handleBack(barButtonItem: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func handleFilter(barButtonItem: UIBarButtonItem)
-    {
-        self.presentFiltersViewController()
+    @IBAction func handleFilter(barButtonItem: UIBarButtonItem) {
+        presentFiltersViewController()
     }
     
-    @IBAction func handleRegisterAccount(button: UIButton)
-    {
-        if let keyboardAssistant = self.keyboardAssistant
-        {
-            keyboardAssistant.closeKeyboard()
-        }
+    @IBAction func handleRegisterAccount(button: UIButton) {
+        keyboardAssistant?.closeKeyboard()
     }
 }
 
 // MARK: - UITextFieldDelegate
 
-extension ViewSizeScrollViewController: UITextFieldDelegate
-{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
-        if let keyboardAssistant = self.keyboardAssistant
-        {
+extension ViewSizeScrollViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let keyboardAssistant = keyboardAssistant {
             _ = keyboardAssistant.navigator.textFieldShouldReturn(textField)
         }
-        
         return true
     }
 }
 
 // MARK: - KeyboardAssistantDelegate
 
-extension ViewSizeScrollViewController: KeyboardAssistantDelegate
-{
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
-    {
-        let constraint: KeyboardAssistant.PositionConstraint = self.keyboardPositionConstraint
-        let offset: CGFloat = self.keyboardPositionOffset
+extension ViewSizeScrollViewController: KeyboardAssistantDelegate {
+    
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
         
-        if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false)
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: nextInputItem, constraint: constraint, offset: offset)
+        let constraint: KeyboardAssistant.PositionConstraint = keyboardPositionConstraint
+        let offset: CGFloat = keyboardPositionOffset
+        
+        if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false) {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: nextInputItem, constraint: constraint, offset: offset)
         }
-        else
-        {
-            keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.btRegisterAccount, constraint: constraint, offset: offset)
+        else {
+            keyboardAssistant.reposition(scrollView: scrollView, toInputItem: btRegisterAccount, constraint: constraint, offset: offset)
         }
     }
 }

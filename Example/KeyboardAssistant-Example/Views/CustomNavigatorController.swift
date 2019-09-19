@@ -5,14 +5,12 @@
 
 import UIKit
 
-class CustomNavigatorController: UIView, InputNavigatorAccessoryController
-{
+class CustomNavigatorController: UIView, NibBased, InputNavigatorAccessoryController {
+    
     // MARK: - InputNavigatorAccessoryController protocol
     
     public var controllerView: UIView { return self }
     public weak var buttonDelegate: InputNavigatorAccessoryControllerDelegate?
-    
-    // MARK: - Properties
     
     // MARK: - Outlets
     
@@ -22,57 +20,34 @@ class CustomNavigatorController: UIView, InputNavigatorAccessoryController
     
     // MARK: - Life Cycle
     
-    public required init()
-    {
+    public required init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
-        
-        self.load()
+        initialize()
     }
     
-    public override init(frame: CGRect)
-    {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.load()
+        initialize()
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        self.load()
+        initialize()
     }
     
-    // MARK: - Load
-    
-    private func load()
-    {
-        self.loadNibWithName(nibName: "CustomNavigatorController", constrainEdgesToSuperview: true)
+    private func initialize() {
+        loadNib()
     }
     
-    // MARK: - Actions
-    
-    @IBAction func handlePrev(button: UIButton)
-    {
-        if let buttonDelegate = self.buttonDelegate
-        {
-            buttonDelegate.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
-        }
+    @IBAction func handlePrev(button: UIButton) {
+        buttonDelegate?.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleNext(button: UIButton)
-    {
-        if let buttonDelegate = self.buttonDelegate
-        {
-            buttonDelegate.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
-        }
+    @IBAction func handleNext(button: UIButton) {
+        buttonDelegate?.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleDone(button: UIButton)
-    {
-        if let buttonDelegate = self.buttonDelegate
-        {
-            buttonDelegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
-        }
+    @IBAction func handleDone(button: UIButton) {
+        buttonDelegate?.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
     }
 }

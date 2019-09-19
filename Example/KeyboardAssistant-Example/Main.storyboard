@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zNK-Uy-J8l">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zNK-Uy-J8l">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -675,11 +675,10 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="300" id="1VS-0g-UUJ"/>
-                                                    <constraint firstItem="91T-lc-h0Q" firstAttribute="leading" secondItem="8O8-UQ-Ns5" secondAttribute="leading" id="ASs-Mh-Q6H"/>
-                                                    <constraint firstAttribute="leading" secondItem="8O8-UQ-Ns5" secondAttribute="leading" id="Hkm-cJ-SaY"/>
                                                     <constraint firstItem="91T-lc-h0Q" firstAttribute="top" secondItem="8O8-UQ-Ns5" secondAttribute="top" id="Vov-Wq-F9F"/>
                                                     <constraint firstAttribute="trailing" secondItem="91T-lc-h0Q" secondAttribute="trailing" id="giQ-c1-djT"/>
                                                     <constraint firstAttribute="bottom" secondItem="91T-lc-h0Q" secondAttribute="bottom" id="gpv-4Q-1co"/>
+                                                    <constraint firstItem="91T-lc-h0Q" firstAttribute="leading" secondItem="8O8-UQ-Ns5" secondAttribute="leading" id="lpD-IH-kBs"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4O-Ve-Dkm" userLabel="view_3">

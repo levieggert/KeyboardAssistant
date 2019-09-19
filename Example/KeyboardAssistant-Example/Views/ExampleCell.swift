@@ -5,13 +5,23 @@
 
 import UIKit
 
-class ExampleCell: UITableViewCell
-{
+class ExampleCell: UITableViewCell {
+    
     static let nibName: String = "ExampleCell"
     static let reuseIdentifier: String = "ExampleCellReuseIdentifier"
+        
+    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var separatorLine: UIView!
     
-    // MARK: - Outlets
+    var title: String? = nil {
+        didSet {
+            titleLabel.text = title
+        }
+    }
     
-    @IBOutlet weak var lbTitle: UILabel!
-    @IBOutlet weak var separatorLine: UIView!
+    var separatorLineIsHidden: Bool = false {
+        didSet {
+            separatorLine.isHidden = separatorLineIsHidden
+        }
+    }
 }

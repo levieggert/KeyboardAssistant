@@ -6,24 +6,19 @@
 import UIKit
 
 // MARK: -
-extension UIButton
-{
-    func setImageColor(color: UIColor)
-    {
-        if let image = self.image(for: .normal)
-        {
+extension UIButton {
+    func setImageColor(color: UIColor) {
+        if let image = image(for: .normal) {
             let newImage: UIImage = image.withRenderingMode(.alwaysTemplate)
-            self.setImage(newImage, for: .normal)
-            self.tintColor = color
+            setImage(newImage, for: .normal)
+            tintColor = color
         }
     }
 }
 
 // MARK: -
-extension UIColor
-{
-    static func color(hex: Int, alpha: CGFloat = 1) -> UIColor
-    {
+extension UIColor {
+    static func color(hex: Int, alpha: CGFloat = 1) -> UIColor {
         let red: Int = (hex >> 16) & 0xff
         let green: Int = (hex >> 8) & 0xff
         let blue: Int = hex & 0xff

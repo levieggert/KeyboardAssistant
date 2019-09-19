@@ -5,8 +5,16 @@
 
 import UIKit
 
-protocol FilterableCell
-{
-    var lbTitle: UILabel! { get set }
-    var separatorLine: UIView! { get set }
+protocol FilterableCell {
+    var titleLabel: UILabel! { get }
+    var separatorLine: UIView! { get }
+}
+
+extension FilterableCell {
+    func setTitle(title: String?) {
+        titleLabel.text = title
+    }
+    func setSeparatorLine(hidden: Bool) {
+        separatorLine.isHidden = hidden
+    }
 }

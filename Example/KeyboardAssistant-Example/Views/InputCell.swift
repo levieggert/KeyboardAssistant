@@ -5,16 +5,24 @@
 
 import UIKit
 
-class InputCell: UITableViewCell
-{
+class InputCell: UITableViewCell {
+    
     static let nibName: String = "InputCell"
     static let reuseIdentifier: String = "InputCellReuseIdentifier"
     
-    // MARK: - Outlets
+    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var inputTextField: UITextField!
+    @IBOutlet weak private var separatorLine: UIView!
     
-    @IBOutlet weak var lbInput: UILabel!
-    @IBOutlet weak var txtInput: UITextField!
-    @IBOutlet weak var separatorLine: UIView!
+    var title: String? = nil {
+        didSet {
+            titleLabel.text = title
+        }
+    }
     
-    // MARK: - Life Cycle
+    var separatorLineIsHidden: Bool = false {
+        didSet {
+            separatorLine.isHidden = separatorLineIsHidden
+        }
+    }
 }

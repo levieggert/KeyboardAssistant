@@ -5,10 +5,9 @@
 
 import UIKit
 
-class ExamplesViewController: UIViewController
-{
-    enum Example
-    {
+class ExamplesViewController: UIViewController {
+    
+    enum Example {
         case longScrollView
         case longNestedScrollView
         case longTableView
@@ -21,99 +20,85 @@ class ExamplesViewController: UIViewController
     
     // MARK: - Outlets
     
-    @IBOutlet weak var examplesTableView: UITableView!
+    @IBOutlet weak private var examplesTableView: UITableView!
     
     // MARK: - Life Cycle
     
-    deinit
-    {
+    deinit {
         print("deinit: \(type(of: self))")
     }
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        self.title = "Choose Example"
+        title = "Choose Example"
         
         //examplesTableView
-        self.examplesTableView.register(UINib(nibName: ExampleCell.nibName, bundle: nil), forCellReuseIdentifier: ExampleCell.reuseIdentifier)
-        self.examplesTableView.separatorStyle = .none
+        examplesTableView.register(UINib(nibName: ExampleCell.nibName, bundle: nil), forCellReuseIdentifier: ExampleCell.reuseIdentifier)
+        examplesTableView.rowHeight = 80
+        examplesTableView.separatorStyle = .none
     }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension ExamplesViewController: UITableViewDelegate, UITableViewDataSource
-{
-    func numberOfSections(in tableView: UITableView) -> Int
-    {
+extension ExamplesViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return self.examples.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return examples.count
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
-        let example: Example = self.examples[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        switch (example)
-        {
+        let example: Example = examples[indexPath.row]
+        
+        switch example {
+            
         case .longScrollView:
-            self.performSegue(withIdentifier: "showLongScrollView", sender: nil)
+            performSegue(withIdentifier: "showLongScrollView", sender: nil)
         
         case .longNestedScrollView:
-            self.performSegue(withIdentifier: "showLongNestedScrollView", sender: nil)
+            performSegue(withIdentifier: "showLongNestedScrollView", sender: nil)
         
         case .longTableView:
-            self.performSegue(withIdentifier: "showLongTableView", sender: nil)
+            performSegue(withIdentifier: "showLongTableView", sender: nil)
             
         case .viewSizeScrollView:
-            self.performSegue(withIdentifier: "showViewSizeScrollView", sender: nil)
+            performSegue(withIdentifier: "showViewSizeScrollView", sender: nil)
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        let cell: ExampleCell = self.examplesTableView.dequeueReusableCell(withIdentifier: ExampleCell.reuseIdentifier, for: indexPath) as! ExampleCell
-        let example: Example = self.examples[indexPath.row]
-        let isLastRow: Bool = indexPath.row == self.examples.count - 1
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: ExampleCell = examplesTableView.dequeueReusableCell(withIdentifier: ExampleCell.reuseIdentifier, for: indexPath) as! ExampleCell
+        let example: Example = examples[indexPath.row]
+        let isLastRow: Bool = indexPath.row == examples.count - 1
         
         cell.selectionStyle = .none
-        cell.lbTitle.text = ""
+        cell.title = ""
         
-        switch (example)
-        {
+        switch example {
+            
         case .longScrollView:
-            cell.lbTitle.text = "Long ScrollView"
+            cell.title = "Long ScrollView"
             
         case .longNestedScrollView:
-            cell.lbTitle.text = "Long Nested ScrollView"
+            cell.title = "Long Nested ScrollView"
             
         case .longTableView:
-            cell.lbTitle.text = "Long TableView"
+            cell.title = "Long TableView"
             
         case .viewSizeScrollView:
-            cell.lbTitle.text = "View Size ScrollView"
+            cell.title = "View Size ScrollView"
         }
         
-        if (!isLastRow)
-        {
-            cell.separatorLine.isHidden = false
-        }
-        else
-        {
-            cell.separatorLine.isHidden = true
-        }
+        cell.separatorLineIsHidden = isLastRow
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        return 80
     }
 }
