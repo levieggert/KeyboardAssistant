@@ -1,7 +1,7 @@
 KeyboardAssistant
 ==============
 
-Version 1.1.0
+Version 1.2.0
 
 Keyboard Assistant faciliates in the repositioning of views when the device Keyboard is present.  It does this by observing keyboard notifications (willShow, didShow, willHide, didHide) and by responding to UITextField and UITextView objects when they begin editing. 
 
@@ -29,7 +29,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'KeyboardAssistant', '1.0.2'
+    pod 'KeyboardAssistant', '1.2.0'
 end
 ```
 
