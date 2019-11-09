@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "9.0"
 
   s.name         = "KeyboardAssistant"
-  s.version      = "1.1.0"
+  s.version      = "1.2.0"
   s.license      = "MIT"
 
   s.homepage     = "https://github.com/levieggert/KeyboardAssistant"

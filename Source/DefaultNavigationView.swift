@@ -41,13 +41,14 @@ public class DefaultNavigationView: UIView, NibBased, InputNavigatorAccessoryCon
         
         loadNib()
         
-        // top shadow
+        btPrev.setTitle(nil, for: .normal)
+        btNext.setTitle(nil, for: .normal)
+        
         layer.shadowOffset = CGSize(width: 0, height: -1)
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowRadius = 3
         layer.shadowOpacity = 0.2
         
-        // button colors
         setButtonColors(color: .black)
     }
     

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -71,15 +68,14 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jzU-Fm-KvI" secondAttribute="trailing" constant="24" id="8bq-B7-o0k"/>
+                <constraint firstAttribute="trailing" secondItem="jzU-Fm-KvI" secondAttribute="trailing" constant="24" id="8bq-B7-o0k"/>
                 <constraint firstItem="Ndv-40-8jF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HLN-Zt-wQl"/>
-                <constraint firstItem="xi4-Xi-tok" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="MUx-Be-85Q"/>
+                <constraint firstItem="xi4-Xi-tok" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="MUx-Be-85Q"/>
                 <constraint firstItem="Ndv-40-8jF" firstAttribute="leading" secondItem="xi4-Xi-tok" secondAttribute="trailing" id="QdP-0O-qVp"/>
                 <constraint firstItem="xi4-Xi-tok" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="U9Z-Da-Fxp"/>
                 <constraint firstItem="jzU-Fm-KvI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="lhI-xf-5de"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="132" y="154.72263868065968"/>
         </view>
     </objects>

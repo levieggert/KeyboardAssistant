@@ -30,9 +30,7 @@ public class InputNavigator: NSObject {
         case textView
         case bothTextFieldAndTextView
     }
-    
-    // MARK: - Properties
-    
+        
     public private(set) var accessoryController: InputNavigatorAccessoryController?
     public private(set) var customAccessoryView: UIView?
     public private(set) var inputItems: [UIView] = Array()
@@ -43,16 +41,14 @@ public class InputNavigator: NSObject {
     public private(set) var didAddNotifications: Bool = false
     
     public weak var delegate: InputNavigatorDelegate?
-    
-    // MARK: - Life Cycle
-    
+        
     private init(shouldUseKeyboardReturnKeyToNavigate: Bool, shouldSetTextFieldDelegates: Bool?, accessoryController: InputNavigatorAccessoryController?, customAccessoryView: UIView?) {
         
         super.init()
         
         self.shouldUseKeyboardReturnKeyToNavigate = shouldUseKeyboardReturnKeyToNavigate
         
-        if (shouldUseKeyboardReturnKeyToNavigate) {
+        if shouldUseKeyboardReturnKeyToNavigate {
             self.shouldSetTextFieldDelegates = true
             if let shouldSetTextFieldDelegates = shouldSetTextFieldDelegates {
                 self.shouldSetTextFieldDelegates = shouldSetTextFieldDelegates
@@ -154,7 +150,9 @@ public class InputNavigator: NSObject {
     }
     
     public func addNotifications() {
-        if (!didAddNotifications) {
+        
+        if !didAddNotifications {
+            
             didAddNotifications = true
             
             addNotification(name: UITextField.textDidBeginEditingNotification)
@@ -163,7 +161,8 @@ public class InputNavigator: NSObject {
     }
     
     public func removeNotifications() {
-        if (didAddNotifications) {
+        
+        if didAddNotifications {
             didAddNotifications = false
                         
             removeNotification(name: UITextField.textDidBeginEditingNotification)
@@ -258,17 +257,17 @@ public class InputNavigator: NSObject {
         switch (itemType) {
             
         case .textField:
-            if (view is UITextField) {
+            if view is UITextField {
                 inputItems.append(view)
             }
             
         case .textView:
-            if (view is UITextView) {
+            if view is UITextView {
                 inputItems.append(view)
             }
             
         case .bothTextFieldAndTextView:
-            if (view is UITextField || view is UITextView) {
+            if view is UITextField || view is UITextView {
                 inputItems.append(view)
             }
         }
@@ -288,7 +287,7 @@ public class InputNavigator: NSObject {
             let prevValueExists: Bool = oldValue != nil
             let newValueExists: Bool = focusedItem != nil
             
-            if (prevValueExists && !newValueExists) {
+            if prevValueExists && !newValueExists {
                 if let prevItem = oldValue {
                     prevItem.resignFirstResponder()
                 }

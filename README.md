@@ -19,8 +19,7 @@ Note: Before reading any further, note that I use the word input and input item 
 ### Requirements
 
 - iOS 9.0+
-- Xcode 10.1+
-- Swift 5
+- Swift 5.0
 
 ### Cocoapods
 
@@ -61,9 +60,7 @@ To get started creating the auto scrollview assistant.  First declare a Keyboard
 ```swift
 import UIKit
 
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
+class YourViewController: UIViewController {
 
     private var keyboardAssistant: KeyboardAssistant!
 }
@@ -73,16 +70,11 @@ Next, make sure your controller is structured to use a scrollview for positionin
 ```swift
 import UIKit
 
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
+class YourViewController: UIViewController {
 
     private var keyboardAssistant: KeyboardAssistant!
 
-    // MARK: - Outlets
-
     @IBOutlet weak private var scrollView: UIScrollView!
-
     @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 }
 ```
@@ -91,13 +83,9 @@ The viewDidLoad() method is where you will complete the setup of your KeyboardAs
 ```swift
 import UIKit
 
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
+class YourViewController: UIViewController {
 
     private var keyboardAssistant: KeyboardAssistant!
-
-    // MARK: - Outlets
 
     @IBOutlet weak private var scrollView: UIScrollView!
     @IBOutlet weak private var contentView: UIView!
@@ -110,10 +98,8 @@ class YourViewController: UIViewController
 
     @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 
-    // MARK: - Life Cycle
-
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+    
         super.viewDidLoad()
 
         let navigator: InputNavigator = InputNavigator.createWithDefaultController()
@@ -135,13 +121,9 @@ Then create the KeyboardAssistant using the newly created InputNavigator.  There
 ```swift
 import UIKit
 
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
+class YourViewController: UIViewController {
 
     private var keyboardAssistant: KeyboardAssistant!
-
-    // MARK: - Outlets
 
     @IBOutlet weak private var scrollView: UIScrollView!
     @IBOutlet weak private var contentView: UIView!
@@ -154,10 +136,8 @@ class YourViewController: UIViewController
 
     @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 
-    // MARK: - Life Cycle
-
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+    
         super.viewDidLoad()
 
         let navigator: InputNavigator = InputNavigator.createWithDefaultController()
@@ -180,15 +160,15 @@ class YourViewController: UIViewController
 
 Lastly, you will need to manage the lifecycle of registered notifications.  This is done through the KeyboardAssistant start and stop methods.
 ```swift
-override func viewWillAppear(_ animated: Bool)
-{
+override func viewWillAppear(_ animated: Bool) {
+
     super.viewWillAppear(animated)
 
     self.keyboardAssistant.start()
 }
 
-override func viewWillDisappear(_ animated: Bool)
-{
+override func viewWillDisappear(_ animated: Bool) {
+
     super.viewWillAppear(animated)
 
     self.keyboardAssistant.stop()
@@ -214,13 +194,9 @@ In the code below we will:
 ```swift
 import UIKit
 
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
+class YourViewController: UIViewController {
 
     private var keyboardAssistant: KeyboardAssistant!
-
-    // MARK: - Outlets
 
     @IBOutlet weak private var scrollView: UIScrollView!
     @IBOutlet weak private var contentView: UIView!
@@ -233,10 +209,8 @@ class YourViewController: UIViewController
 
     @IBOutlet weak private var scrollViewBottomConstraint: NSLayoutConstraint!
 
-    // MARK: - Life Cycle
-
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+    
         super.viewDidLoad()
 
         let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
@@ -253,15 +227,15 @@ class YourViewController: UIViewController
         bottomConstraintLayoutView: self.view)
     }
 
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
+    
         super.viewWillAppear(animated)
 
         self.keyboardAssistant.start()
     }
 
-    override func viewWillDisappear(_ animated: Bool)
-    {
+    override func viewWillDisappear(_ animated: Bool) {
+    
         super.viewWillAppear(animated)
 
         self.keyboardAssistant.stop()
@@ -275,19 +249,17 @@ We pass shouldLoop: false into getNextInputItem.  If true were passed, it would 
 ```swift
 // MARK: - KeyboardAssistantDelegate
 
-extension YourViewController: KeyboardAssistantDelegate
-{
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
-    {
+extension YourViewController: KeyboardAssistantDelegate {
+
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 20
 
-        if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false)
-        {
+        if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false) {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: nextInputItem, constraint: constraint, offset: offset)
         }
-        else
-        {
+        else {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.btRegisterAccount, constraint: constraint, offset: offset)
         }
     }
@@ -298,27 +270,23 @@ This achieves the same thing, but is a hard-coded approach.
 ```swift
 // MARK: - KeyboardAssistantDelegate
 
-extension YourViewController: KeyboardAssistantDelegate
-{
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
-    {
+extension YourViewController: KeyboardAssistantDelegate {
+
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 20
 
-        if (toInputItem == self.txtFirstName)
-        {
+        if toInputItem == self.txtFirstName {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtLastName, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtLastName)
-        {
+        else if toInputItem == self.txtLastName {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtEmail, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtEmail)
-        {
+        else if toInputItem == self.txtEmail {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.txtPassword, constraint: constraint, offset: offset)
         }
-        else if (toInputItem == self.txtPassword)
-        {
+        else if toInputItem == self.txtPassword {
             keyboardAssistant.reposition(scrollView: self.scrollView, toInputItem: self.btRegisterAccount, constraint: constraint, offset: offset)
         }
     }
@@ -339,13 +307,9 @@ In the code below we will:
 ```swift
 import UIKit
 
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
+class YourViewController: UIViewController {
 
     private var keyboardAssistant: KeyboardAssistant!
-
-    // MARK: - Outlets
 
     @IBOutlet weak private var txtFirstName: UITextField!
     @IBOutlet weak private var txtLastName: UITextField!
@@ -353,10 +317,8 @@ class YourViewController: UIViewController
     @IBOutlet weak private var txtPassword: UITextField!
     @IBOutlet weak private var btRegisterAccount: UIButton!
 
-    // MARK: - Life Cycle
-
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+    
         super.viewDidLoad()
 
         let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigationAndDefaultController(shouldSetTextFieldDelegates: true)
@@ -369,15 +331,15 @@ class YourViewController: UIViewController
         self.keyboardAssistant = KeyboardAssistant.createManual(inputNavigator: navigator, delegate: self)
     }
 
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
+    
         super.viewWillAppear(animated)
 
         self.keyboardAssistant.start()
     }
 
-    override func viewWillDisappear(_ animated: Bool)
-    {
+    override func viewWillDisappear(_ animated: Bool) {
+    
         super.viewWillAppear(animated)
 
         self.keyboardAssistant.stop()
@@ -386,10 +348,10 @@ class YourViewController: UIViewController
 
 // MARK: - KeyboardAssistantDelegate
 
-extension YourViewController: KeyboardAssistantDelegate
-{
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
-    {
+extension YourViewController: KeyboardAssistantDelegate {
+
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    
         // Do your manual positioning here.
     }
 }
@@ -419,8 +381,8 @@ Let's start with the built-in options and expand on those.
 We'll start with the default controller.  DefaultNavigationView is a custom view class that comes with the KeyboardAssistant module and has it's own .xib file for creating the UI.  It has 3 primary buttons, btPrev, btNext, and btDone.  The prev and next buttons are for navigating input items and the done button will close the keyboard by resigning the active input item.  To create a navigator with the default controller, use the static method as shown in the example below.
 
 ```swift
-override func viewDidLoad()
-{
+override func viewDidLoad() {
+
     super.viewDidLoad()
     
     let navigator: InputNavigator = InputNavigator.createWithDefaultController()
@@ -430,8 +392,8 @@ override func viewDidLoad()
 Editing the default controller is easy.
 
 ```swift
-override func viewDidLoad()
-{
+override func viewDidLoad() {
+
     super.viewDidLoad()
 
     let navigator: InputNavigator = InputNavigator.createWithDefaultController()
@@ -440,8 +402,8 @@ override func viewDidLoad()
     navigator.defaultController?.setButtonColors(color: .red)
     
     // you can also configure the default controller in anyway you like.
-    if let defaultController = navigator.defaultController
-    {
+    if let defaultController = navigator.defaultController {
+    
         // remove the top shadow or change the top shadow in anyway you want
         defaultController.layer.shadowOpacity = 0
         
@@ -468,8 +430,8 @@ Important! When creating an InputNavigator with keyboard navigation, there is a 
 
 This is how you create an InputNavigator with keyboard navigation.  Passing true here will set all UITextField delegate's to the InputNavigator.
 ```swift
-override func viewDidLoad()
-{
+override func viewDidLoad() {
+
     super.viewDidLoad()
     
     let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: true)
@@ -478,14 +440,12 @@ override func viewDidLoad()
 
 If your controller class need's to use UITextFieldDelegate, then set the flag to false and make sure you call textFieldShouldReturn on the InputNavigator.
 ```swift
-class YourViewController: UIViewController
-{
-    // MARK: - Properties
+class YourViewController: UIViewController {
 
     private var keyboardAssistant: KeyboardAssistant!
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+    
         super.viewDidLoad()
 
         let navigator: InputNavigator = InputNavigator.createWithKeyboardNavigation(shouldSetTextFieldDelegates: false)
@@ -494,10 +454,10 @@ class YourViewController: UIViewController
 
 // MARK: - UITextFieldDelegate
 
-extension YourViewController: UITextFieldDelegate
-{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {        
+extension YourViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    
         _ = self.keyboardAssistant.navigator.textFieldShouldReturn(textField)
 
         return true
@@ -514,10 +474,8 @@ Implement the InputNavigatorAccessoryController protocol in your custom view cla
 ```swift
 import UIKit
 
-public class YourCustomController: UIView, InputNavigatorAccessoryController
-{
-    // MARK: - InputNavigatorAccessoryController protocol
-    
+public class YourCustomController: UIView, InputNavigatorAccessoryController {
+
     public var controllerView: UIView { return self }
     @IBOutlet public weak var btPrev: UIButton!
     @IBOutlet public weak var btNext: UIButton!
@@ -531,31 +489,24 @@ Add actions for btPrev, btNext, and btDone and call the appropriate buttonDelega
 ```swift
 import UIKit
 
-public class YourCustomController: UIView, InputNavigatorAccessoryController
-{
+public class YourCustomController: UIView, InputNavigatorAccessoryController {
 
     // MARK: - Actions
     
-    @IBAction func handlePrev(button: UIButton)
-    {
-        if let buttonDelegate = self.buttonDelegate
-        {
+    @IBAction func handlePrev(button: UIButton) {
+        if let buttonDelegate = self.buttonDelegate {
             buttonDelegate.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
         }
     }
     
-    @IBAction func handleNext(button: UIButton)
-    {
-        if let buttonDelegate = self.buttonDelegate
-        {
+    @IBAction func handleNext(button: UIButton) {
+        if let buttonDelegate = self.buttonDelegate {
             buttonDelegate.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
         }
     }
     
-    @IBAction func handleDone(button: UIButton)
-    {        
-        if let buttonDelegate = self.buttonDelegate
-        {
+    @IBAction func handleDone(button: UIButton) {        
+        if let buttonDelegate = self.buttonDelegate {
             buttonDelegate.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
         }
     }
