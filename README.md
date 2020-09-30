@@ -1,7 +1,7 @@
 KeyboardAssistant
 ==============
 
-Version 1.2.0
+Version 1.3.0
 
 Keyboard Assistant faciliates in the repositioning of views when the device Keyboard is present.  It does this by observing keyboard notifications (willShow, didShow, willHide, didHide) and by responding to UITextField and UITextView objects when they begin editing. 
 
@@ -29,13 +29,13 @@ platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'KeyboardAssistant', '1.2.0'
+    pod 'KeyboardAssistant', '1.3.0'
 end
 ```
 
 ### Brief Overview Of Classes
 
-KeyboardAssistant is broken into 3 core classes.  KeyboardObserver, InputNavigator, and KeyboardAssistant.  The KeyboardAssistant class is the main class you will be working with and sits on top of KeyboardObserver and InputNavigator.  Before using KeyboardAssistant, you will create an InputNavigator and inject it into the KeyboardAssistant.  InputNavigator handles navigation between inputs and is responsible for telling KeyboardAssistant about focus changes (when a UITextField or UITextView begins editing).  The KeyboardObserver class is responsible for checking keyboard state changes (willShow, didShow, willHide, didHide, didChangeFrame) and reports changes to the KeyboardAssistant. It is possible to use InputNavigator and KeyboardObserver separately if you wish.  However, that is not the intent of this module.  For repositioning input items above the device keyboard, you will be utilizing KeyboardAssistant.  To learn more about KeyboardAssistant, start in the How To Use KeyboardAssistant section below.
+KeyboardAssistant is broken into 3 core classes.  KeyboardNotificationObserver, InputNavigator, and KeyboardAssistant.  The KeyboardAssistant class is the main class you will be working with and sits on top of KeyboardNotificationObserver and InputNavigator.  Before using KeyboardAssistant, you will create an InputNavigator and inject it into the KeyboardAssistant.  InputNavigator handles navigation between inputs and is responsible for telling KeyboardAssistant about focus changes (when a UITextField or UITextView begins editing).  The KeyboardNotificationObserver class is responsible for checking keyboard state changes (willShow, didShow, willHide, didHide, didChangeFrame) and reports changes to the KeyboardAssistant. It is possible to use InputNavigator and KeyboardNotificationObserver separately if you wish.  However, that is not the intent of this module.  For repositioning input items above the device keyboard, you will be utilizing KeyboardAssistant.  To learn more about KeyboardAssistant, start in the How To Use KeyboardAssistant section below.
 
 ### How To Use KeyboardAssistant
 

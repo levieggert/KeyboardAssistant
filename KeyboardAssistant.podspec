@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "9.0"
 
   s.name         = "KeyboardAssistant"
-  s.version      = "1.2.0"
+  s.version      = "1.3.0"
   s.license      = "MIT"
 
   s.homepage     = "https://github.com/levieggert/KeyboardAssistant"
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/levieggert/KeyboardAssistant.git", :tag => "#{s.version}" }
 
-  s.source_files = 'Source/*.swift'
+  s.source_files = 'Source/**/*.{h,m,swift}'
   s.resources = 'Resources/*.*'
   s.swift_version = '5.0'
 end
