@@ -7,8 +7,9 @@ import UIKit
 
 public class KeyboardNotificationObserver: NSObject, KeyboardObserverType {
     
-    public private(set) var keyboardStateDidChangeSignal: SignalValue<KeyboardStateChange> = SignalValue()
-    public private(set) var keyboardHeightDidChangeSignal: SignalValue<Double> = SignalValue()
+    public let keyboardStateDidChangeSignal: SignalValue<KeyboardStateChange> = SignalValue()
+    public let keyboardHeightDidChangeSignal: SignalValue<Double> = SignalValue()
+    
     public private(set) var keyboardState: KeyboardState = .didHide
     public private(set) var keyboardHeight: Double = 0
     public private(set) var keyboardAnimationDuration: Double = 0
