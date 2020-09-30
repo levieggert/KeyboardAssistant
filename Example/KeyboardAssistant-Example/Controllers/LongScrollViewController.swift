@@ -19,7 +19,7 @@ class LongScrollViewController: UIViewController, FilteredKeyboardAssistant {
     var keyboardBottomConstraint: NSLayoutConstraint? {
         return scrollViewBottomConstraint
     }
-    var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
+    var keyboardPositionConstraint: KeyboardAssistantPositionConstraint = .viewBottomToTopOfKeyboard
     var keyboardPositionOffset: CGFloat = 30
     var navigatorController: InputNavigatorAccessoryController? {
         return CustomNavigatorController()
@@ -107,9 +107,9 @@ extension LongScrollViewController: UITextFieldDelegate {
 
 extension LongScrollViewController: KeyboardAssistantDelegate {
     
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: Double) {
         
-        let constraint: KeyboardAssistant.PositionConstraint = keyboardPositionConstraint
+        let constraint: KeyboardAssistantPositionConstraint = keyboardPositionConstraint
         let offset: CGFloat = keyboardPositionOffset
         
         if toInputItem == txtFirstName || toInputItem == txtLastName {

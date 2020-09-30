@@ -6,7 +6,7 @@
 import UIKit
 
 protocol FiltersViewControllerDelegate: class {
-    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
+    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistantRepositionType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistantPositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool)
 }
 
 class FiltersViewController: UIViewController {
@@ -17,7 +17,7 @@ class FiltersViewController: UIViewController {
     }
     
     class KeyboardOption: FilterOption {
-        var type: KeyboardAssistant.AssistantType!
+        var type: KeyboardAssistantRepositionType!
     }
     
     class NavigatorOption: FilterOption {
@@ -29,7 +29,7 @@ class FiltersViewController: UIViewController {
     }
     
     class PositionConstraintOption: FilterOption {
-        var type: KeyboardAssistant.PositionConstraint!
+        var type: KeyboardAssistantPositionConstraint!
     }
     
     enum Section {
@@ -61,9 +61,9 @@ class FiltersViewController: UIViewController {
     
     private var miscFilterOptionsDictionary: [MiscType: MiscOption] = Dictionary()
     private var miscFilterOptions: [MiscOption] = Array()
-    private var positionFilterOptionsDictionary: [KeyboardAssistant.PositionConstraint: PositionConstraintOption] = Dictionary()
+    private var positionFilterOptionsDictionary: [KeyboardAssistantPositionConstraint: PositionConstraintOption] = Dictionary()
     private var positionFilterOptions: [PositionConstraintOption] = Array()
-    private var keyboardAssistantFilterOptionsDictionary: [KeyboardAssistant.AssistantType: KeyboardOption] = Dictionary()
+    private var keyboardAssistantFilterOptionsDictionary: [KeyboardAssistantRepositionType: KeyboardOption] = Dictionary()
     private var keyboardAssistantFilterOptions: [KeyboardOption] = Array()
     private var inputNavigatorFilterOptionsDictionary: [InputNavigator.NavigatorType: NavigatorOption] = Dictionary()
     private var inputNavigatorFilterOptions: [NavigatorOption] = Array()
@@ -71,9 +71,9 @@ class FiltersViewController: UIViewController {
     private weak var positionOffsetTextField: UITextField?
     
     var keyboardAssistant: KeyboardAssistant?
-    var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
+    var keyboardPositionConstraint: KeyboardAssistantPositionConstraint = .viewBottomToTopOfKeyboard
     var keyboardPositionOffset: CGFloat = 30
-    var availableKeyboardAssistantTypes: [KeyboardAssistant.AssistantType] = Array()
+    var availableKeyboardAssistantTypes: [KeyboardAssistantRepositionType] = Array()
     var availableInputNavigatorTypes: [InputNavigator.NavigatorType] = Array()
     
     weak var delegate: FiltersViewControllerDelegate?
@@ -109,7 +109,7 @@ class FiltersViewController: UIViewController {
         
         // - position constraint options
         var positionOption: PositionConstraintOption!
-        for positionType in KeyboardAssistant.PositionConstraint.all {
+        for positionType in KeyboardAssistantPositionConstraint.all {
             positionOption = PositionConstraintOption()
             positionOption.type = positionType
             positionFilterOptionsDictionary[positionType] = positionOption
@@ -118,7 +118,7 @@ class FiltersViewController: UIViewController {
         
         // - keyboard assistant options
         var keyboardOption: KeyboardOption!
-        for assistantType in KeyboardAssistant.AssistantType.allTypes {
+        for assistantType in KeyboardAssistantRepositionType.allTypes {
             keyboardOption = KeyboardOption()
             keyboardOption.type = assistantType
             keyboardAssistantFilterOptionsDictionary[assistantType] = keyboardOption
@@ -141,7 +141,7 @@ class FiltersViewController: UIViewController {
         
         //keyboardAssistant
         if let keyboardAssistant = keyboardAssistant {
-            if let filterOption = keyboardAssistantFilterOptionsDictionary[keyboardAssistant.type] {
+            if let filterOption = keyboardAssistantFilterOptionsDictionary[keyboardAssistant.repositionType] {
                 filterOption.inputValue = NSNumber(value: true)
             }
             
@@ -171,9 +171,9 @@ class FiltersViewController: UIViewController {
         
         if let delegate = delegate {
             
-            var keyboardAssistantType: KeyboardAssistant.AssistantType = .autoScrollView
+            var keyboardAssistantType: KeyboardAssistantRepositionType = .autoScrollView
             var inputNavigatorType: InputNavigator.NavigatorType = .defaultController
-            var positionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
+            var positionConstraint: KeyboardAssistantPositionConstraint = .viewBottomToTopOfKeyboard
             var positionOffset: CGFloat = 20
             var shouldSetTextFieldDelegates: Bool = true
             

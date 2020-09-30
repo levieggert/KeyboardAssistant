@@ -7,18 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4559D84023340207005BD0D3 /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4559D83F23340207005BD0D3 /* NibBased.swift */; };
+		45B336192524CE3F003177A6 /* KeyboardNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336082524CE3F003177A6 /* KeyboardNotificationObserver.swift */; };
+		45B3361A2524CE3F003177A6 /* KeyboardObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336092524CE3F003177A6 /* KeyboardObserverType.swift */; };
+		45B3361B2524CE3F003177A6 /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3360A2524CE3F003177A6 /* KeyboardState.swift */; };
+		45B3361C2524CE3F003177A6 /* KeyboardStateChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3360B2524CE3F003177A6 /* KeyboardStateChange.swift */; };
+		45B3361D2524CE3F003177A6 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3360D2524CE3F003177A6 /* ObservableValue.swift */; };
+		45B3361E2524CE3F003177A6 /* SignalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3360E2524CE3F003177A6 /* SignalValue.swift */; };
+		45B3361F2524CE3F003177A6 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3360F2524CE3F003177A6 /* NotificationHandler.swift */; };
+		45B336202524CE3F003177A6 /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336102524CE3F003177A6 /* NibBased.swift */; };
+		45B336212524CE3F003177A6 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336112524CE3F003177A6 /* UIExtensions.swift */; };
+		45B336222524CE3F003177A6 /* KeyboardAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336132524CE3F003177A6 /* KeyboardAssistant.swift */; };
+		45B336232524CE3F003177A6 /* KeyboardAssistantRepositionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336142524CE3F003177A6 /* KeyboardAssistantRepositionType.swift */; };
+		45B336242524CE3F003177A6 /* KeyboardAssistantPositionConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336152524CE3F003177A6 /* KeyboardAssistantPositionConstraint.swift */; };
+		45B336252524CE3F003177A6 /* InputNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336162524CE3F003177A6 /* InputNavigator.swift */; };
+		45B336262524CE3F003177A6 /* InputNavigatorAccessoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336172524CE3F003177A6 /* InputNavigatorAccessoryController.swift */; };
+		45B336272524CE3F003177A6 /* DefaultNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B336182524CE3F003177A6 /* DefaultNavigationView.swift */; };
 		45CEA62722273B1A00DC4ADA /* KeyboardAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45CEA61D22273B1A00DC4ADA /* KeyboardAssistant.framework */; };
 		45CEA62C22273B1A00DC4ADA /* KeyboardAssistantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CEA62B22273B1A00DC4ADA /* KeyboardAssistantTests.swift */; };
 		45CEA62E22273B1A00DC4ADA /* KeyboardAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = 45CEA62022273B1A00DC4ADA /* KeyboardAssistant.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		45D65D57223176ED00BE4067 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D4D223176ED00BE4067 /* KeyboardObserver.swift */; };
-		45D65D58223176ED00BE4067 /* KeyboardAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D4E223176ED00BE4067 /* KeyboardAssistant.swift */; };
-		45D65D59223176ED00BE4067 /* InputNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D4F223176ED00BE4067 /* InputNavigator.swift */; };
-		45D65D5B223176ED00BE4067 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D51223176ED00BE4067 /* UserDefaults+Extension.swift */; };
-		45D65D5D223176ED00BE4067 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D53223176ED00BE4067 /* NotificationHandler.swift */; };
-		45D65D5E223176ED00BE4067 /* InputNavigatorAccessoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D54223176ED00BE4067 /* InputNavigatorAccessoryController.swift */; };
-		45D65D5F223176ED00BE4067 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D55223176ED00BE4067 /* UIExtensions.swift */; };
-		45D65D60223176ED00BE4067 /* DefaultNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D65D56223176ED00BE4067 /* DefaultNavigationView.swift */; };
 		45D65D682231791C00BE4067 /* navigator_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D65D622231791C00BE4067 /* navigator_right.png */; };
 		45D65D692231791C00BE4067 /* navigator_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D65D632231791C00BE4067 /* navigator_right@2x.png */; };
 		45D65D6A2231791C00BE4067 /* navigator_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D65D642231791C00BE4067 /* navigator_right@3x.png */; };
@@ -39,21 +45,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4559D83F23340207005BD0D3 /* NibBased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
+		45B336082524CE3F003177A6 /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
+		45B336092524CE3F003177A6 /* KeyboardObserverType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserverType.swift; sourceTree = "<group>"; };
+		45B3360A2524CE3F003177A6 /* KeyboardState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardState.swift; sourceTree = "<group>"; };
+		45B3360B2524CE3F003177A6 /* KeyboardStateChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardStateChange.swift; sourceTree = "<group>"; };
+		45B3360D2524CE3F003177A6 /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		45B3360E2524CE3F003177A6 /* SignalValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalValue.swift; sourceTree = "<group>"; };
+		45B3360F2524CE3F003177A6 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
+		45B336102524CE3F003177A6 /* NibBased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
+		45B336112524CE3F003177A6 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
+		45B336132524CE3F003177A6 /* KeyboardAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAssistant.swift; sourceTree = "<group>"; };
+		45B336142524CE3F003177A6 /* KeyboardAssistantRepositionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAssistantRepositionType.swift; sourceTree = "<group>"; };
+		45B336152524CE3F003177A6 /* KeyboardAssistantPositionConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAssistantPositionConstraint.swift; sourceTree = "<group>"; };
+		45B336162524CE3F003177A6 /* InputNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNavigator.swift; sourceTree = "<group>"; };
+		45B336172524CE3F003177A6 /* InputNavigatorAccessoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNavigatorAccessoryController.swift; sourceTree = "<group>"; };
+		45B336182524CE3F003177A6 /* DefaultNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNavigationView.swift; sourceTree = "<group>"; };
 		45CEA61D22273B1A00DC4ADA /* KeyboardAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeyboardAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CEA62022273B1A00DC4ADA /* KeyboardAssistant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardAssistant.h; sourceTree = "<group>"; };
 		45CEA62122273B1A00DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45CEA62622273B1A00DC4ADA /* KeyboardAssistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyboardAssistantTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CEA62B22273B1A00DC4ADA /* KeyboardAssistantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAssistantTests.swift; sourceTree = "<group>"; };
 		45CEA62D22273B1A00DC4ADA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		45D65D4D223176ED00BE4067 /* KeyboardObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
-		45D65D4E223176ED00BE4067 /* KeyboardAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAssistant.swift; sourceTree = "<group>"; };
-		45D65D4F223176ED00BE4067 /* InputNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNavigator.swift; sourceTree = "<group>"; };
-		45D65D51223176ED00BE4067 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
-		45D65D53223176ED00BE4067 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
-		45D65D54223176ED00BE4067 /* InputNavigatorAccessoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputNavigatorAccessoryController.swift; sourceTree = "<group>"; };
-		45D65D55223176ED00BE4067 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
-		45D65D56223176ED00BE4067 /* DefaultNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNavigationView.swift; sourceTree = "<group>"; };
 		45D65D622231791C00BE4067 /* navigator_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigator_right.png; sourceTree = "<group>"; };
 		45D65D632231791C00BE4067 /* navigator_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigator_right@2x.png"; sourceTree = "<group>"; };
 		45D65D642231791C00BE4067 /* navigator_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigator_right@3x.png"; sourceTree = "<group>"; };
@@ -82,6 +94,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45B336062524CE3F003177A6 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				45B3360C2524CE3F003177A6 /* Common */,
+				45B336122524CE3F003177A6 /* KeyboardAssistant */,
+				45B336072524CE3F003177A6 /* KeyboardObserver */,
+				45B336162524CE3F003177A6 /* InputNavigator.swift */,
+				45B336172524CE3F003177A6 /* InputNavigatorAccessoryController.swift */,
+				45B336182524CE3F003177A6 /* DefaultNavigationView.swift */,
+			);
+			path = Source;
+			sourceTree = SOURCE_ROOT;
+		};
+		45B336072524CE3F003177A6 /* KeyboardObserver */ = {
+			isa = PBXGroup;
+			children = (
+				45B336082524CE3F003177A6 /* KeyboardNotificationObserver.swift */,
+				45B336092524CE3F003177A6 /* KeyboardObserverType.swift */,
+				45B3360A2524CE3F003177A6 /* KeyboardState.swift */,
+				45B3360B2524CE3F003177A6 /* KeyboardStateChange.swift */,
+			);
+			path = KeyboardObserver;
+			sourceTree = "<group>";
+		};
+		45B3360C2524CE3F003177A6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				45B336102524CE3F003177A6 /* NibBased.swift */,
+				45B3360F2524CE3F003177A6 /* NotificationHandler.swift */,
+				45B3360D2524CE3F003177A6 /* ObservableValue.swift */,
+				45B3360E2524CE3F003177A6 /* SignalValue.swift */,
+				45B336112524CE3F003177A6 /* UIExtensions.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		45B336122524CE3F003177A6 /* KeyboardAssistant */ = {
+			isa = PBXGroup;
+			children = (
+				45B336132524CE3F003177A6 /* KeyboardAssistant.swift */,
+				45B336152524CE3F003177A6 /* KeyboardAssistantPositionConstraint.swift */,
+				45B336142524CE3F003177A6 /* KeyboardAssistantRepositionType.swift */,
+			);
+			path = KeyboardAssistant;
+			sourceTree = "<group>";
+		};
 		45CEA61322273B1A00DC4ADA = {
 			isa = PBXGroup;
 			children = (
@@ -104,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				45D65D612231791C00BE4067 /* Resources */,
-				45D65D4C223176ED00BE4067 /* Source */,
+				45B336062524CE3F003177A6 /* Source */,
 				45CEA62022273B1A00DC4ADA /* KeyboardAssistant.h */,
 				45CEA62122273B1A00DC4ADA /* Info.plist */,
 			);
@@ -119,22 +177,6 @@
 			);
 			path = KeyboardAssistantTests;
 			sourceTree = "<group>";
-		};
-		45D65D4C223176ED00BE4067 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				45D65D56223176ED00BE4067 /* DefaultNavigationView.swift */,
-				45D65D4E223176ED00BE4067 /* KeyboardAssistant.swift */,
-				45D65D4D223176ED00BE4067 /* KeyboardObserver.swift */,
-				45D65D4F223176ED00BE4067 /* InputNavigator.swift */,
-				45D65D54223176ED00BE4067 /* InputNavigatorAccessoryController.swift */,
-				4559D83F23340207005BD0D3 /* NibBased.swift */,
-				45D65D53223176ED00BE4067 /* NotificationHandler.swift */,
-				45D65D55223176ED00BE4067 /* UIExtensions.swift */,
-				45D65D51223176ED00BE4067 /* UserDefaults+Extension.swift */,
-			);
-			path = Source;
-			sourceTree = SOURCE_ROOT;
 		};
 		45D65D612231791C00BE4067 /* Resources */ = {
 			isa = PBXGroup;
@@ -267,15 +309,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45D65D57223176ED00BE4067 /* KeyboardObserver.swift in Sources */,
-				45D65D5D223176ED00BE4067 /* NotificationHandler.swift in Sources */,
-				45D65D59223176ED00BE4067 /* InputNavigator.swift in Sources */,
-				45D65D5F223176ED00BE4067 /* UIExtensions.swift in Sources */,
-				45D65D60223176ED00BE4067 /* DefaultNavigationView.swift in Sources */,
-				45D65D5B223176ED00BE4067 /* UserDefaults+Extension.swift in Sources */,
-				4559D84023340207005BD0D3 /* NibBased.swift in Sources */,
-				45D65D58223176ED00BE4067 /* KeyboardAssistant.swift in Sources */,
-				45D65D5E223176ED00BE4067 /* InputNavigatorAccessoryController.swift in Sources */,
+				45B3361C2524CE3F003177A6 /* KeyboardStateChange.swift in Sources */,
+				45B336222524CE3F003177A6 /* KeyboardAssistant.swift in Sources */,
+				45B336202524CE3F003177A6 /* NibBased.swift in Sources */,
+				45B3361D2524CE3F003177A6 /* ObservableValue.swift in Sources */,
+				45B336212524CE3F003177A6 /* UIExtensions.swift in Sources */,
+				45B336242524CE3F003177A6 /* KeyboardAssistantPositionConstraint.swift in Sources */,
+				45B3361F2524CE3F003177A6 /* NotificationHandler.swift in Sources */,
+				45B336272524CE3F003177A6 /* DefaultNavigationView.swift in Sources */,
+				45B3361A2524CE3F003177A6 /* KeyboardObserverType.swift in Sources */,
+				45B3361E2524CE3F003177A6 /* SignalValue.swift in Sources */,
+				45B336192524CE3F003177A6 /* KeyboardNotificationObserver.swift in Sources */,
+				45B3361B2524CE3F003177A6 /* KeyboardState.swift in Sources */,
+				45B336252524CE3F003177A6 /* InputNavigator.swift in Sources */,
+				45B336232524CE3F003177A6 /* KeyboardAssistantRepositionType.swift in Sources */,
+				45B336262524CE3F003177A6 /* InputNavigatorAccessoryController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

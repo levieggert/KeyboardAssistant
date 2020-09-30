@@ -6,20 +6,14 @@
 import UIKit
 
 class CustomNavigatorController: UIView, NibBased, InputNavigatorAccessoryController {
-    
-    // MARK: - InputNavigatorAccessoryController protocol
-    
+        
     public var controllerView: UIView { return self }
     public weak var buttonDelegate: InputNavigatorAccessoryControllerDelegate?
-    
-    // MARK: - Outlets
-    
-    @IBOutlet public weak var btPrev: UIButton!
-    @IBOutlet public weak var btNext: UIButton!
-    @IBOutlet public weak var btDone: UIButton!
-    
-    // MARK: - Life Cycle
-    
+        
+    @IBOutlet public weak var previousButton: UIButton!
+    @IBOutlet public weak var nextButton: UIButton!
+    @IBOutlet public weak var doneButton: UIButton!
+        
     public required init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
         initialize()
@@ -37,17 +31,21 @@ class CustomNavigatorController: UIView, NibBased, InputNavigatorAccessoryContro
     
     private func initialize() {
         loadNib()
+        
+        previousButton.addTarget(self, action: #selector(handlePrevious(button:)), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(handleNext(button:)), for: .touchUpInside)
+        doneButton.addTarget(self, action: #selector(handleDone(button:)), for: .touchUpInside)
     }
     
-    @IBAction func handlePrev(button: UIButton) {
+    @objc func handlePrevious(button: UIButton) {
         buttonDelegate?.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleNext(button: UIButton) {
+    @objc func handleNext(button: UIButton) {
         buttonDelegate?.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleDone(button: UIButton) {
+    @objc func handleDone(button: UIButton) {
         buttonDelegate?.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
     }
 }

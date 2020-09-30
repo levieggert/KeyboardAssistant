@@ -19,7 +19,7 @@ class ViewSizeScrollViewController: UIViewController, FilteredKeyboardAssistant 
     var keyboardBottomConstraint: NSLayoutConstraint? {
         return scrollViewBottomConstraint
     }
-    var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint = .viewBottomToTopOfKeyboard
+    var keyboardPositionConstraint: KeyboardAssistantPositionConstraint = .viewBottomToTopOfKeyboard
     var keyboardPositionOffset: CGFloat = 30
     var navigatorController: InputNavigatorAccessoryController? {
         return CustomNavigatorController()
@@ -105,9 +105,9 @@ extension ViewSizeScrollViewController: UITextFieldDelegate {
 
 extension ViewSizeScrollViewController: KeyboardAssistantDelegate {
     
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: Double) {
         
-        let constraint: KeyboardAssistant.PositionConstraint = keyboardPositionConstraint
+        let constraint: KeyboardAssistantPositionConstraint = keyboardPositionConstraint
         let offset: CGFloat = keyboardPositionOffset
         
         if let nextInputItem = keyboardAssistant.navigator.getNextInputItem(inputItem: toInputItem, shouldLoop: false) {

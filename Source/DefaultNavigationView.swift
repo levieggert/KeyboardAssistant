@@ -6,22 +6,14 @@
 import UIKit
 
 public class DefaultNavigationView: UIView, NibBased, InputNavigatorAccessoryController {
-    
-    // MARK: - InputNavigatorAccessoryController protocol
-    
+        
     public var controllerView: UIView { return self }
     public weak var buttonDelegate: InputNavigatorAccessoryControllerDelegate?
-    
-    // MARK: - Properties
         
-    // MARK: - Outlets
-    
-    @IBOutlet public weak var btPrev: UIButton!
-    @IBOutlet public weak var btNext: UIButton!
-    @IBOutlet public weak var btDone: UIButton!
-    
-    // MARK: - Life Cycle
-    
+    @IBOutlet public weak var previousButton: UIButton!
+    @IBOutlet public weak var nextButton: UIButton!
+    @IBOutlet public weak var doneButton: UIButton!
+        
     public required init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
         initialize()
@@ -40,9 +32,17 @@ public class DefaultNavigationView: UIView, NibBased, InputNavigatorAccessoryCon
     private func initialize() {
         
         loadNib()
+        setupLayout()
         
-        btPrev.setTitle(nil, for: .normal)
-        btNext.setTitle(nil, for: .normal)
+        previousButton.addTarget(self, action: #selector(handlePrevious(button:)), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(handleNext(button:)), for: .touchUpInside)
+        doneButton.addTarget(self, action: #selector(handleDone(button:)), for: .touchUpInside)
+    }
+    
+    private func setupLayout() {
+        
+        previousButton.setTitle(nil, for: .normal)
+        nextButton.setTitle(nil, for: .normal)
         
         layer.shadowOffset = CGSize(width: 0, height: -1)
         layer.shadowColor = UIColor.black.cgColor
@@ -52,33 +52,33 @@ public class DefaultNavigationView: UIView, NibBased, InputNavigatorAccessoryCon
         setButtonColors(color: .black)
     }
     
-    @IBAction func handlePrev(button: UIButton) {
+    @objc func handlePrevious(button: UIButton) {
         buttonDelegate?.inputNavigatorAccessoryControllerPreviousButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleNext(button: UIButton) {
+    @objc func handleNext(button: UIButton) {
         buttonDelegate?.inputNavigatorAccessoryControllerNextButtonTapped(accessoryController: self)
     }
     
-    @IBAction func handleDone(button: UIButton) {
+    @objc func handleDone(button: UIButton) {
         buttonDelegate?.inputNavigatorAccessoryControllerDoneButtonTapped(accessoryController: self)
     }
         
     public func setButtonColors(color: UIColor) {
-        setBtPrevColor(color: color)
-        setBtNextColor(color: color)
-        setBtDoneColor(color: color)
+        setPreviousButtonColor(color: color)
+        setNextButtonColor(color: color)
+        setDoneButtonColor(color: color)
     }
     
-    public func setBtPrevColor(color: UIColor) {
-        btPrev.setImageColor(color: color)
+    public func setPreviousButtonColor(color: UIColor) {
+        previousButton.setImageColor(color: color)
     }
     
-    public func setBtNextColor(color: UIColor) {
-        btNext.setImageColor(color: color)
+    public func setNextButtonColor(color: UIColor) {
+        nextButton.setImageColor(color: color)
     }
     
-    public func setBtDoneColor(color: UIColor) {
-        btDone.setTitleColor(color, for: .normal)
+    public func setDoneButtonColor(color: UIColor) {
+        doneButton.setTitleColor(color, for: .normal)
     }
 }

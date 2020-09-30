@@ -251,7 +251,7 @@ We pass shouldLoop: false into getNextInputItem.  If true were passed, it would 
 
 extension YourViewController: KeyboardAssistantDelegate {
 
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: Double) {
     
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 20
@@ -272,7 +272,7 @@ This achieves the same thing, but is a hard-coded approach.
 
 extension YourViewController: KeyboardAssistantDelegate {
 
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: Double) {
     
         let constraint: KeyboardAssistant.RepositionConstraint = .viewBottomToTopOfKeyboard
         let offset: CGFloat = 20
@@ -350,7 +350,7 @@ class YourViewController: UIViewController {
 
 extension YourViewController: KeyboardAssistantDelegate {
 
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: Double) {
     
         // Do your manual positioning here.
     }

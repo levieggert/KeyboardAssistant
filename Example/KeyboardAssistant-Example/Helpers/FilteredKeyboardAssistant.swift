@@ -14,7 +14,7 @@ protocol FilteredKeyboardAssistant: FiltersViewControllerDelegate {
     var navigatorController: InputNavigatorAccessoryController? { get }
     var navigatorCustomAccessoryView: UIView? { get }
     var navigatorInputItems: [UIView] { get }
-    var keyboardPositionConstraint: KeyboardAssistant.PositionConstraint { get set }
+    var keyboardPositionConstraint: KeyboardAssistantPositionConstraint { get set }
     var keyboardPositionOffset: CGFloat { get set }
 }
 
@@ -27,7 +27,7 @@ extension FilteredKeyboardAssistant {
         
         if let filtersViewController = filterNavigation.viewControllers.first as? FiltersViewController {
             
-            var availableKeyboardAssistantFilters: [KeyboardAssistant.AssistantType] = Array()
+            var availableKeyboardAssistantFilters: [KeyboardAssistantRepositionType] = Array()
             var availableInputNavigatorFilters: [InputNavigator.NavigatorType] = Array()
             
             if keyboardScrollView != nil {
@@ -64,7 +64,7 @@ extension FilteredKeyboardAssistant {
         viewController.present(filterNavigation, animated: true, completion: nil)
     }
     
-    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistant.AssistantType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool) {
+    func filtersViewControllerApplyFilters(filtersViewController: FiltersViewController, keyboardAssistantType: KeyboardAssistantRepositionType, inputNavigatorType: InputNavigator.NavigatorType, positionConstraint: KeyboardAssistantPositionConstraint, positionOffset: CGFloat, shouldSetTextFieldDelegates: Bool) {
         
         keyboardPositionConstraint = positionConstraint
         keyboardPositionOffset = positionOffset

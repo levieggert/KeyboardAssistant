@@ -12,9 +12,10 @@ public protocol InputNavigatorAccessoryControllerDelegate: class {
 }
 
 public protocol InputNavigatorAccessoryController {
+    
     var controllerView: UIView { get }
-    var btPrev: UIButton! { get set }
-    var btNext: UIButton! { get set }
-    var btDone: UIButton! { get set }
+    var previousButton: UIButton! { get set }
+    var nextButton: UIButton! { get set }
+    var doneButton: UIButton! { get set }
     var buttonDelegate: InputNavigatorAccessoryControllerDelegate? { get set }
 }

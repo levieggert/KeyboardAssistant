@@ -238,11 +238,11 @@ public class InputNavigator: NSObject {
             thatPosition.x = thatPosition.x - that.frame.origin.x
             thatPosition.y = thatPosition.y - that.frame.origin.y
             
-            if (thisPosition.y < thatPosition.y) {
+            if thisPosition.y < thatPosition.y {
                 return true
             }
-            else if (thisPosition.y == thatPosition.y) {
-                if (thisPosition.x < thatPosition.x) {
+            else if thisPosition.y == thatPosition.y {
+                if thisPosition.x < thatPosition.x {
                     return true
                 }
             }

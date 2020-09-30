@@ -6,36 +6,18 @@
 import UIKit
 
 public protocol KeyboardAssistantDelegate: class {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat)
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: Double)
 }
 
 public class KeyboardAssistant: NSObject {
+     
+    private var observersAdded: Bool = false
     
-    public enum AssistantType {
-        case autoScrollView
-        case manualWithBottomConstraint
-        case manual
-        
-        public static var allTypes: [KeyboardAssistant.AssistantType] {
-            return [.autoScrollView, .manualWithBottomConstraint, .manual]
-        }
-    }
+    public let keyboardObserver: KeyboardNotificationObserver
     
-    public enum PositionConstraint {
-        case viewTopToTopOfScreen
-        case viewBottomToTopOfKeyboard
-        
-        public static var all: [PositionConstraint] {
-            return [.viewTopToTopOfScreen, .viewBottomToTopOfKeyboard]
-        }
-    }
-    
-    // MARK: - Properties
-    
-    public private(set) var observer: KeyboardObserver!
     public private(set) var navigator: InputNavigator!
-    public private(set) var type: KeyboardAssistant.AssistantType = .autoScrollView
-    public private(set) var positionConstraint: KeyboardAssistant.PositionConstraint = .viewTopToTopOfScreen
+    public private(set) var repositionType: KeyboardAssistantRepositionType = .autoScrollView
+    public private(set) var positionConstraint: KeyboardAssistantPositionConstraint = .viewTopToTopOfScreen
     public private(set) var positionOffset: CGFloat = 20
     public private(set) var resetBottomConstraintConstant: CGFloat = 0
     
@@ -51,16 +33,20 @@ public class KeyboardAssistant: NSObject {
     
     private init(inputNavigator: InputNavigator) {
         
-        super.init()
+        keyboardObserver = KeyboardNotificationObserver(loggingEnabled: true)
         
-        observer = KeyboardObserver()
+        super.init()
+                
         navigator = inputNavigator
         
-        observer.delegate = self
         navigator.delegate = self
     }
     
-    static public func createAutoScrollView(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistant.PositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant {
+    deinit {
+        stop()
+    }
+    
+    static public func createAutoScrollView(inputNavigator: InputNavigator, positionScrollView: UIScrollView, positionConstraint: KeyboardAssistantPositionConstraint, positionOffset: CGFloat, bottomConstraint: NSLayoutConstraint, bottomConstraintLayoutView: UIView) -> KeyboardAssistant {
         
         let assistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
@@ -69,7 +55,7 @@ public class KeyboardAssistant: NSObject {
         assistant.positionOffset = positionOffset
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
-        assistant.type = .autoScrollView
+        assistant.repositionType = .autoScrollView
         
         return assistant
     }
@@ -80,7 +66,7 @@ public class KeyboardAssistant: NSObject {
         
         assistant.bottomConstraint = bottomConstraint
         assistant.bottomConstraintLayoutView = bottomConstraintLayoutView
-        assistant.type = .manualWithBottomConstraint
+        assistant.repositionType = .manualWithBottomConstraint
         assistant.delegate = delegate
         
         return assistant
@@ -90,21 +76,17 @@ public class KeyboardAssistant: NSObject {
         
         let assistant = KeyboardAssistant(inputNavigator: inputNavigator)
         
-        assistant.type = .manual
+        assistant.repositionType = .manual
         assistant.delegate = delegate
         
         return assistant
-    }
-    
-    deinit {
-        stop()
     }
     
     public func closeKeyboard() {
         navigator.focusedItem = nil
     }
     
-    public func setBottomConstraintToKeyboard(keyboardHeight: CGFloat, animated: Bool) {
+    public func setBottomConstraintToKeyboard(keyboardHeight: Double, animated: Bool) {
         
         if let bottomConstraint = bottomConstraint, let bottomConstraintLayoutView = bottomConstraintLayoutView {
             
@@ -113,10 +95,10 @@ public class KeyboardAssistant: NSObject {
             // Is there a way to check for this?
             
             if invertBottomConstraintConstant {
-                bottomConstraint.constant = keyboardHeight * -1
+                bottomConstraint.constant = CGFloat(keyboardHeight * -1)
             }
             else {
-                bottomConstraint.constant = keyboardHeight
+                bottomConstraint.constant = CGFloat(keyboardHeight)
             }
             
             if animated {
@@ -140,32 +122,35 @@ public class KeyboardAssistant: NSObject {
     }
     
     public func start() {
+        addObservers()
         navigator.addNotifications()
-        observer.start()
+        keyboardObserver.startObservingKeyboardChanges()
     }
     
     public func stop() {
+        removeObservers()
         navigator.focusedItem = nil
-        observer.stop()
+        keyboardObserver.stopObservingKeyboardChanges()
         navigator.removeNotifications()
     }
     
     private func reposition(toInputItem: UIView) {
-        switch type {
+        
+        switch repositionType {
         case .autoScrollView:
             if let scrollView = scrollView {
                 reposition(scrollView: scrollView, toInputItem: toInputItem, constraint: positionConstraint, offset: positionOffset)
             }
         case .manualWithBottomConstraint:
-            delegate?.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: observer.keyboardHeight)
+            delegate?.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: keyboardObserver.keyboardHeight)
             
         case .manual:
-            delegate?.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: observer.keyboardHeight)
+            delegate?.keyboardAssistantManuallyReposition(keyboardAssistant: self, toInputItem: toInputItem, keyboardHeight: keyboardObserver.keyboardHeight)
         }
     }
     
-    public func reposition(scrollView: UIScrollView, toInputItem: UIView, constraint: PositionConstraint, offset: CGFloat) {
-        if observer.keyboardIsUp {
+    public func reposition(scrollView: UIScrollView, toInputItem: UIView, constraint: KeyboardAssistantPositionConstraint, offset: CGFloat) {
+        if keyboardObserver.keyboardIsUp {
             var scrollOffset: CGFloat?
 
             //first - get position of toInputItem relative to scrollview
@@ -190,7 +175,7 @@ public class KeyboardAssistant: NSObject {
             
             if var scrollOffset = scrollOffset {
                 // dont allow to scroll passed bottom of scroll view.
-                if (scrollView.contentSize.height - scrollOffset) < scrollView.frame.size.height {
+                if scrollView.contentSize.height - scrollOffset < scrollView.frame.size.height {
                     let bottomOfScrollViewOffset: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height
                     scrollOffset = bottomOfScrollViewOffset
                 }
@@ -213,20 +198,46 @@ public class KeyboardAssistant: NSObject {
             print(string)
         }
     }
-}
-
-// MARK: - KeyboardObserverDelegate
-
-extension KeyboardAssistant: KeyboardObserverDelegate {
     
-    public func keyboardDidChangeState(keyboardObserver: KeyboardObserver, keyboardState: KeyboardObserver.KeyboardState) {
+    // MARK: - Observers
+    
+    private func addObservers() {
         
-        log(string: "\nKeyboardAssistant: keyboard state changed: \(keyboardState)")
+        guard !observersAdded else {
+            return
+        }
         
-        switch (keyboardState) {
+        observersAdded = true
+        
+        keyboardObserver.keyboardStateDidChangeSignal.addObserver(self) { [weak self] (keyboardStateChange: KeyboardStateChange) in
+            self?.handleKeyboardStateChange(keyboardStateChange: keyboardStateChange)
+        }
+        
+        keyboardObserver.keyboardHeightDidChangeSignal.addObserver(self) { [weak self] (keyboardHeight: Double) in
+            self?.handleKeyboardHeightChange(keyboardHeight: keyboardHeight)
+        }
+    }
+    
+    private func removeObservers() {
+        
+        guard observersAdded else {
+            return
+        }
+        
+        observersAdded = false
+        
+        keyboardObserver.keyboardStateDidChangeSignal.removeObserver(self)
+        keyboardObserver.keyboardHeightDidChangeSignal.removeObserver(self)
+    }
+    
+    private func handleKeyboardStateChange(keyboardStateChange: KeyboardStateChange) {
+        
+        log(string: "\nKeyboardAssistant: keyboard state changed: \(keyboardStateChange.keyboardState)")
+        
+        switch keyboardStateChange.keyboardState {
         
         case .willShow:
-            setBottomConstraintToKeyboard(keyboardHeight: keyboardObserver.keyboardHeight, animated: false)
+            setBottomConstraintToKeyboard(keyboardHeight: keyboardStateChange.keyboardHeight, animated: false)
             
         case .didShow:
             if let toInputItem = navigator.focusedItem {
@@ -240,7 +251,7 @@ extension KeyboardAssistant: KeyboardObserverDelegate {
         }
     }
     
-    public func keyboardDidInvalidateKeyboardHeight(keyboardObserver: KeyboardObserver, keyboardHeight: CGFloat) {
+    private func handleKeyboardHeightChange(keyboardHeight: Double) {
         
         log(string: "\nKeyboardAssistant: keyboard height changed: \(keyboardHeight)")
         log(string: "  keyboardHeight: \(keyboardHeight)")

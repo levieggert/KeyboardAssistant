@@ -59,7 +59,7 @@ class LongTableViewController: UIViewController {
         
         /*
         
-        if (useAutoKeyboardAssistant)
+        if useAutoKeyboardAssistant
         {
             keyboardAssistant = KeyboardAssistant.createAutoKeyboardAssistant(allowToSetInputDelegates: allowToSetInputDelegates,
                                                                                    inputItems: inputItems, 
@@ -81,10 +81,7 @@ class LongTableViewController: UIViewController {
         }
  
          */
-        
-        keyboardAssistant.observer.loggingEnabled = true
-        keyboardAssistant.observer.loggingEnabled = true
-        
+                
         // tableView
         tableView.register(UINib(nibName: InputCell.nibName, bundle: nil), forCellReuseIdentifier: InputCell.reuseIdentifier)
         tableView.separatorStyle = .none
@@ -183,7 +180,7 @@ extension LongTableViewController: UITextFieldDelegate {
 // MARK: - KeyboardAssistantDelegate
 
 extension LongTableViewController: KeyboardAssistantDelegate {
-    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: CGFloat) {
+    func keyboardAssistantManuallyReposition(keyboardAssistant: KeyboardAssistant, toInputItem: UIView, keyboardHeight: Double) {
         
     }
 }

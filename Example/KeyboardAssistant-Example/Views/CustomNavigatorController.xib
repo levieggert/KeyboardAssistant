@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomNavigatorController" customModule="KeyboardAssistant_Example" customModuleProvider="target">
             <connections>
-                <outlet property="btDone" destination="ijL-9D-OAk" id="kar-yY-AXl"/>
-                <outlet property="btNext" destination="pZ7-EE-Ame" id="hOD-xv-dbP"/>
-                <outlet property="btPrev" destination="oKp-EV-Ezi" id="zEV-Dp-YcE"/>
+                <outlet property="doneButton" destination="ijL-9D-OAk" id="kYb-Be-veX"/>
+                <outlet property="nextButton" destination="pZ7-EE-Ame" id="Zmi-BB-hvD"/>
+                <outlet property="previousButton" destination="oKp-EV-Ezi" id="DlA-gO-qrX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -22,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oKp-EV-Ezi" userLabel="btPrev">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oKp-EV-Ezi" userLabel="previousButton">
                     <rect key="frame" x="30" y="0.0" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="GXv-fy-j5w"/>
@@ -31,11 +29,8 @@
                     <state key="normal" title="Prev">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
-                    <connections>
-                        <action selector="handlePrevWithButton:" destination="-1" eventType="touchUpInside" id="4xC-87-fDv"/>
-                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZ7-EE-Ame" userLabel="btNext">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZ7-EE-Ame" userLabel="nextButton">
                     <rect key="frame" x="90" y="0.0" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="PQ1-OY-2S2"/>
@@ -44,11 +39,8 @@
                     <state key="normal" title="Next">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
-                    <connections>
-                        <action selector="handleNextWithButton:" destination="-1" eventType="touchUpInside" id="iOe-GR-C37"/>
-                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ijL-9D-OAk" userLabel="btDone">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ijL-9D-OAk" userLabel="doneButton">
                     <rect key="frame" x="170" y="0.0" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="E1H-e4-Jlh"/>
@@ -57,9 +49,6 @@
                     <state key="normal" title="Done">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
-                    <connections>
-                        <action selector="handleDoneWithButton:" destination="-1" eventType="touchUpInside" id="oBQ-XL-UF0"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
